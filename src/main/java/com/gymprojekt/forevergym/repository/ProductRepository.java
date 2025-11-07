@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ProductRepository extends CrudRepository<Product, Integer> {
 
-    List<Product> findAllPrice(Integer price);
+    List<Product> findByPrice(Integer price);
 
     List<Product> findAllByOrderByPriceDesc();
 
     List<Product> findAllByOrderByPriceAsc();
 
-    List<Product> findAllDescriptionContaining(String description);
+    List<Product> findByDescriptionContaining(String description);
 }
