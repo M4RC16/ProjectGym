@@ -1,6 +1,7 @@
 package com.gymprojekt.forevergym.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -59,6 +60,7 @@ public class User {
     @Column(name = "end_shift")
     private LocalTime endShift;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 

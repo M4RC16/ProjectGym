@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReservationRepository extends CrudRepository<Reservation, Long> {
 
-    List<Reservation> findByScheduledAtBetween(Integer start, Instant end);
+    List<Reservation> findByScheduledAtBetween(Instant start, Instant end);
 
     List<Reservation> findByReservationDateAfter(Instant date);
 
