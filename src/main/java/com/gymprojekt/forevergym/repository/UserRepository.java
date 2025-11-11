@@ -29,5 +29,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // Bejelentkezéshez fog kelleni :)
 
-    Optional<User> findByEmailAndPassword(String email, String password);
+    Optional<User> findByPassword(String password);
 }
