@@ -1,0 +1,43 @@
+<div class="container h-100">
+
+  <div class="row justify-content-center align-items-center h-100">
+
+    <div class="col-12 col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
+
+      <div class="login-box">
+
+        <img src="assets/logo.svg" class="login-logo" alt="ProjectGym Logo" />
+
+        <h2 class="login-title">Bejelentkezés</h2>
+        <p class="login-sub">Jelentkezz be fiókodba</p>
+
+        <form (ngSubmit)="onLogin()">
+          <input
+          placeholder="Email"
+            [(ngModel)]="email"
+            type="text"
+            id="username"
+            name="username"
+            class="login-input"
+            required
+          />
+
+          <input
+          placeholder="Jelszó"
+            [(ngModel)]="password"
+            type="password"
+            id="password"
+            name="password"
+            class="login-input"
+            required
+          />
+
+          <button type="submit" class="login-btn">Bejelentkezés</button>
+          <a class="other-bt" routerLink="/register">Nincs még fiókod?</a>
+          <a class="other-bt" routerLink="">Elfelejteted a jelszavad?</a>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

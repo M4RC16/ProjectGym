@@ -1,0 +1,52 @@
+<div class="container h-100">
+
+  <div class="row justify-content-center align-items-center h-100">
+
+    <div class="col-12 col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
+
+      <div class="register-box">
+
+        <img src="assets/logo.svg" class="register-logo" alt="ProjectGym Logo" />
+
+        <h2 class="register-title">Regisztráció</h2>
+        <p class="register-sub">Regisztrálj egy fiókot</p>
+
+        <form (ngSubmit)="onRegister()">
+          <input
+          placeholder="Email"
+            [(ngModel)]="email"
+            type="text"
+            id="username"
+            name="username"
+            class="register-input"
+            required
+          />
+
+          <input
+          placeholder="Jelszó"
+            [(ngModel)]="password"
+            type="password"
+            id="password"
+            name="password"
+            class="register-input"
+            required
+          />
+
+          <input
+          placeholder="Jelszó újra"
+            [(ngModel)]="confirmPassword"
+            type="password"
+            id="password"
+            name="password"
+            class="register-input"
+            required
+          />
+
+          <button type="submit" class="register-btn">Regisztráció</button>
+          <a class="other-bt" routerLink="/login">Van már fiókod?</a>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

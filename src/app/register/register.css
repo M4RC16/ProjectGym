@@ -1,0 +1,73 @@
+.register-box {
+    background: white;
+    width: 500px;
+    padding: 45px;
+    margin-top: 100px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.register-logo {
+    width: 150px;
+    margin: 20px 0 40px 0;
+}
+
+.register-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.register-sub {
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.register-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #f3f3f3;
+    outline: none;
+    transition: 0.2s;
+}
+
+.register-input:focus {
+    border-color: #000;
+    background: #fff;
+}
+
+.other-bt {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+}
+
+.other-bt:hover {
+    color: #000;
+    cursor: pointer;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 1rem;
+    background: #000;
+    color: #f2f200;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.register-btn:hover {
+    opacity: 0.85;
+}
