@@ -1,6 +1,7 @@
 package com.gymprojekt.forevergym.service;
 
 import com.gymprojekt.forevergym.controller.UserController;
+import com.gymprojekt.forevergym.exception.AccountNotVerifiedException;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.repository.UserRepository;
 import com.gymprojekt.forevergym.security.JwtService;
@@ -29,6 +30,9 @@ public class AuthService {
 
         if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Hibás email vagy jelszó");
+        }
+        if (!user.isVerified()){
+            throw new AccountNotVerifiedException("A fiók nincs hitelesítve");
         }
 
         String token = jwtService.generateToken(user.getEmail());
