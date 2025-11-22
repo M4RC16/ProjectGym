@@ -4,12 +4,12 @@ import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.security.JwtService;
 import com.gymprojekt.forevergym.service.AuthService;
 import com.gymprojekt.forevergym.service.UserService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -33,7 +33,14 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("verify/{token}")
+    public ResponseEntity<User> verifyToken(@PathVariable String token) {
+        return null;
+    }
 
+
+    @Setter
+    @Getter
     public static class LoginRequest {
         private String email;
         private String password;
@@ -44,49 +51,22 @@ public class UserController {
             this.email = email;
             this.password = password;
         }
-        public String getEmail() {
-            return email;
-        }
-        public void setEmail(String email) {
-            this.email = email;
-        }
-        public String getPassword() {
-            return password;
-        }
-        public void setPassword(String password) {
-            this.password = password;
-        }
+
     }
 
+    @Setter
+    @Getter
     public static class LoginResponse {
         private String token;
         private String email;
         private String message;
-        public LoginResponse() {}
 
         public LoginResponse(String token, String email, String message) {
             this.token = token;
             this.email = email;
             this.message = message;
         }
-        public String getToken() {
-            return token;
-        }
-        public void setToken(String token) {
-            this.token = token;
-        }
-        public String getEmail() {
-            return email;
-        }
-        public void setEmail(String email) {
-            this.email = email;
-        }
-        public String getMessage() {
-            return message;
-        }
-        public void setMessage(String message) {
-            this.message = message;
-        }
+
     }
 
 }

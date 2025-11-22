@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByEmail(String email);
 
+    Optional<User> findByVerificationToken(String token);
+
     List<User> findByValidUntilBefore(LocalDate date); // lejárt bérlet
 
     List<User> findByValidUntilAfter(LocalDate date); // aktív bérlet
@@ -26,8 +28,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByLastName(String lastName);
 
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
-
-    // Bejelentkezéshez fog kelleni :)
 
     Optional<User> findByPassword(String password);
 }

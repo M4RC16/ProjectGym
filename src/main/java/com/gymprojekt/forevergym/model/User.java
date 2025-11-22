@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -59,6 +60,15 @@ public class User {
 
     @Column(name = "end_shift")
     private LocalTime endShift;
+
+    @Column(name = "isVerified", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
+    private boolean isVerified = false;
+
+    @Column(name = "verificationToken")
+    private String verificationToken ;
+
+    @Column(name = "tokenExpiryDate")
+    private LocalDateTime tokenExpiryDate;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
@@ -182,6 +192,30 @@ public class User {
 
     public void setEndShift(LocalTime endShift) {
         this.endShift = endShift;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public LocalDateTime getTokenExpiryDate() {
+        return tokenExpiryDate;
+    }
+
+    public void setTokenExpiryDate(LocalDateTime tokenExpiryDate) {
+        this.tokenExpiryDate = tokenExpiryDate;
     }
 
     public Instant getCreatedAt() {
