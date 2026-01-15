@@ -1,4 +1,4 @@
-package com.gymprojekt.forevergym.security;
+package com.gymprojekt.forevergym.service;
 
 import com.gymprojekt.forevergym.exception.EmailNotFoundException;
 import com.gymprojekt.forevergym.model.User;

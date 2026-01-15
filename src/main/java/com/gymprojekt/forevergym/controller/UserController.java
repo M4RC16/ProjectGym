@@ -1,14 +1,13 @@
 package com.gymprojekt.forevergym.controller;
 
 import com.gymprojekt.forevergym.model.User;
-import com.gymprojekt.forevergym.security.JwtService;
 import com.gymprojekt.forevergym.service.AuthService;
+import com.gymprojekt.forevergym.service.EmailService;
 import com.gymprojekt.forevergym.service.UserService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,14 +15,16 @@ public class UserController {
 
     private final UserService service;
     private final AuthService authService;
+    private final EmailService emailService;
 
-    public UserController(UserService service, AuthService authService) {
+    public UserController(UserService service, AuthService authService, EmailService emailService) {
         this.service = service;
         this.authService = authService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.registerUser(user));
     }
 
@@ -33,19 +34,28 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("verify/{token}")
-    public ResponseEntity<User> verifyToken(@PathVariable String token) {
-        return null;
+    @PostMapping("/sendForgottenPassEmail")
+    public ResponseEntity<?> sendForgottenPassEmail(@RequestBody EmailRequest request) {
+        String result = emailService.SendPasswordResetEmail(request.getEmail());
+        return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest request) {
+        return ResponseEntity.ok(service.resetPassword(request));
+    }
+
+    @GetMapping("verify/{token}")
+    public ResponseEntity<String> verifyToken(@PathVariable String token) {
+        String result = service.verifyUser(token);
+        return ResponseEntity.ok(result);
+    }
 
     @Setter
     @Getter
     public static class LoginRequest {
         private String email;
         private String password;
-
-        public LoginRequest() {}
 
         public LoginRequest(String email, String password) {
             this.email = email;
@@ -69,4 +79,22 @@ public class UserController {
 
     }
 
+    @Setter
+    @Getter
+    public static class EmailRequest {
+        private String email;
+    }
+
+    @Setter
+    @Getter
+    public static class PasswordResetRequest {
+        private String token;
+        private String password1;
+        private String password2;
+        public PasswordResetRequest(String token, String password1, String password2) {
+            this.token = token;
+            this.password1 = password1;
+            this.password2 = password2;
+        }
+    }
 }
