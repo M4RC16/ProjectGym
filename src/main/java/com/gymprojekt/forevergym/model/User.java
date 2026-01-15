@@ -65,7 +65,7 @@ public class User {
     private boolean isVerified = false;
 
     @Column(name = "verificationToken")
-    private String verificationToken ;
+    private String verificationToken;
 
     @Column(name = "tokenExpiryDate")
     private LocalDateTime tokenExpiryDate;
@@ -73,6 +73,12 @@ public class User {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
+    @Column(name = "resetTokenExpiryDate")
+    private LocalDateTime resetTokenExpiryDate;
 
     public Integer getId() {
         return id;
@@ -224,6 +230,22 @@ public class User {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public LocalDateTime getResetTokenExpiryDate() {
+        return resetTokenExpiryDate;
+    }
+
+    public void setResetTokenExpiryDate(LocalDateTime resetTokenExpiryDate) {
+        this.resetTokenExpiryDate = resetTokenExpiryDate;
     }
 
 }

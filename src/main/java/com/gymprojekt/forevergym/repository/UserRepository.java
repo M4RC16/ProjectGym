@@ -30,4 +30,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
 
     Optional<User> findByPassword(String password);
+
+    Optional<User> findByResetPasswordToken(String token);
 }
