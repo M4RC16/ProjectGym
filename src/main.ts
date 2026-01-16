@@ -1,4 +1,7 @@
-import { bootstrapApplication } from '@angular/platform-browser';
+/// npm install @angular/localize@20.3.12 --save
+
+
+import { bootstrapApplication} from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
 

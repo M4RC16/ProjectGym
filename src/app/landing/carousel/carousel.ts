@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
-  imports: [],
+  imports: [NgbCarouselModule, CommonModule],
   templateUrl: './carousel.html',
   styleUrl: './carousel.css',
 })
@@ -11,9 +12,9 @@ import { CommonModule } from '@angular/common';
 export class Carousel {
 
   images = [
-    'assets/kep1.jpg',
     'assets/kep2.jpg',
-    'assets/image3.jpg'
+    'assets/kep3.jpg',
+    'assets/kep1.jpg'
   ];
   currentIndex = 0;
 

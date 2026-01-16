@@ -3,6 +3,7 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { NotFound } from './not-found/not-found';
 import { Landing } from './landing/landing';
+import { Gallery } from './gallery/gallery';
 
 export const routes: Routes = [
     {
@@ -16,6 +17,10 @@ export const routes: Routes = [
     {
         path: 'register',
         component: Register,
+    },
+    {
+        path: 'gallery',
+        component: Gallery,
     },
     {
         path: '**',

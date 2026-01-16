@@ -1,0 +1,82 @@
+.container-fluid {
+    background-image: url("../../assets/SVG/footer2.svg");
+    background-color: gray;
+    padding: 3rem;
+/*     height: 800px; */
+    background-size:cover;
+    background-repeat: no-repeat;
+    color: black;
+}
+
+.brand .logo {
+    max-width: 15rem;
+    margin: 1rem;
+}
+
+.brand .slogen {
+    font-size: 3rem;
+    color: black;
+    margin-left: -40px;
+    margin-top: 2rem;
+    .slogen-first {
+        text-align: start;
+    }
+    .slogen-last {
+        text-align: end;
+        margin-right: -40px;
+    }
+
+    span {
+        display: block;
+    }
+}
+
+.contact {
+    padding-right: 8rem;
+}
+
+button {
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    background-color: yellow;
+    padding: 10px 20px;
+    margin: 1rem 1rem;
+    box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: rgb(37, 35, 35);
+    color: yellow;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.icons {
+    font-size: 3rem;
+    color: white;
+}
+
+.footer-bottom {
+    margin-top: 7rem;
+    padding-top: 1rem;
+    color: white;
+    font-weight: bold;
+    border-top:black 1px solid;
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
+.hovered {
+    transition: 0.5s;
+}
+
+.hovered:hover {
+    transform: scale(1.1);
+}

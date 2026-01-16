@@ -1,9 +1,6 @@
-<div class="carousel-container">
-  <div class="carousel-slide" *ngFor="let image of images; let i = index"
-       [class.active]="i === currentIndex">
-    <img [src]="image" alt="Slide {{i + 1}}">
-  </div>
+<ngb-carousel class="carousel" *ngIf="images.length" [interval]="2000" [pauseOnHover]="false" [showNavigationArrows]="false" [pauseOnFocus]="false" [showNavigationIndicators]="false">
+  <ng-template ngbSlide *ngFor="let img of images; let i = index">
+    <img [src]="img" class="d-block w-100" alt="Slide {{i + 1}}" loading="lazy">
+  </ng-template>
+</ngb-carousel>
 
-  <button class="prev" (click)="prev()">❮</button>
-  <button class="next" (click)="next()">❯</button>
-</div>

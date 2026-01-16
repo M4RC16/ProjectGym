@@ -1,0 +1,10 @@
+.trainer {
+    max-width: 20rem;
+    padding: 0.2rem;
+    background-color: rgba(223, 223, 223, 0.315);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+    margin: 0.5rem;
+}

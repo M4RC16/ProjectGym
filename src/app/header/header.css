@@ -2,6 +2,13 @@ body {
     margin: none;
 }
 
+.container {
+    display: flex;
+    justify-self: anchor-center;
+    position: fixed;
+    z-index: 1;
+}
+
 img{
     max-width: 5rem;
     max-height: 5rem;
