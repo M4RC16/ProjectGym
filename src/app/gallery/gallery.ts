@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Img } from '../models/Img.model';
 
 @Component({
@@ -9,6 +10,8 @@ import { Img } from '../models/Img.model';
 })
 export class Gallery {
 /*   @Input({ required: true }) ImgData!: Img[]; */
+
+constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document: Document) {}
 
 ImgData = [
   { imgId: 1, imgUrl: "https://picsum.photos/300/400", imgAlt: "Álló kép 1" },
@@ -44,10 +47,12 @@ ImgData = [
     this.previewImage = true;
     this.currentIndex = index;
     this.currentLightboxImg = this.ImgData[index];
+    this.renderer.addClass(this.document.body, 'no-scroll');
   }
 
   onClose() {
     this.previewImage = false;
+    this.renderer.removeClass(this.document.body, 'no-scroll');
   }
 
   onNext() {

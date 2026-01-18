@@ -1,9 +1,17 @@
+<div class="title ">
+  <h1>Galéria</h1>
+  <p class="description">
+    Edzőtermünk felszereltségét és minőségét első helyen tartjuk, ezért a termünkben a legkorszerűbb
+    és legjobb minőségű eszközök találhatók
+  </p>
+</div>
+
 <div class="gallery-lightbox-container">
   <div class="gallery">
     @for (item of ImgData; track item.imgId) {
 
     <div class="gallery-img">
-      <img (click)="onPreview(item.imgId)" [src]="item.imgUrl" [alt]="item.imgAlt" />
+      <img (click)="onPreview(item.imgId - 1)" [src]="item.imgUrl" [alt]="item.imgAlt" />
     </div>
 
     }
@@ -11,9 +19,9 @@
 
   @if (previewImage) {
 
-    <div class="lightbox" animate.enter="fade-in" animate.leave="fade-out">
-    <span class="count">{{currentIndex+1}}/{{totalImageCount}}</span>
-    <button class="close-btn"(click)="onClose()">
+  <div class="lightbox" animate.enter="fade-in" animate.leave="fade-out">
+    <span class="count">{{ currentIndex + 1 }}/{{ totalImageCount }}</span>
+    <button class="close-btn" (click)="onClose()">
       <i class="fa-solid fa-xmark"></i>
     </button>
     <button class="btn-lightbox-carousel btn-prev" (click)="onPrevious()">
@@ -23,12 +31,10 @@
       <i class="fas fa-arrow-circle-right icon-lightbox-carousel icon-next"></i>
     </button>
 
-    <div class="lightbox-img"  >
-      <img [src]="currentLightboxImg.imgUrl" [alt]="currentLightboxImg.imgAlt">
+    <div class="lightbox-img">
+      <img [src]="currentLightboxImg.imgUrl" [alt]="currentLightboxImg.imgAlt" />
     </div>
-
   </div>
 
   }
-  
 </div>

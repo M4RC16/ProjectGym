@@ -3,24 +3,18 @@
     text-align: center;
 }
 
-.gallery {
-  column-count: 3;
-  column-gap: 10px;
-}
-
-.gallery-img {
-  break-inside: avoid;
-  margin-bottom: 10px;
-  max-width: 400px;
-  max-height: 600px;
-  overflow: hidden;
-}
-
-.gallery-img img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
+.title {
+    margin-top: 9rem;
+    color: white;
+    p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        opacity: 0.8;
+        max-width: 800px;
+        justify-self: center;
+        margin-top: 2rem;
+    }
 }
 
 .gallery-lightbox-container {
@@ -36,18 +30,27 @@
 }
 
 .gallery-img {
-    break-inside: avoid;   
-    margin-bottom: 20px;   
+    break-inside: avoid;
+    margin-bottom: 40px;
+    max-width: 400px;
+    max-height: 600px;
+    overflow: hidden;
+    border-radius: .60rem;
+    box-shadow: 0px 3px 10px 2px black;
+}
+
+.gallery-img:hover {
+    transform: scale(1.03);
+    transition: all 0.3s ease-in-out;
 }
 
 .gallery-img img {
     width: 100%;
     height: auto;
+    display: block;
+    object-fit: cover;
     cursor: pointer;
-    border-radius: .35rem;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 5px 0 black;
-}  
+}
 
 .lightbox {
     display: flex;
@@ -60,6 +63,7 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.85);
     z-index: 2;
+
 }
 
 .lightbox .count {
@@ -138,28 +142,44 @@
     opacity: .5;
 }
 
-.icon-prev, .icon-next {
+.icon-prev,
+.icon-next {
     font-size: 2.5rem;
 }
 
 .lightbox-img img {
     width: 100%;
-    border-radius: .35rem
-    ;
+    border-radius: .35rem;
 }
 
 .fade-in {
-  animation: fadeIn 150ms ease-in forwards;
+    animation: fadeIn 150ms ease-in forwards;
 }
+
 .fade-out {
-  animation: fadeOut 150ms ease-in backwards;
+    animation: fadeOut 150ms ease-in backwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(.5); }
-  to   { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
+
 @keyframes fadeOut {
-  from { opacity: 1; transform: scale(1); }
-  to   { opacity: 0; transform: scale(.5); }
-} 
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(.5);
+    }
+}
