@@ -1,3 +1,7 @@
+.container {
+    margin: 9rem auto;
+}
+
 .register-box {
     background: white;
     width: 500px;

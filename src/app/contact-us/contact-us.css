@@ -1,0 +1,126 @@
+.contact-us {
+    padding: 0;
+}
+
+.hero {
+    background-color: gray;
+
+
+}
+
+.hero-body .container-fluid {
+    padding: 9rem 0;
+    color: white;
+}
+
+.row {
+    margin: 4rem 0;
+}
+
+.contact {
+    color: white;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin: 4rem 4rem;
+    font-size: 2rem;
+    font-weight: bold;
+
+
+
+    .circle {
+        background-color: rgba(105, 105, 105, 0.320);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+        color: #FAFA01;
+        border-radius: 100%;
+        max-width: 10rem;
+        max-height: 10rem;
+        width: 7rem;
+        height: 7%;
+        text-align: center;
+
+        i {
+            font-size: 4rem;
+            margin: 1.5rem 0;
+        }
+    }
+
+}
+
+/* Form */
+
+.contact-form {
+    background-color: rgba(105, 105, 105, 0.320);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+    padding: 2rem;
+    border-radius: 4rem;
+    color: white;
+    max-width: 40rem;
+
+    h3 {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+
+    label {
+        display: block;
+        margin-top: 1rem;
+        margin-bottom: .5rem;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        background: #f3f3f3;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    input:hover {
+        transform: scale(1.01);
+        border: 1px solid black;
+    }
+
+    input:focus {
+        border-color: #000;
+        background: #fff;
+    }
+}
+
+button {
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    background-color: yellow;
+    padding: 10px 20px;
+    margin: 1rem 1rem;
+    box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
+    -moz-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: rgb(37, 35, 35);
+    color: yellow;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* Google map */
+
+.google-map-container {
+    padding: 0;
+    height: 40rem; 
+
+}

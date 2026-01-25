@@ -31,11 +31,40 @@ export class TrainerService {
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
             imageUrl: 'assets/trainers/NAI.jpg'
+        },
+                {
+            id: '5',
+            name: 'Mike Johnson',
+            shortDescription: 'Cardio Specialist',
+            description: 'Focuses on high-intensity interval training.',
+            imageUrl: 'assets/trainers/NAI.jpg'
+        },
+                {
+            id: '6',
+            name: 'Mike Johnson',
+            shortDescription: 'Cardio Specialist',
+            description: 'Focuses on high-intensity interval training.',
+            imageUrl: 'assets/trainers/NAI.jpg'
+        },
+                {
+            id: '7',
+            name: 'Mike Johnson',
+            shortDescription: 'Cardio Specialist',
+            description: 'Focuses on high-intensity interval training.',
+            imageUrl: 'assets/trainers/NAI.jpg'
+        },
+                {
+            id: '8',
+            name: 'Mike Johnson',
+            shortDescription: 'Cardio Specialist',
+            description: 'Focuses on high-intensity interval training.',
+            imageUrl: 'assets/trainers/NAI.jpg'
         }
+        
     ];
 
     getFirstThreeTrainers() {
-        return [...this.trainers].slice(0, 3);
+        return [...this.trainers];
     }
 
 

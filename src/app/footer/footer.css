@@ -6,6 +6,8 @@
     background-size:cover;
     background-repeat: no-repeat;
     color: black;
+    position: sticky;
+    bottom: 0;
 }
 
 .brand .logo {

@@ -2,5 +2,5 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class RequestsService {
-    private baseUrl = '';
+    private baseUrl = 'localhost:3000';
 }

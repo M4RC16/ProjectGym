@@ -1,0 +1,71 @@
+.tickets {
+    margin-bottom: 15rem;
+}
+
+.title {
+    margin-top: 9rem;
+    color: white;
+
+    p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        opacity: 0.8;
+        max-width: 800px;
+        justify-self: center;
+        margin: 2rem 0;
+    }
+}
+
+.ticket-table {
+    font-size: 1.5rem;
+    justify-self: center;
+    max-width: 1200px;
+    width: 90%;
+    border-radius: 4rem;
+    padding: 2rem;
+    color: white;
+    background-color: rgba(105, 105, 105, 0.320);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #e5e5e5;
+        transition: .3s ease-in;
+    }
+
+    a:hover {
+        color: #FAFA01;
+    }
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+table th,
+table td {
+    text-align: center;
+    word-wrap: break-word;
+}
+
+th {
+    padding-bottom: .5rem;
+}
+
+td {
+    padding: .5rem 0;
+    transition: .5 ease-in;
+    border-bottom: 1px solid black;
+    color: #e5e5e5;
+
+}
+
+tr:hover {
+    background-color: rgba(213, 213, 213, 0.400);
+    transform: scale(1.01);
+
+}

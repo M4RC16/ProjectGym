@@ -1,0 +1,21 @@
+.title {
+    margin-top: 9rem;
+    color: white;
+    p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+        opacity: 0.8;
+        max-width: 800px;
+        justify-self: center;
+        margin-top: 2rem;
+    }
+}
+
+.trainers-container {
+    margin: 4rem auto;
+}
+
+.trainer {
+      text-align: -webkit-center;
+}

@@ -3,10 +3,11 @@ import { Carousel } from './carousel/carousel';
 import { Trainers } from './trainers/trainers';
 import { ImgSlider } from './img-slider/img-slider';
 import { type Img } from '../models/Img.model';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-landing',
-  imports: [Carousel, /* Trainers, ImgSlider */],
+  imports: [Carousel, RouterLink],
   templateUrl: './landing.html',
   styleUrl: './landing.css',
 })

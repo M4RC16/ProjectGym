@@ -1,0 +1,11 @@
+<div class="trainer-card" [class.open]="isOpen">
+  <img [src]="trainer.imageUrl" [alt]="trainer.name" />
+  <div class="informations">
+    <h4>{{ trainer.name }}</h4>
+    <button (click)="toggle()"><img src="assets/icons/chevronRight.svg" alt="" /></button>
+    <div class="trainer-description">
+      <h4>{{ trainer.name }}</h4>
+      <p>{{ trainer.description }}</p>
+    </div>
+  </div>
+</div>

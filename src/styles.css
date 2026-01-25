@@ -38,3 +38,8 @@ html.no-scroll {
   overflow: hidden !important;
   height: 100% !important;
 }
+
+div.div-sticky {
+  position: fixed;
+  top: 0;
+}

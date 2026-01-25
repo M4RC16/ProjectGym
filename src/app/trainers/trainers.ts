@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { TrainerCard } from '../../trainers/trainer-card/trainer-card';
-import { TrainerService } from '../../services/trainer.service';
+import { TrainerService } from '../services/trainer.service';
+import { TrainerCard } from "./trainer-card/trainer-card";
 
 @Component({
   selector: 'app-trainers',
@@ -9,11 +9,7 @@ import { TrainerService } from '../../services/trainer.service';
   styleUrl: './trainers.css',
 })
 export class Trainers {
-
   private TrainerService = inject(TrainerService);
 
   Trainers = this.TrainerService.getFirstThreeTrainers();
-
-
-
 }
