@@ -1,7 +1,11 @@
 package com.gymprojekt.forevergym.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "role")
 public class Role {
@@ -12,21 +16,5 @@ public class Role {
 
     @Column(name = "role_name")
     private String roleName;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 
 }

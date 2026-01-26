@@ -9,6 +9,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AuthService {
 
@@ -35,7 +38,10 @@ public class AuthService {
             throw new AccountNotVerifiedException("A fiók nincs hitelesítve");
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String roleName = user.getRole().getRoleName();
+        List<String> roles = List.of(roleName);
+
+        String token = jwtService.generateToken(user.getEmail(), roles);
 
         return new UserController.LoginResponse(token, user.getEmail(), "Sikeres bejelentkezés");
     }

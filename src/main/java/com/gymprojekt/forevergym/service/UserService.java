@@ -1,17 +1,22 @@
 package com.gymprojekt.forevergym.service;
 
+import com.gymprojekt.forevergym.UserProjection;
 import com.gymprojekt.forevergym.controller.UserController;
 import com.gymprojekt.forevergym.exception.EmailIsNotValidException;
 import com.gymprojekt.forevergym.exception.PasswordProblemException;
 import com.gymprojekt.forevergym.exception.UserAlreadyExistsException;
+import com.gymprojekt.forevergym.model.Role;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.repository.UserRepository;
+import com.gymprojekt.forevergym.repository.RoleRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,12 +29,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final RoleRepository roleRepository;
 
     @Lazy
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.roleRepository = roleRepository;
     }
 
     public String registerUser(User user) {
@@ -128,6 +135,26 @@ public class UserService {
         userRepository.save(user);
 
         return "Sikeres jelszóvisszaállítás";
+    }
+
+    public List<UserProjection> getAllUsers() {
+        return userRepository.findAllProjectedBy();
+    }
+
+    @Transactional
+    public String changeUserRole(UserController.changeUserRole changeUser) {
+
+        int userId = changeUser.getId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("A felhasználó nem található"));
+
+        Role newRole = roleRepository.findById(changeUser.getRoleId())
+                .orElseThrow(() -> new RuntimeException("Szerepkör nem található"));
+
+        user.setRole(newRole);
+        userRepository.save(user);
+
+        return "Szerepkör módosítva";
     }
 
 }

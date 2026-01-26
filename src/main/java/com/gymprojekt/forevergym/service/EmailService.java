@@ -52,7 +52,7 @@ public class EmailService {
         }
         if (form.getEmailAddress() != null && !form.getEmailAddress().matches(emailRegex)) {
             throw new RuntimeException("Érvénytelen email formátum");
-        }
+        }   
         if (form.getMessage() == null) {
             throw new RuntimeException("Nem lehet üres az üzenet mező");
         }

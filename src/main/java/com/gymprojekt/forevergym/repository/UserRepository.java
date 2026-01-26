@@ -1,5 +1,6 @@
 package com.gymprojekt.forevergym.repository;
 
+import com.gymprojekt.forevergym.UserProjection;
 import com.gymprojekt.forevergym.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -8,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+    List<UserProjection> findAllProjectedBy();
 
     // Milyen típusu a visszaérkező adat | milyen típusu a lekérdezés | elválasztó | hol keresse | mit keressen
 
