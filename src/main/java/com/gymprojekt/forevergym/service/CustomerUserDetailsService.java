@@ -1,6 +1,6 @@
 package com.gymprojekt.forevergym.service;
 
-import com.gymprojekt.forevergym.exception.EmailNotFoundException;
+import com.gymprojekt.forevergym.exception.NotFoundException;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +19,9 @@ public class CustomerUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws EmailNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws NotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EmailNotFoundException("Felhasználó nem található: " + email));
+                .orElseThrow(() -> new NotFoundException("Felhasználó nem található: " + email));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),

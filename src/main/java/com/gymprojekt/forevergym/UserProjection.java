@@ -1,8 +1,6 @@
 package com.gymprojekt.forevergym;
 
-
 import com.gymprojekt.forevergym.model.Role;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.Set;

@@ -1,7 +1,9 @@
 package com.gymprojekt.forevergym.service;
 
 import com.gymprojekt.forevergym.controller.UserController;
-import com.gymprojekt.forevergym.exception.AccountNotVerifiedException;
+import com.gymprojekt.forevergym.exception.NotAllowedException;
+import com.gymprojekt.forevergym.model.RefreshToken;
+import com.gymprojekt.forevergym.model.Role;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.repository.UserRepository;
 import com.gymprojekt.forevergym.security.JwtService;
@@ -9,41 +11,46 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     public AuthService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       JwtService jwtService) {
+                       JwtService jwtService, RefreshTokenService refreshTokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
     }
 
-    public UserController.LoginResponse login(UserController.LoginRequest loginRequest) {
-        User user = userRepository.findByEmail(loginRequest.getEmail())
+    public UserController.LoginResponse login(UserController.LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Hibás email vagy jelszó"));
 
-        if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Hibás email vagy jelszó");
         }
-        if (!user.isVerified()){
-            throw new AccountNotVerifiedException("A fiók nincs hitelesítve");
+        if (!user.isVerified()) {
+            throw new NotAllowedException("A fiók nincs hitelesítve");
         }
 
-        String roleName = user.getRole().getRoleName();
-        List<String> roles = List.of(roleName);
+        String deviceInfo = request.getDeviceInfo() != null
+                ? request.getDeviceInfo()
+                : "Unknown Device";
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user, deviceInfo);
 
-        String token = jwtService.generateToken(user.getEmail(), roles);
+        String accessToken = jwtService.generateToken(user);
 
-        return new UserController.LoginResponse(token, user.getEmail(), "Sikeres bejelentkezés");
+        return new UserController.LoginResponse(
+                accessToken,
+                refreshToken.getToken(),
+                user.getId(),
+                user.getRole());
     }
-
 }

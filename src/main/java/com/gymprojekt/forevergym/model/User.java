@@ -3,6 +3,7 @@ package com.gymprojekt.forevergym.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
@@ -85,7 +86,7 @@ public class User {
     private LocalDateTime resetTokenExpiryDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", columnDefinition = "INTEGER DEFAULT 3")
     private Role role;
 
 }

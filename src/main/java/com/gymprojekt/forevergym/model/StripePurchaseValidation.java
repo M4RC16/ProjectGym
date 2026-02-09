@@ -25,7 +25,7 @@ public class StripePurchaseValidation {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ticket_id")
-    private TicketType ticket;
+    private Ticket ticket;
 
     @Column(name = "successful_purchase", nullable = false)
     private Boolean successfulPurchase = false;
@@ -49,11 +49,11 @@ public class StripePurchaseValidation {
         this.user = user;
     }
 
-    public TicketType getTicket() {
+    public Ticket getTicket() {
         return ticket;
     }
 
-    public void setTicket(TicketType ticket) {
+    public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
 

@@ -1,6 +1,8 @@
 package com.gymprojekt.forevergym.controller;
 
+import com.gymprojekt.forevergym.ApiResponse;
 import com.gymprojekt.forevergym.UserProjection;
+import com.gymprojekt.forevergym.model.Role;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.service.AuthService;
 import com.gymprojekt.forevergym.service.EmailService;
@@ -10,11 +12,13 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Controller
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService service;
@@ -28,8 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.registerUser(user));
+    public ResponseEntity<ApiResponse> registerUser(@RequestBody User user) {
+        service.registerUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success("Sikeres regisztráció! A hitelesítő email elküldve!"));
     }
 
     @PostMapping("/login")
@@ -39,20 +45,21 @@ public class UserController {
     }
 
     @PostMapping("/sendForgottenPassEmail")
-    public ResponseEntity<?> sendForgottenPassEmail(@RequestBody EmailRequest request) {
-        String result = emailService.SendPasswordResetEmail(request.getEmail());
-        return ResponseEntity.ok(result);
+    public ResponseEntity<ApiResponse> sendForgottenPassEmail(@RequestBody EmailRequest request) {
+        emailService.SendPasswordResetEmail(request.getEmail());
+        return ResponseEntity.ok(ApiResponse.success("Email elküldve"));
     }
 
     @PostMapping("/resetPassword")
-    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest request) {
-        return ResponseEntity.ok(service.resetPassword(request));
+    public ResponseEntity<ApiResponse> resetPassword(@RequestBody PasswordResetRequest request) {
+        service.resetPassword(request);
+        return ResponseEntity.ok(ApiResponse.success("Sikeres jelszóvisszaállítás"));
     }
 
-    @GetMapping("verify/{token}")
-    public ResponseEntity<String> verifyToken(@PathVariable String token) {
-        String result = service.verifyUser(token);
-        return ResponseEntity.ok(result);
+    @GetMapping("/verify/{token}")
+    public ResponseEntity<ApiResponse> verifyToken(@PathVariable String token) {
+        service.verifyUser(token);
+        return ResponseEntity.ok(ApiResponse.success("Sikeres aktiválás"));
     }
 
     @GetMapping("/requests/getAllUser")
@@ -63,9 +70,16 @@ public class UserController {
 
     @PostMapping("/change/Role")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> changeRole(@RequestBody changeUserRole changeUser) {
-        String response = service.changeUserRole(changeUser);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse> changeRole(@RequestBody changeUserRole changeUser) {
+        service.changeUserRole(changeUser);
+        return ResponseEntity.ok(ApiResponse.success("Szerepkör módosítva"));
+    }
+
+    @DeleteMapping("/delete/{email}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable String email) {
+        service.deleteUser(email);
+        return ResponseEntity.noContent().build();
     }
 
     @Setter
@@ -73,10 +87,12 @@ public class UserController {
     public static class LoginRequest {
         private String email;
         private String password;
+        private String deviceInfo;
 
-        public LoginRequest(String email, String password) {
+        public LoginRequest(String email, String password, String deviceInfo) {
             this.email = email;
             this.password = password;
+            this.deviceInfo = deviceInfo;
         }
 
     }
@@ -84,14 +100,18 @@ public class UserController {
     @Setter
     @Getter
     public static class LoginResponse {
-        private String token;
-        private String email;
-        private String message;
+        private String accessToken;
+        private String refreshToken;
+        private int Id;
+        private Role Role;
 
-        public LoginResponse(String token, String email, String message) {
-            this.token = token;
-            this.email = email;
-            this.message = message;
+        public LoginResponse() {};
+
+        public LoginResponse(String accessToken, String refreshToken, int Id, Role Role) {
+            this.accessToken = accessToken;
+            this.refreshToken = refreshToken;
+            this.Id = Id;
+            this.Role = Role;
         }
 
     }

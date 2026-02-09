@@ -1,5 +1,6 @@
 package com.gymprojekt.forevergym.security;
 
+import com.gymprojekt.forevergym.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,10 +29,15 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private Long EXPIRATION;
 
-    public String generateToken(String email, List<String> role) {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", role);
-        return createToken(claims, email);
+
+        if (user.getRole() != null) {
+            claims.put("roles", List.of(user.getRole().getRoleName()));
+        }
+
+        claims.put("userId", user.getId());
+        return createToken(claims, user.getEmail());
     }
 
     private String createToken(Map<String, Object> claims, String email) {

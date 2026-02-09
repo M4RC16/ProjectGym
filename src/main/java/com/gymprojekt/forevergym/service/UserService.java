@@ -2,9 +2,10 @@ package com.gymprojekt.forevergym.service;
 
 import com.gymprojekt.forevergym.UserProjection;
 import com.gymprojekt.forevergym.controller.UserController;
-import com.gymprojekt.forevergym.exception.EmailIsNotValidException;
-import com.gymprojekt.forevergym.exception.PasswordProblemException;
-import com.gymprojekt.forevergym.exception.UserAlreadyExistsException;
+import com.gymprojekt.forevergym.exception.NotValidException;
+import com.gymprojekt.forevergym.exception.NotFoundException;
+import com.gymprojekt.forevergym.exception.BadRequestException;
+import com.gymprojekt.forevergym.exception.AlreadyExistsException;
 import com.gymprojekt.forevergym.model.Role;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.repository.UserRepository;
@@ -39,16 +40,18 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    public String registerUser(User user) {
+    public void registerUser(User user) {
+
+        Role newRole;
 
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new UserAlreadyExistsException("Az email regisztrálva van!");
+            throw new AlreadyExistsException("Az email regisztrálva van!");
         }
         if (!user.getEmail().matches(emailRegex)) {
-            throw new EmailIsNotValidException("Az emailcím amit beítrál nem felel meg!");
+            throw new NotValidException("Az emailcím amit beítrál nem felel meg!");
         }
         if (!user.getPassword().matches(passwordRegex)) {
-            throw new PasswordProblemException("A jelszó legalább 8 karakter hosszú, legalább 1 számot és 1 speciális karaktert kell tartalmazzon!");
+            throw new BadRequestException("A jelszó legalább 8 karakter hosszú, legalább 1 számot és 1 speciális karaktert kell tartalmazzon!");
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -56,14 +59,14 @@ public class UserService {
         String token = UUID.randomUUID().toString();
         user.setVerificationToken(token);
         user.setTokenExpiryDate(LocalDateTime.now().plusHours(12));
+        newRole = roleRepository.findById(3).orElseThrow();
+        user.setRole(newRole);
 
         emailService.SendVerificationEmail(user.getEmail(), token);
         userRepository.save(user);
-
-        return "Sikeres regisztráció! A hitelesítő email elküldve!";
     }
 
-    public String verifyUser(String token) {
+    public void verifyUser(String token) {
         User user = userRepository.findByVerificationToken(token)
                 .orElseThrow(() -> new RuntimeException("A felhasználó nem található"));
 
@@ -75,8 +78,6 @@ public class UserService {
         user.setVerificationToken(null);
         user.setTokenExpiryDate(null);
         userRepository.save(user);
-
-        return "Sikeres aktiválás";
     }
 
     private String generateAlphanumericCode() {
@@ -109,7 +110,7 @@ public class UserService {
         return resetToken;
     }
 
-    public String resetPassword(UserController.PasswordResetRequest request) {
+    public void resetPassword(UserController.PasswordResetRequest request) {
 
         String password;
         if (!Objects.equals(request.getPassword1(), request.getPassword2())) {
@@ -133,8 +134,6 @@ public class UserService {
         user.setResetPasswordToken(null);
         user.setResetTokenExpiryDate(null);
         userRepository.save(user);
-
-        return "Sikeres jelszóvisszaállítás";
     }
 
     public List<UserProjection> getAllUsers() {
@@ -142,19 +141,24 @@ public class UserService {
     }
 
     @Transactional
-    public String changeUserRole(UserController.changeUserRole changeUser) {
+    public void changeUserRole(UserController.changeUserRole changeUser) {
 
         int userId = changeUser.getId();
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("A felhasználó nem található"));
+                .orElseThrow(() -> new NotFoundException("A felhasználó nem található"));
 
         Role newRole = roleRepository.findById(changeUser.getRoleId())
-                .orElseThrow(() -> new RuntimeException("Szerepkör nem található"));
+                .orElseThrow(() -> new NotFoundException("Szerepkör nem található"));
 
         user.setRole(newRole);
         userRepository.save(user);
+    }
 
-        return "Szerepkör módosítva";
+    @Transactional
+    public void deleteUser(String email) {
+        userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Nem található felhasználó"));
+        userRepository.deleteByEmail(email);
     }
 
 }
