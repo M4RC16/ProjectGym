@@ -1,5 +1,5 @@
 import { Component, Input, OnInit} from '@angular/core';
-import { type Img } from '../../models/Img.model';
+import { type Img } from '../../models/models.model';
 
 @Component({
   selector: 'app-img-slider',

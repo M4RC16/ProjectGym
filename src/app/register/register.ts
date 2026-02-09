@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
+import { RequestsService } from '../services/requests.service';
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,7 @@ import { RouterLink } from "@angular/router";
 })
 export class Register {
 
+  private requestsService = inject(RequestsService);
   email = signal('');
   password = signal('');
   confirmPassword = signal('');
@@ -17,11 +19,23 @@ export class Register {
   passwordRegex = "^(?=.[0-9])(?=.[!@#$%^&*]).{8,}$";
 
   onRegister() {
-
+/* 
     if (this.emailRegex.match(this.email())) {
+      console.log('Registering with', this.email(), this.password(), this.confirmPassword());
+    }else {
+      console.error('Invalid email format');
+    } */
 
-    }
-    console.log('Registering with', this.email(), this.password(), this.confirmPassword());
+  this.requestsService.register({email: this.email(), password: this.password(), /* passwordConfirmation: this.confirmPassword() */}).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+      },
+      error: (error) => {
+        console.error('Registration failed:', error);
+      }
+    });
+
+    
   }
 
 }

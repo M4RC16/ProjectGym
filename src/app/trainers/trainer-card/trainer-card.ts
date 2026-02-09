@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Trainer } from '../../models/trainer.model';
+import { type Trainer } from '../../models/models.model';
+
 
 @Component({
   selector: 'app-trainer-card',

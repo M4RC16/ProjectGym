@@ -1,0 +1,76 @@
+.profil-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;  
+  width: 100rem;
+  margin: 15rem auto;
+  border-radius: 4rem;
+  min-height: 50rem;      
+  background-color: black;
+  padding: 0;
+}
+
+.side-bar {
+  width: 20%;
+  padding: 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profil-content {
+  float: none;
+  width: auto;            
+  flex: 1; 
+  display: flex;          
+  flex-direction: column; 
+  min-height: 0;          
+  border-radius: 3.9rem;
+  overflow-x: hidden;
+  background-color: white;
+}
+
+
+
+.personal-info {
+    color: white;
+}
+
+.controls {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+
+        li {
+            text-align: center;
+            color: white;
+
+            a {
+                text-decoration: none;
+                color: white;
+                font-size: 1.6rem;
+                font-weight: bold;
+
+                &:hover {
+                    color: #E8E804;
+                }
+            }
+
+            i {
+
+                font-size: 1.5rem;
+                margin-right: 0.5rem;
+            }
+
+            &:hover {
+                transform: scale(1.1);
+                color: #E8E804;
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="left">
+    <div class="calendar">
+      <div class="month">
+        <i class="fas fa-chevron-left prev" (click)="prevMonth()"></i>
+        <div class="date">{{ currentMonthYear }}</div>
+        <i class="fas fa-chevron-right next" (click)="nextMonth()"></i>
+      </div>
+      <div class="weekdays">
+        <div *ngFor="let wd of weekdaysShort">{{ wd }}</div>
+      </div>
+      <div class="days">
+        <div
+          *ngFor="let dayObj of days"
+          class="day"
+          [class.prev-date]="dayObj.type === 'prev-date'"
+          [class.next-date]="dayObj.type === 'next-date'"
+          [class.today]="dayObj.isToday"
+          [class.active]="dayObj.isActive"
+          [class.event]="dayObj.hasEvent"
+          (click)="onDayClick(dayObj)"
+        >
+          {{ dayObj.day }}
+        </div>
+      </div>
+      <div class="goto-today">
+        <div class="goto">
+          <input
+            type="text"
+            placeholder="mm/yyyy"
+            class="date-input"
+            [(ngModel)]="dateInput"
+            (input)="onDateInputChange()"
+          />
+          <button class="goto-btn" (click)="gotoDate()">Ugrás</button>
+        </div>
+        <button class="today-btn" (click)="goToToday()">Mai nap</button>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="today-date">
+      <div class="event-day">{{ eventDayName }}</div>
+      <div class="event-date">{{ eventDateString }}</div>
+    </div>
+    <div class="events" [class.displayNoEvents]="addEventActive">
+      <div *ngFor="let event of displayedEvents" class="event" (click)="deleteEvent(event)">
+        <div class="title">
+          <i class="fas fa-circle"></i>
+          <h3 class="event-title">{{ event.title }}</h3>
+        </div>
+        <div class="event-time">
+          <span class="event-time">{{ event.time }}</span>
+        </div>
+      </div>
+      <div *ngIf="showNoEvent" class="no-event">
+        <h3>Nincs ma edzés</h3>
+      </div>
+    </div>
+    <div class="add-event-wrapper" [class.active]="addEventActive">
+      <div class="add-event-header">
+        <div class="title">Add Event</div>
+        <i class="fas fa-times close" (click)="closeAddEvent()"></i>
+      </div>
+      <div class="add-event-body">
+        <div class="add-event-input">
+          <input
+            type="text"
+            placeholder="Event Name"
+            class="event-name"
+            [(ngModel)]="eventName"
+            (input)="onEventNameInput()"
+          />
+        </div>
+        <div class="add-event-input">
+          <input
+            type="text"
+            placeholder="Event Time From"
+            class="event-time-from"
+            [(ngModel)]="eventTimeFrom"
+            (input)="onEventTimeFromInput()"
+          />
+        </div>
+        <div class="add-event-input">
+          <input
+            type="text"
+            placeholder="Event Time To"
+            class="event-time-to"
+            [(ngModel)]="eventTimeTo"
+            (input)="onEventTimeToInput()"
+          />
+        </div>
+      </div>
+      <div class="add-event-footer">
+        <button class="add-event-btn" (click)="addEvent()">Add Event</button>
+      </div>
+    </div>
+  </div>
+  <button class="add-event" (click)="toggleAddEvent()">
+    <i class="fas fa-plus"></i>
+  </button>
+</div>
