@@ -31,8 +31,8 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public String SendPasswordResetEmail(String toEmail) {
-        System.out.println(toEmail);
+    public void SendPasswordResetEmail(String toEmail) {
+
         String token = userService.sendToken(toEmail);
 
         SimpleMailMessage message = new SimpleMailMessage();
@@ -43,7 +43,20 @@ public class EmailService {
 
         mailSender.send(message);
 
-        return "A megadott emailcímre a kód elküldve";
+    }
+
+    public void SendDeleteReservation(String toEmail) {
+
+        String token = userService.sendToken(toEmail);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Jelszó megváltoztatás - ForeverGym");
+        message.setText("Írd be a kódot" +
+                "a kód: " + token);
+
+        mailSender.send(message);
+
     }
 
     public String SendForm(ContactFormController.FormInfo form) {
@@ -59,14 +72,14 @@ public class EmailService {
         if (form.getFirstName() == null || form.getLastName() == null) {
             throw new RuntimeException("Nem lehet üres a név");
         }
-        SimpleMailMessage message = getSimpleMailMessage(form);
+        SimpleMailMessage message = MailMessage(form);
 
         mailSender.send(message);
 
         return "Sikeres Küldés";
     }
 
-    private static SimpleMailMessage getSimpleMailMessage(ContactFormController.FormInfo form) {
+    private static SimpleMailMessage MailMessage(ContactFormController.FormInfo form) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo("schzsombor@gmail.com");
         message.setSubject("ÚJ KAPCSOLATFELVÉTEL: " + form.getFirstName() + " " + form.getLastName());

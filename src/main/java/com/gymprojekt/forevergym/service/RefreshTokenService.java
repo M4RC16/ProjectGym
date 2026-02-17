@@ -38,12 +38,11 @@ public class RefreshTokenService {
                 .orElseThrow(() -> new InvalidTokenException("Refresh token nem található"));
     }
 
-    public RefreshToken verifyExpiration(RefreshToken token) {
+    public void verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(token);
             throw new TokenExpiredException("A refresh token lejárt. Jelentkezz be újra!");
         }
-        return token;
     }
 
     public List<RefreshToken> findAllByUser(User user){
@@ -59,4 +58,11 @@ public class RefreshTokenService {
     public void deleteById(Integer token){
         refreshTokenRepository.deleteById((long) token);
     }
+
+    public User getUserByToken(String refreshToken) {
+
+        return refreshTokenRepository.findUserByToken(refreshToken);
+
+    }
+
 }

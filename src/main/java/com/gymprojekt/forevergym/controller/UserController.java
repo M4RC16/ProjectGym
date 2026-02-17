@@ -7,6 +7,8 @@ import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.service.AuthService;
 import com.gymprojekt.forevergym.service.EmailService;
 import com.gymprojekt.forevergym.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
@@ -39,8 +41,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse httpResponse) {
         LoginResponse response = authService.login(loginRequest);
+
+        Cookie refreshTokenCookie = new Cookie("refreshToken", response.getRefreshToken());
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(false); // ha deploy akkor true
+        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 30);
+        refreshTokenCookie.setPath("/");
+
+        httpResponse.addCookie(refreshTokenCookie);
+
+        System.out.println(response.getRefreshToken());
+
+        response.setRefreshToken(null);
+
         return ResponseEntity.ok(response);
     }
 
@@ -102,16 +117,10 @@ public class UserController {
     public static class LoginResponse {
         private String accessToken;
         private String refreshToken;
-        private int Id;
-        private Role Role;
 
-        public LoginResponse() {};
-
-        public LoginResponse(String accessToken, String refreshToken, int Id, Role Role) {
+        public LoginResponse(String accessToken, String refreshToken) {
             this.accessToken = accessToken;
             this.refreshToken = refreshToken;
-            this.Id = Id;
-            this.Role = Role;
         }
 
     }

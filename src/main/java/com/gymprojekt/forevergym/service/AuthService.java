@@ -49,8 +49,6 @@ public class AuthService {
 
         return new UserController.LoginResponse(
                 accessToken,
-                refreshToken.getToken(),
-                user.getId(),
-                user.getRole());
+                refreshToken.getToken());
     }
 }

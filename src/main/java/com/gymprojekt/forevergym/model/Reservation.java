@@ -1,9 +1,13 @@
 package com.gymprojekt.forevergym.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "reservation")
 public class Reservation {
@@ -13,33 +17,9 @@ public class Reservation {
     private Integer id;
 
     @Column(name = "scheduled_at", nullable = false)
-    private Instant scheduledAt;
+    private LocalDateTime scheduledAt;
 
     @Column(name = "reservation_date", nullable = false)
-    private Instant reservationDate;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Instant getScheduledAt() {
-        return scheduledAt;
-    }
-
-    public void setScheduledAt(Instant scheduledAt) {
-        this.scheduledAt = scheduledAt;
-    }
-
-    public Instant getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(Instant reservationDate) {
-        this.reservationDate = reservationDate;
-    }
+    private LocalDateTime reservationDate;
 
 }

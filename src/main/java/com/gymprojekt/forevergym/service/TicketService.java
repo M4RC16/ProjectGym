@@ -36,12 +36,16 @@ public class TicketService {
 
     public String addTicket(Ticket ticket){
 
-        if (ticket.getPrice() == null) {
+         if (ticket.getTicketName() == null || ticket.getTicketName().trim().isEmpty()) {
+            throw new IllegalArgumentException("A jegy neve kötelező!");
+        }
+
+        if (ticket.getPrice() == null || ticket.getPrice() <= 0) {
             throw new IllegalArgumentException("A jegy ára kötelező!");
         }
 
         if(ticketRepository.findByTicketName(ticket.getTicketName()).isPresent()){
-            throw new AlreadyExistsException("Van már ilyen nevű jegynév");
+            throw new AlreadyExistsException("Van már ilyen nevű jegy");
         }
 
         ticketRepository.save(ticket);
