@@ -12,6 +12,15 @@ export interface Trainer {
   imageUrl: string;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  role: {
+    id: number;
+    name: string;
+  };
+}
+
 export interface loginData {
   email: string;
   password: string;
@@ -20,12 +29,8 @@ export interface loginData {
 
 export interface loginResponse {
   JWTtoken: string;
-  refreshToken: string;
-  userId: number;
-  role: {
-    id: number;
-    name: string;
-  };
+  email: string;
+  message: string;
 }
 
 export interface registerData{

@@ -6,7 +6,7 @@
   margin: 15rem auto;
   border-radius: 4rem;
   min-height: 50rem;      
-  background-color: black;
+  background-color: #343A40;
   padding: 0;
 }
 
@@ -28,7 +28,7 @@
   min-height: 0;          
   border-radius: 3.9rem;
   overflow-x: hidden;
-  background-color: white;
+  background-color: transparent;
 }
 
 

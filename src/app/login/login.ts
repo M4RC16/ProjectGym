@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { RequestsService } from '../services/requests.service';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +10,8 @@ import { RequestsService } from '../services/requests.service';
   styleUrl: './login.css',
 })
 export class Login {
-  private requestsService = inject(RequestsService);
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
   password = signal('');
   email = signal('');
@@ -39,7 +40,7 @@ export class Login {
   onLogin() {
     console.log('Logging in with', this.email(), this.password());
 
-    this.requestsService
+    this.auth
       .login({
         email: this.email(),
         password: this.password(),
@@ -47,18 +48,11 @@ export class Login {
       })
       .subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
-          localStorage.setItem('JWTtoken', response.JWTtoken);
-          localStorage.setItem('refreshToken', response.refreshToken);
-          localStorage.setItem('userId', response.userId.toString());
-          localStorage.setItem('roleName', JSON.stringify(response.role.name));
+          this.router.navigate(['/profil/' + "admin"/* this.auth.getCurrentUser()?.role.name.toLowerCase() */]);
         },
         error: (error) => {
           console.error('Login failed:', error);
         },
       });
-
-    console.log('Browser Info:', this.detectBrowser());
-    console.log('Operating System:', this.detectOS());
   }
 }

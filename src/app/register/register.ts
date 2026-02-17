@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
 import { RequestsService } from '../services/requests.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,32 +11,53 @@ import { RequestsService } from '../services/requests.service';
   styleUrl: './register.css',
 })
 export class Register {
-
-  private requestsService = inject(RequestsService);
+  private auth = inject(AuthService);
   email = signal('');
   password = signal('');
   confirmPassword = signal('');
-  emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-  passwordRegex = "^(?=.[0-9])(?=.[!@#$%^&*]).{8,}$";
+  emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+
+  emailError = signal('');
+  passwordError = signal('');
+  confirmPasswordError = signal('');
 
   onRegister() {
-/* 
-    if (this.emailRegex.match(this.email())) {
-      console.log('Registering with', this.email(), this.password(), this.confirmPassword());
-    }else {
-      console.error('Invalid email format');
-    } */
+    this.emailError.set('');
+    this.passwordError.set('');
+    this.confirmPasswordError.set('');
 
-  this.requestsService.register({email: this.email(), password: this.password(), /* passwordConfirmation: this.confirmPassword() */}).subscribe({
-      next: (response) => {
-        console.log('Registration successful:', response);
-      },
-      error: (error) => {
-        console.error('Registration failed:', error);
-      }
-    });
+    let hasError = false;
 
-    
+    if (!this.emailRegex.test(this.email())) {
+      this.emailError.set('Érvénytelen email formátum');
+      hasError = true;
+    }
+
+    if (!this.passwordRegex.test(this.password())) {
+      this.passwordError.set('A jelszónak legalább 8 karakter hosszúnak kell lennie, és tartalmaznia kell egy számot és egy speciális karaktert');
+      hasError = true;
+    }
+
+    if (this.password() !== this.confirmPassword()) {
+      this.confirmPasswordError.set('A két jelszó nem egyezik');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    this.auth
+      .register({
+        email: this.email(),
+        password: this.password(),
+      })
+      .subscribe({
+        next: (response) => {
+          console.log('Registration successful:', response);
+        },
+        error: (error) => {
+          console.error('Registration failed:', error);
+        },
+      });
   }
-
 }

@@ -21,6 +21,9 @@
             class="register-input"
             required
           />
+          @if (emailError()) {
+            <p class="error-message">{{ emailError() }}</p>
+          }
 
           <input
           placeholder="Jelszó"
@@ -31,16 +34,22 @@
             class="register-input"
             required
           />
+          @if (passwordError()) {
+            <p class="error-message">{{ passwordError() }}</p>
+          }
 
           <input
           placeholder="Jelszó újra"
             [(ngModel)]="confirmPassword"
             type="password"
-            id="password"
-            name="password"
+            id="confirmPassword"
+            name="confirmPassword"
             class="register-input"
             required
           />
+          @if (confirmPasswordError()) {
+            <p class="error-message">{{ confirmPasswordError() }}</p>
+          }
 
           <button type="submit" class="register-btn">Regisztráció</button>
           <a class="other-bt" routerLink="/login">Van már fiókod?</a>

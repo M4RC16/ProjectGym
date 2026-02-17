@@ -10,12 +10,11 @@
 
         <h2 class="login-title">Bejelentkezés</h2>
         <p class="login-sub">Jelentkezz be fiókodba</p>
-
         <form (ngSubmit)="onLogin()">
           <input
           placeholder="Email"
             [(ngModel)]="email"
-            type="text"
+            type="email"
             id="username"
             name="username"
             class="login-input"
