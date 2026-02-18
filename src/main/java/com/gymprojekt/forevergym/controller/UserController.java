@@ -9,7 +9,9 @@ import com.gymprojekt.forevergym.service.EmailService;
 import com.gymprojekt.forevergym.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,13 +79,23 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Sikeres aktiválás"));
     }
 
+    @GetMapping("requests/getAllTrainer")
+    public ResponseEntity<List<Trainers>> getAllTrainer(){
+        return ResponseEntity.ok(service.getAllTrainer());
+    }
+
+    @GetMapping("/requests/userById/{id}")
+    public ResponseEntity<UserProjection> getUserById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getUserById(id));
+    }
+
     @GetMapping("/requests/getAllUser")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserProjection>> getAllUserForAdmin() {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
-    @PostMapping("/change/Role")
+    @PostMapping("/change/role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> changeRole(@RequestBody changeUserRole changeUser) {
         service.changeUserRole(changeUser);
@@ -155,6 +167,15 @@ public class UserController {
             this.id = id;
             this.roleId = roleId;
         }
+    }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Trainers {
+        private int trainerId;
+        private String trainerName;
     }
 
 }

@@ -5,6 +5,7 @@ import com.gymprojekt.forevergym.model.RefreshToken;
 import com.gymprojekt.forevergym.model.ReservationXUser;
 import com.gymprojekt.forevergym.model.User;
 import com.gymprojekt.forevergym.repository.RefreshTokenRepository;
+import com.gymprojekt.forevergym.repository.ReservationRepository;
 import com.gymprojekt.forevergym.repository.ReservationXUserRepository;
 import com.gymprojekt.forevergym.repository.UserRepository;
 import lombok.Getter;
@@ -20,13 +21,21 @@ import java.util.stream.Collectors;
 public class ReservationService {
 
     private final ReservationXUserRepository reservationXUserRepository;
+    private final ReservationRepository reservationRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    public ReservationService(ReservationXUserRepository reservationXUserRepository, RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, UserRepository userRepository1) {
+    public ReservationService(ReservationXUserRepository reservationXUserRepository,
+                              ReservationRepository reservationRepository,
+                              RefreshTokenRepository refreshTokenRepository,
+                              UserRepository userRepository,
+                              EmailService emailService) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.reservationXUserRepository = reservationXUserRepository;
+        this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     public List<TrainingResponse> getMyTrainings(String refreshToken) {
@@ -50,18 +59,24 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteReservation(TrainingResponse reservation) {
+    public void deleteReservation(int reservationXUserId, int reservationId, int trainerId) {
 
-        int reservationId = reservation.getReservationId();
-        int trainerId = reservation.getTrainerId();
+        ReservationXUser reservationXUser = reservationXUserRepository.findById((long) reservationXUserId)
+                .orElseThrow(() -> new NotFoundException("Nincs ilyen foglalás: " + reservationXUserId));
+
+        LocalDateTime scheduledAt = reservationXUser.getReservation().getScheduledAt();
 
         User trainer = userRepository.findById(trainerId)
                 .orElseThrow(() -> new NotFoundException("Nincs ilyen edző: " + trainerId));
-        reservationXUserRepository.findById((long) reservationId)
-                        .orElseThrow(() -> new NotFoundException("Nincs ilyen foglalás: " + reservationId));
-        reservationXUserRepository.deleteById((long) reservationId);
 
         String trainerEmail = trainer.getEmail();
+        emailService.SendDeleteReservation(trainerEmail, scheduledAt);
+
+        reservationXUserRepository.deleteById((long) reservationXUserId);
+        reservationRepository.deleteById(reservationId);
+    }
+
+    public void newReservation(String token, int trainerId) {
 
     }
 
@@ -75,7 +90,7 @@ public class ReservationService {
         private Integer trainerId;
 
         public TrainingResponse(Integer reservationXUserId, Integer reservationId,
-                                  LocalDateTime scheduledAt, String trainerName, Integer trainerId) {
+                                LocalDateTime scheduledAt, String trainerName, Integer trainerId) {
             this.reservationXUserId = reservationXUserId;
             this.reservationId = reservationId;
             this.scheduledAt = scheduledAt;

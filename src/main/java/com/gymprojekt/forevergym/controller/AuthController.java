@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,16 +29,15 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest request) {
-        String requestRefreshToken = request.getRefreshToken();
+    public ResponseEntity<TokenRefreshResponse> refreshToken(@CookieValue(value = "refreshToken") String refreshToken) {
 
-        RefreshToken refreshToken = refreshTokenService.findByToken(requestRefreshToken);
-        refreshTokenService.verifyExpiration(refreshToken);
+        RefreshToken token = refreshTokenService.findByToken(refreshToken);
+        refreshTokenService.verifyExpiration(token);
 
-        User user = refreshToken.getUser();
+        User user = token.getUser();
         String accessToken = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(new TokenRefreshResponse(accessToken, requestRefreshToken, "Access token frissítve"));
+        return ResponseEntity.ok(new TokenRefreshResponse(accessToken, refreshToken, "Access token frissítve"));
     }
 
     @PostMapping("/logout")

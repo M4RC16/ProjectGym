@@ -1,5 +1,6 @@
 package com.gymprojekt.forevergym.service;
 
+import com.gymprojekt.forevergym.TrainerProjection;
 import com.gymprojekt.forevergym.UserProjection;
 import com.gymprojekt.forevergym.controller.UserController;
 import com.gymprojekt.forevergym.exception.NotValidException;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -161,4 +163,25 @@ public class UserService {
         userRepository.deleteByEmail(email);
     }
 
+    public List<UserController.Trainers> getAllTrainer() {
+
+        List<TrainerProjection> projections = userRepository.findAllTrainers();
+
+        return projections.stream()
+                .map(projection -> new UserController.Trainers(
+                        projection.getTrainerId(),
+                        projection.getTrainerName()
+                ))
+                .collect(Collectors.toList());
+
+    }
+
+    public UserProjection getUserById(int id) {
+        UserProjection user = userRepository.findUserById(id);
+        if (user == null) {
+            throw new NotFoundException("Felhasználó nem található ID: " + id);
+        }
+
+        return user;
+    }
 }

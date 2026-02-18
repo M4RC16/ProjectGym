@@ -5,6 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class EmailService {
 
@@ -45,15 +47,14 @@ public class EmailService {
 
     }
 
-    public void SendDeleteReservation(String toEmail) {
-
-        String token = userService.sendToken(toEmail);
+    public void SendDeleteReservation(String toEmail, LocalDateTime scheduledAt) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setSubject("Jelszó megváltoztatás - ForeverGym");
-        message.setText("Írd be a kódot" +
-                "a kód: " + token);
+        message.setSubject("Lemondott óra - ForeverGym");
+        message.setText("Egy ügyfél lemondta az órát.\n\n" +
+                "Időpont: " + scheduledAt + "\n\n" +
+                "Üdvözlettel,\nAutómata üzenetküldő");
 
         mailSender.send(message);
 

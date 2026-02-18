@@ -1,8 +1,10 @@
 package com.gymprojekt.forevergym.repository;
 
+import com.gymprojekt.forevergym.TrainerProjection;
 import com.gymprojekt.forevergym.UserProjection;
 import com.gymprojekt.forevergym.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<UserProjection> findAllProjectedBy();
+
+    UserProjection findUserById(int id);
 
     // Milyen típusu a visszaérkező adat | milyen típusu a lekérdezés | elválasztó | hol keresse | mit keressen
 
@@ -38,5 +42,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     void deleteByEmail(String email);
 
-    User getUserById(int id);
+    @Query("SELECT u.id as trainerId, CONCAT( u.firstName, ' ', u.lastName) as trainerName FROM User u WHERE u.role.id = 2")
+    List<TrainerProjection> findAllTrainers();
 }

@@ -32,6 +32,7 @@ public class TicketController {
         ticketService.deleteTicket(id);
         return ResponseEntity.ok("Ticket törölve");
     }
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public String addTicket(@RequestBody Ticket ticket) {
