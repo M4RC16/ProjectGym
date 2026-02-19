@@ -7,21 +7,24 @@
         <i class="fas fa-chevron-right next" (click)="nextMonth()"></i>
       </div>
       <div class="weekdays">
-        <div *ngFor="let wd of weekdaysShort">{{ wd }}</div>
+        @for (wd of weekdaysShort; track wd) {
+          <div>{{ wd }}</div>
+        }
       </div>
       <div class="days">
-        <div
-          *ngFor="let dayObj of days"
-          class="day"
-          [class.prev-date]="dayObj.type === 'prev-date'"
-          [class.next-date]="dayObj.type === 'next-date'"
-          [class.today]="dayObj.isToday"
-          [class.active]="dayObj.isActive"
-          [class.event]="dayObj.hasEvent"
-          (click)="onDayClick(dayObj)"
-        >
-          {{ dayObj.day }}
-        </div>
+        @for (dayObj of days; track dayObj.day + '-' + dayObj.type) {
+          <div
+            class="day"
+            [class.prev-date]="dayObj.type === 'prev-date'"
+            [class.next-date]="dayObj.type === 'next-date'"
+            [class.today]="dayObj.isToday"
+            [class.active]="dayObj.isActive"
+            [class.event]="dayObj.hasEvent"
+            (click)="onDayClick(dayObj)"
+          >
+            {{ dayObj.day }}
+          </div>
+        }
       </div>
       <div class="goto-today">
 <!--         <div class="goto">
@@ -44,59 +47,75 @@
       <div class="event-date">{{ eventDateString }}</div>
     </div>
     <div class="events" [class.displayNoEvents]="addEventActive">
-      <div *ngFor="let event of displayedEvents" class="event" (click)="deleteEvent(event)">
-        <div class="title">
-          <i class="fas fa-circle"></i>
-          <h3 class="event-title">{{ event.title }}</h3>
+      @for (event of displayedEvents; track event.title) {
+        <div class="event" (click)="deleteEvent(event)">
+          <div class="title">
+            <i class="fas fa-circle"></i>
+            <h3 class="event-title">{{ event.title }}</h3>
+          </div>
+          <div class="event-time">
+            <span class="event-time">{{ event.time }}</span>
+          </div>
         </div>
-        <div class="event-time">
-          <span class="event-time">{{ event.time }}</span>
+      }
+      @if (showNoEvent) {
+        <div class="no-event">
+          <h3>Nincs ma edzés</h3>
         </div>
-      </div>
-      <div *ngIf="showNoEvent" class="no-event">
-        <h3>Nincs ma edzés</h3>
-      </div>
+      }
     </div>
     <div class="add-event-wrapper" [class.active]="addEventActive">
       <div class="add-event-header">
-        <div class="title">Add Event</div>
+        <div class="title">Foglalás</div>
         <i class="fas fa-times close" (click)="closeAddEvent()"></i>
       </div>
       <div class="add-event-body">
         <div class="add-event-input">
-          <input
-            type="text"
-            placeholder="Event Name"
-            class="event-name"
-            [(ngModel)]="eventName"
-            (input)="onEventNameInput()"
-          />
+          <select class="trainer-select" [(ngModel)]="selectedTrainerId" (change)="onTrainerSelect()">
+            <option value="" disabled>Válassz edzőt</option>
+            @for (trainer of trainers; track trainer.id) {
+              <option [value]="trainer.id">{{ trainer.name }}</option>
+            }
+          </select>
         </div>
-        <div class="add-event-input">
-          <input
-            type="text"
-            placeholder="Event Time From"
-            class="event-time-from"
-            [(ngModel)]="eventTimeFrom"
-            (input)="onEventTimeFromInput()"
-          />
-        </div>
-        <div class="add-event-input">
-          <input
-            type="text"
-            placeholder="Event Time To"
-            class="event-time-to"
-            [(ngModel)]="eventTimeTo"
-            (input)="onEventTimeToInput()"
-          />
-        </div>
+
+        @if (timeSlots.length > 0) {
+          <div class="time-slots">
+            <label>Válassz időpontot:</label>
+            <div class="time-slot-list">
+              @for (slot of timeSlots; track slot.id) {
+                <label
+                  class="time-slot-item"
+                  [class.disabled]="!slot.available"
+                >
+                  <input
+                    type="radio"
+                    name="timeSlot"
+                    [value]="slot.id"
+                    [(ngModel)]="selectedTimeSlotId"
+                    [disabled]="!slot.available"
+                  />
+                  <span class="time-slot-label">{{ slot.time }}</span>
+                </label>
+              }
+            </div>
+          </div>
+        }
+
+        @if (loadingSlots) {
+          <div class="loading-slots">
+            <i class="fas fa-spinner fa-spin"></i> Időpontok betöltése...
+          </div>
+        }
       </div>
       <div class="add-event-footer">
-        <button class="add-event-btn" (click)="addEvent()">Add Event</button>
+        <button class="add-event-btn" (click)="addBooking()" [disabled]="!selectedTrainerId || !selectedTimeSlotId">Foglalás</button>
       </div>
     </div>
   </div>
-  <button class="add-event" (click)="toggleAddEvent()">
-    <i class="fas fa-plus"></i>
-  </button>
+  @if (currentUser()?.role?.[0]?.roleName !== 'TRAINER') {
+    <button class="add-event" (click)="toggleAddEvent()">
+      <i class="fas fa-plus"></i>
+    </button>
+  }
 </div>

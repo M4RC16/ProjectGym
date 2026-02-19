@@ -9,6 +9,9 @@ import { ContactUs } from './contact-us/contact-us';
 import { Trainers } from './trainers/trainers';
 import { Profil } from './profil/profil';
 import { Calendar } from './profil/calendar/calendar';
+import { Dashboard } from './profil/dashboard/dashboard';
+import { authGuard } from './guards/auth-guard';
+import { roleGuard } from './guards/role-guard';
 
 export const routes: Routes = [
   {
@@ -42,10 +45,25 @@ export const routes: Routes = [
   {
     path: 'profil',
     component: Profil,
+/*  */
     children: [
       {
-        path: 'admin',
+        path: 'user',
         component: Calendar,
+        data: { role: 3 },
+        canActivate: [roleGuard],
+      },
+      {
+        path: 'trainer',
+        component: Calendar,
+        data: { role: 2 },
+        canActivate: [roleGuard],
+      },
+      {
+        path: 'admin',
+        component: Dashboard,
+        data: { role: 1 },
+        canActivate: [roleGuard],
       },
     ],
   },

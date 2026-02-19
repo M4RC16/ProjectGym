@@ -12,13 +12,21 @@ export interface Trainer {
   imageUrl: string;
 }
 
+export interface Role {
+  id: number;
+  roleName: string;
+}
+
 export interface User {
   id: number;
-  name: string;
-  role: {
-    id: number;
-    name: string;
-  };
+  role: Role[] | null;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string | null;
+  validUntil: string | null;
+  hourlyWage: number | null;
+
 }
 
 export interface loginData {
@@ -28,9 +36,8 @@ export interface loginData {
 }
 
 export interface loginResponse {
-  JWTtoken: string;
-  email: string;
-  message: string;
+  accessToken: string;
+
 }
 
 export interface registerData{
@@ -49,5 +56,22 @@ export interface EventDay {
   month: number;
   year: number;
   events: CalendarEvent[];
+}
+
+export interface TimeSlot {
+  id: number;
+  time: string;
+  available: boolean;
+}
+
+export interface BookingRequest {
+  trainerId: string;
+  trainerName: string;
+  timeSlotId: number;
+  date: string;
+}
+
+export interface AdminUser {
+
 }
 

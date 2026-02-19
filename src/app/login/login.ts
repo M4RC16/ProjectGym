@@ -48,7 +48,7 @@ export class Login {
       })
       .subscribe({
         next: (response) => {
-          this.router.navigate(['/profil/' + "admin"/* this.auth.getCurrentUser()?.role.name.toLowerCase() */]);
+          this.router.navigate(['/profil/' +  this.auth.getCurrentUser()?.role?.[0]?.roleName.toLowerCase() ]);
         },
         error: (error) => {
           console.error('Login failed:', error);

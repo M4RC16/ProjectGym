@@ -35,6 +35,87 @@
 
 .personal-info {
     color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.profile-avatar {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8E804, #c4c400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    i {
+        font-size: 2.4rem;
+        color: #343A40;
+    }
+}
+
+.profile-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 0 0.3rem 0;
+    color: #fff;
+}
+
+.profile-role {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(232, 232, 4, 0.15);
+    color: #E8E804;
+    padding: 0.2rem 0.8rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.2rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.6rem;
+    transition: background 0.2s;
+
+    i {
+        font-size: 0.95rem;
+        color: #E8E804;
+        width: 1.2rem;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    span {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.85);
+        overflow-wrap: break-word;
+        word-break: break-word;
+        min-width: 0;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
 }
 
 .controls {
@@ -73,4 +154,26 @@
 
 
     }
+}
+
+/* Admin szín felülírások */
+.side-bar.admin .profile-avatar {
+    background: linear-gradient(135deg, #e80404, #c40000);
+}
+
+.side-bar.admin .profile-role {
+    background: rgba(232, 4, 4, 0.15);
+    color: #e80404;
+}
+
+.side-bar.admin .detail-item i {
+    color: #e80404;
+}
+
+.side-bar.admin .controls li:hover {
+    color: #e80404;
+}
+
+.side-bar.admin .controls a:hover {
+    color: #e80404;
 }

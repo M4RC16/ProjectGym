@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarEvent, EventDay } from '../../models/models.model';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { CalendarEvent, EventDay, TimeSlot, Trainer } from '../../models/models.model';
 import { FormsModule } from '@angular/forms';
+import { RequestsService } from '../../services/requests.service';
+import { AuthService } from '../../services/auth.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-calendar',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './calendar.html',
   styleUrl: './calendar.css',
 })
 export class Calendar implements OnInit {
+  private requestsService = inject(RequestsService);
+  private auth = inject(AuthService);
+  currentUser = toSignal(this.auth.currentUser$);
+
   today = new Date();
   activeDay: number = 0;
   month: number = this.today.getMonth();
@@ -44,13 +50,18 @@ export class Calendar implements OnInit {
 
   dateInput: string = '';
   addEventActive: boolean = false;
-  eventName: string = '';
-  eventTimeFrom: string = '';
-  eventTimeTo: string = '';
+
+  // Booking
+  trainers: Trainer[] = [];
+  selectedTrainerId: string = '';
+  timeSlots: TimeSlot[] = [];
+  selectedTimeSlotId: number | null = null;
+  loadingSlots: boolean = false;
 
   ngOnInit() {
     this.getEvents();
     this.initCalendar();
+    this.loadTrainers();
   }
 
   initCalendar() {
@@ -171,7 +182,7 @@ export class Calendar implements OnInit {
     this.initCalendar();
   }
 
-  onDateInputChange() {
+/*   onDateInputChange() {
     this.dateInput = this.dateInput.replace(/[^0-9/]/g, '');
     if (this.dateInput.length === 2 && !this.dateInput.includes('/')) {
       this.dateInput += '/';
@@ -194,7 +205,7 @@ export class Calendar implements OnInit {
       }
     }
     alert('Invalid Date');
-  }
+  } */
 
   getActiveDay(date: number) {
     const day = new Date(this.year, this.month, date);
@@ -221,115 +232,93 @@ export class Calendar implements OnInit {
 
   closeAddEvent() {
     this.addEventActive = false;
+    this.resetBookingForm();
   }
 
-  onEventNameInput() {
-    if (this.eventName.length > 60) {
-      this.eventName = this.eventName.slice(0, 60);
-    }
+  loadTrainers() {
+    this.requestsService.getTrainers().subscribe({
+      next: (trainers) => this.trainers = trainers,
+      error: (err) => console.error('Edzők betöltése sikertelen:', err)
+    });
   }
 
-  onEventTimeFromInput() {
-    this.eventTimeFrom = this.eventTimeFrom.replace(/[^0-9:]/g, '');
-    if (this.eventTimeFrom.length === 2 && !this.eventTimeFrom.includes(':')) {
-      this.eventTimeFrom += ':';
-    }
-    if (this.eventTimeFrom.length > 5) {
-      this.eventTimeFrom = this.eventTimeFrom.slice(0, 5);
-    }
-  }
+  onTrainerSelect() {
+    this.selectedTimeSlotId = null;
+    this.timeSlots = [];
 
-  onEventTimeToInput() {
-    this.eventTimeTo = this.eventTimeTo.replace(/[^0-9:]/g, '');
-    if (this.eventTimeTo.length === 2 && !this.eventTimeTo.includes(':')) {
-      this.eventTimeTo += ':';
-    }
-    if (this.eventTimeTo.length > 5) {
-      this.eventTimeTo = this.eventTimeTo.slice(0, 5);
-    }
-  }
+    if (!this.selectedTrainerId) return;
 
-  addEvent() {
-    if (this.eventName === '' || this.eventTimeFrom === '' || this.eventTimeTo === '') {
-      alert('Please fill all the fields');
-      return;
-    }
+    const dateStr = `${this.year}-${String(this.month + 1).padStart(2, '0')}-${String(this.activeDay).padStart(2, '0')}`;
+    this.loadingSlots = true;
 
-    const timeFromArr = this.eventTimeFrom.split(':');
-    const timeToArr = this.eventTimeTo.split(':');
-    if (
-      timeFromArr.length !== 2 ||
-      timeToArr.length !== 2 ||
-      parseInt(timeFromArr[0]) > 23 ||
-      parseInt(timeFromArr[1]) > 59 ||
-      parseInt(timeToArr[0]) > 23 ||
-      parseInt(timeToArr[1]) > 59
-    ) {
-      alert('Invalid Time Format');
-      return;
-    }
-
-    const timeFrom = this.convertTime(this.eventTimeFrom);
-    const timeTo = this.convertTime(this.eventTimeTo);
-
-    let eventExist = false;
-    this.eventsArr.forEach((event) => {
-      if (
-        event.day === this.activeDay &&
-        event.month === this.month + 1 &&
-        event.year === this.year
-      ) {
-        event.events.forEach((e) => {
-          if (e.title === this.eventName) {
-            eventExist = true;
-          }
-        });
+    this.requestsService.getTrainerTimeSlots(this.selectedTrainerId, dateStr).subscribe({
+      next: (slots) => {
+        this.timeSlots = slots;
+        this.loadingSlots = false;
+      },
+      error: (err) => {
+        console.error('Időpontok betöltése sikertelen:', err);
+        this.loadingSlots = false;
       }
     });
+  }
 
-    if (eventExist) {
-      alert('Event already added');
-      return;
-    }
+  addBooking() {
+    if (!this.selectedTrainerId || !this.selectedTimeSlotId) return;
 
-    const newEvent: CalendarEvent = {
-      title: this.eventName,
-      time: timeFrom + ' - ' + timeTo,
-    };
+    const trainer = this.trainers.find(t => t.id === this.selectedTrainerId);
+    if (!trainer) return;
 
-    let eventAdded = false;
-    if (this.eventsArr.length > 0) {
-      this.eventsArr.forEach((item) => {
-        if (
-          item.day === this.activeDay &&
-          item.month === this.month + 1 &&
-          item.year === this.year
-        ) {
-          item.events.push(newEvent);
-          eventAdded = true;
+    const dateStr = `${this.year}-${String(this.month + 1).padStart(2, '0')}-${String(this.activeDay).padStart(2, '0')}`;
+    const selectedSlot = this.timeSlots.find(s => s.id === this.selectedTimeSlotId);
+
+    this.requestsService.createBooking({
+      trainerId: trainer.id,
+      trainerName: trainer.name,
+      timeSlotId: this.selectedTimeSlotId,
+      date: dateStr
+    }).subscribe({
+      next: () => {
+        // Event hozzáadása a naptárhoz
+        const newEvent: CalendarEvent = {
+          title: trainer.name,
+          time: selectedSlot ? selectedSlot.time : ''
+        };
+
+        let eventAdded = false;
+        this.eventsArr.forEach(item => {
+          if (item.day === this.activeDay && item.month === this.month + 1 && item.year === this.year) {
+            item.events.push(newEvent);
+            eventAdded = true;
+          }
+        });
+
+        if (!eventAdded) {
+          this.eventsArr.push({
+            day: this.activeDay,
+            month: this.month + 1,
+            year: this.year,
+            events: [newEvent]
+          });
         }
-      });
-    }
 
-    if (!eventAdded) {
-      this.eventsArr.push({
-        day: this.activeDay,
-        month: this.month + 1,
-        year: this.year,
-        events: [newEvent],
-      });
-    }
+        const activeDayObj = this.days.find(d => d.isActive);
+        if (activeDayObj) activeDayObj.hasEvent = true;
 
-    this.addEventActive = false;
-    this.eventName = '';
-    this.eventTimeFrom = '';
-    this.eventTimeTo = '';
-    this.updateEvents(this.activeDay);
+        this.updateEvents(this.activeDay);
+        this.closeAddEvent();
+      },
+      error: (err) => {
+        console.error('Foglalás sikertelen:', err);
+        alert('Foglalás sikertelen!');
+      }
+    });
+  }
 
-    const activeDayObj = this.days.find((d) => d.isActive);
-    if (activeDayObj && !activeDayObj.hasEvent) {
-      activeDayObj.hasEvent = true;
-    }
+  resetBookingForm() {
+    this.selectedTrainerId = '';
+    this.selectedTimeSlotId = null;
+    this.timeSlots = [];
   }
 
   deleteEvent(event: CalendarEvent) {
@@ -371,10 +360,8 @@ export class Calendar implements OnInit {
 
   convertTime(time: string): string {
     const timeArr = time.split(':');
-    let timeHour = parseInt(timeArr[0]);
+    const timeHour = timeArr[0].padStart(2, '0');
     const timeMin = timeArr[1];
-    const timeFormat = timeHour >= 12 ? 'PM' : 'AM';
-    timeHour = timeHour % 12 || 12;
-    return timeHour + ':' + timeMin + ' ' + timeFormat;
+    return timeHour + ':' + timeMin;
   }
 }

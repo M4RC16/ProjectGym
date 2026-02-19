@@ -3,7 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { loginData, loginResponse, registerData, User } from '../models/models.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { RequestsService } from './requests.service';
+import { environment } from '../../environments/environment';
+
+interface AppJwtPayload extends JwtPayload {
+  userId: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +17,9 @@ import { jwtDecode } from 'jwt-decode';
 export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
+  private userService = inject(RequestsService);
 
-  private readonly baseUrl = 'http://localhost:8080';
+  private readonly baseUrl = environment.apiUrl;
   private JWTtoken: string | null = null;
   private refreshTimeout: any;
 
@@ -35,7 +42,7 @@ export class AuthService {
   // Login
   login(data: loginData): Observable<loginResponse> {
     return this.httpClient
-      .post<loginResponse>(this.baseUrl + '/login', data, { withCredentials: true })
+      .post<loginResponse>(this.baseUrl + '/api/user/login', data, { withCredentials: true })
       .pipe(
         tap((response) => this.handleLoginResponse(response)),
         catchError((error) => {
@@ -47,24 +54,23 @@ export class AuthService {
 
   // Login response kezelése
   private handleLoginResponse(response: loginResponse): void {
-    this.JWTtoken = response.JWTtoken;
+    this.JWTtoken = response.accessToken;
 
-/*     const decodedToken = jwtDecode(this.JWTtoken); */
+    const decodedToken = jwtDecode<AppJwtPayload>(this.JWTtoken);
 
-    const user: User = {
-      id: 1,
-      name: 'asdasd',
-      role: {
-        id: 1,
-        name: 'USER',
+    this.userService.getUserById(decodedToken.userId).subscribe({
+      next: (user) => {
+        this.currentUserSubject.next(user);
+        console.log('✅ Auth success:', user.firstName, user.role?.[0]?.roleName);
+        this.scheduleTokenRefresh(1000);
       },
-    };
+      error: (err) => {
+        console.error('❌ Failed to fetch user data after login', err);
+        this.clearAuthState();
+      }
+    });
 
-    this.currentUserSubject.next(user);
 
-    this.scheduleTokenRefresh(1000);
-
-    console.log('✅ Auth success:', user.name);
   }
 
   // Token frissítés ütemezése
@@ -90,7 +96,7 @@ export class AuthService {
   refreshTokens(): Observable<loginResponse> {
     return this.httpClient
       .post<loginResponse>(
-        this.baseUrl + '/refresh',
+        this.baseUrl + '/api/auth/refresh',
         {},
         {
           withCredentials: true,
@@ -123,7 +129,7 @@ export class AuthService {
   logout(): void {
     this.httpClient
       .post(
-        this.baseUrl + '/logout',
+        this.baseUrl + '/api/user/logout',
         {},
         {
           withCredentials: true,
@@ -137,7 +143,7 @@ export class AuthService {
   }
 
   // register
-    register(data: registerData) {
+  register(data: registerData) {
     return this.httpClient.post(this.baseUrl + '/register', data);
   }
 

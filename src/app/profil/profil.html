@@ -1,16 +1,36 @@
 <div class="profil-container container">
     
-  <div class="side-bar ">
+  <div class="side-bar" [class.admin]="currentUser()?.role?.[0]?.id === 1">
     <div class="personal-info">
-      <h2>User name</h2>
-      <h2>email</h2>
-      <h2>Tel</h2>
-      <h2>jegy</h2>
+      @if (currentUser(); as user) {
+        <div class="profile-avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <h2 class="profile-name">{{ (user.firstName || user.lastName) ? user.firstName+' '+user.lastName : (user.role?.[0]?.roleName ?? 'Ismeretlen')+' felhasználó' }}</h2>
+        <span class="profile-role">{{ user.role?.[0]?.roleName }}</span>
+
+        <div class="profile-details">
+          <div class="detail-item">
+            <i class="fa-solid fa-envelope"></i>
+            <span>{{ user.email }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>{{ user.phoneNumber }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="fa-solid fa-ticket"></i>
+            <span>{{ user.validUntil }} jegy</span>
+          </div>
+        </div>
+      } @else {
+        <h2 class="profile-name">Nincs bejelentkezve</h2>
+      }
     </div>
 
     <div class="controls">
       <ul>
-        <li><i class="fa-solid fa-right-from-bracket"></i><a href="#">Logout</a></li>
+        <li><a (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
       </ul>
     </div>
   </div>

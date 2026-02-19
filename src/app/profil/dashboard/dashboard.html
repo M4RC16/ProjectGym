@@ -1,0 +1,57 @@
+<div class="dashboard">
+  <h2 class="dashboard-title">Felhasználók kezelése</h2>
+
+  <div class="table-wrapper">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Név</th>
+          <th>Email</th>
+          <th>Telefon</th>
+          <th>Érvényesség</th>
+          <th>Órabér</th>
+          <th>Szerepkör</th>
+          <th>Műveletek</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track user.email) {
+          <tr>
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber ?? '–' }}</td>
+            <td>{{ user.validUntil ?? '–' }}</td>
+            <td>{{ user.hourlyWage ?? '–' }}</td>
+            <td>
+              <select
+                class="role-select"
+                [ngModel]="user.role?.[0]?.id ?? null"
+                (ngModelChange)="onRoleChange(user, $event)"
+              >
+                @if (user.role && user.role.length > 0) {
+                    <option [ngValue]="user.role[0].id" disabled>{{ user.role[0].roleName.toUpperCase() }}</option>
+                } @else {
+                    <option [ngValue]="null" disabled>Nincs</option>
+                }
+                @for (role of availableRoles; track role.id) {
+                  @if (user.role?.[0]?.id !== role.id) {
+                    <option [ngValue]="role.id">{{ role.roleName }}</option>
+                  }
+                }
+              </select>
+            </td>
+            <td>
+              <button class="delete-btn" (click)="deleteUser(user)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="empty-row">Nincsenek felhasználók</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
