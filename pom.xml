@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.gymprojekt</groupId>
-    <artifactId>forevergym</artifactId>
+    <artifactId>projectgym</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>forevergym</name>
     <description>forevergym</description>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <scope>annotationProcessor</scope>
+            <scope>true</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
