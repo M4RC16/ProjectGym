@@ -41,28 +41,19 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<ApiResponse> logout(@RequestBody LogoutRequest request) {
-        RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken());
+    public ResponseEntity<ApiResponse> logout(@CookieValue(value = "refreshToken") String request) {
+        RefreshToken refreshToken = refreshTokenService.findByToken(request);
         refreshTokenService.deleteById(refreshToken.getId());
 
         return ResponseEntity.ok(ApiResponse.success("Sikeres kijelentkezés"));
     }
 
     @PostMapping("/logout/all")
-    public ResponseEntity<ApiResponse> logoutAll(@RequestBody LogoutRequest request) {
-        RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken());
+    public ResponseEntity<ApiResponse> logoutAll(@CookieValue(value = "refreshToken") String request) {
+        RefreshToken refreshToken = refreshTokenService.findByToken(request);
         User user = refreshToken.getUser();
         refreshTokenService.deleteByUser(user);
         return ResponseEntity.ok(ApiResponse.success("Kijelentkeztél minden eszközről"));
-    }
-
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class TokenRefreshRequest {
-        private String refreshToken;
     }
 
     @Getter
@@ -71,13 +62,5 @@ public class AuthController {
         private String accessToken;
         private String refreshToken;
         private String message;
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class LogoutRequest {
-        private String refreshToken;
     }
 }
