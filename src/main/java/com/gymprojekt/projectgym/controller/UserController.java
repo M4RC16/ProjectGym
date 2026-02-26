@@ -108,6 +108,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("user/delete")
+    public ResponseEntity<ApiResponse> deleteMe(@CookieValue(value = "refreshToken") String request){
+        service.deleteMe(request);
+        return ResponseEntity.noContent().build();
+    }
+
     @Setter
     @Getter
     public static class LoginRequest {
@@ -125,14 +131,11 @@ public class UserController {
 
     @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class LoginResponse {
         private String accessToken;
         private String refreshToken;
-
-        public LoginResponse(String accessToken, String refreshToken) {
-            this.accessToken = accessToken;
-            this.refreshToken = refreshToken;
-        }
 
     }
 
@@ -144,28 +147,21 @@ public class UserController {
 
     @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class PasswordResetRequest {
         private String token;
         private String password1;
         private String password2;
-
-        public PasswordResetRequest(String token, String password1, String password2) {
-            this.token = token;
-            this.password1 = password1;
-            this.password2 = password2;
-        }
     }
 
     @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class changeUserRole {
         private int id;
         private Integer roleId;
-
-        public changeUserRole(int id, Integer roleId) {
-            this.id = id;
-            this.roleId = roleId;
-        }
     }
 
     @Setter
@@ -175,6 +171,9 @@ public class UserController {
     public static class Trainers {
         private int trainerId;
         private String trainerName;
+        private String profilePicture;
+        private String description;
+        private Integer hourlyRate;
     }
 
 }

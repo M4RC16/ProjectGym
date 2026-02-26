@@ -13,7 +13,13 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(org.springframework.web.servlet.config.annotation.CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://127.0.0.1:5500")
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "http://projectgym.hu",
+                                "https://projectgym.hu",
+                                "http://www.projectgym.hu",
+                                "https://www.projectgym.hu"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE, OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

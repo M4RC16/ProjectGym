@@ -1,7 +1,7 @@
 package com.gymprojekt.projectgym.service;
 
-import com.gymprojekt.projectgym.repository.TrainerProjection;
-import com.gymprojekt.projectgym.repository.UserProjection;
+import com.gymprojekt.projectgym.model.RefreshToken;
+import com.gymprojekt.projectgym.repository.*;
 import com.gymprojekt.projectgym.controller.UserController;
 import com.gymprojekt.projectgym.exception.NotValidException;
 import com.gymprojekt.projectgym.exception.NotFoundException;
@@ -9,8 +9,6 @@ import com.gymprojekt.projectgym.exception.BadRequestException;
 import com.gymprojekt.projectgym.exception.AlreadyExistsException;
 import com.gymprojekt.projectgym.model.Role;
 import com.gymprojekt.projectgym.model.User;
-import com.gymprojekt.projectgym.repository.UserRepository;
-import com.gymprojekt.projectgym.repository.RoleRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,13 +31,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final RoleRepository roleRepository;
+    private final RefreshTokenRepository refreshRep;
 
     @Lazy
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
+    public UserService(RefreshTokenRepository refreshRep, UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
         this.roleRepository = roleRepository;
+        this.refreshRep = refreshRep;
     }
 
     public void registerUser(User user) {
@@ -170,10 +170,21 @@ public class UserService {
         return projections.stream()
                 .map(projection -> new UserController.Trainers(
                         projection.getTrainerId(),
-                        projection.getTrainerName()
+                        projection.getTrainerName(),
+                        projection.getDescription(),
+                        projection.getProfilePicture(),
+                        projection.getHourlyWage()
                 ))
                 .collect(Collectors.toList());
+    }
 
+    public void deleteMe(String refreshToken){
+        RefreshToken token = refreshRep.findByToken(refreshToken)
+                .orElseThrow(() -> new RuntimeException("RefreshToken nem található"));
+
+        int userId = token.getUser().getId();
+
+        userRepository.deleteById(userId);
     }
 
     public UserProjection getUserById(int id) {
