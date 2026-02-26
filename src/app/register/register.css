@@ -87,3 +87,37 @@
 .register-btn:hover {
     opacity: 0.85;
 }
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: calc(50% - 7.5px);
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.success-content {
+    padding: 20px 0;
+}
+
+.success-message {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.login-link {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}

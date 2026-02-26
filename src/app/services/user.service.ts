@@ -1,0 +1,47 @@
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { User, UserFormData } from '../models/models.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+
+  private baseUrl = environment.apiUrl;
+  private httpClient = inject(HttpClient);
+
+  getAllUsers() {
+    return this.httpClient.get<User[]>(`${this.baseUrl}/api/user/requests/getAllUser`, {
+      withCredentials: true,
+    });
+  }
+
+  deleteUser(email: string) {
+    return this.httpClient.delete(`${this.baseUrl}/api/user/delete/${email}`, {
+      withCredentials: true,
+    });
+  }
+
+  updateUserRole(id: number, roleId: number) {
+    return this.httpClient.post(
+      this.baseUrl + `/api/user/change/role`,
+      { id, roleId },
+      { withCredentials: true },
+    );
+  }
+
+  getUserById(id: number) {
+    return this.httpClient.get<User>(`${this.baseUrl}/api/user/requests/userById/${id}`, {
+      withCredentials: true,
+    });
+  }
+
+  sendUserForm(data: UserFormData){
+    return this.httpClient.post(`${this.baseUrl}/api/form/ContactForm`, data, {
+      withCredentials: true,
+      responseType: 'text',
+    });
+  }
+  
+}

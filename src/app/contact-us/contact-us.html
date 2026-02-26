@@ -1,56 +1,76 @@
 <div class="contact-us container-fluid">
   <div class="hero">
     <div class="hero-body">
-      <div class="container-fluid text-center">
-        <h1 class="title">Kapcsolat</h1>
-        <h2 class="subtitle">Lépj kapcsolatba velünk!</h2>
+      <div class="container text-center">
+        <h2 class="contact-subtitle">Kapcsolat</h2>
+        <h1 class="contact-title">Lépj kapcsolatba velünk!</h1>
       </div>
     </div>
   </div>
-
-  <div class="row">
-    <div class="contacts col-6">
-      <div class="contact">
-        <div class="circle">
+  <div class="row g-4 g-lg-5 justify-content-center">
+    <div class="col-12 col-lg-5">
+      <div class="contact-item">
+        <div class="contact-circle">
           <i class="fa-solid fa-location-dot"></i>
         </div>
         <p>1234 Pécs, Fő utca 1.</p>
       </div>
-      <div class="contact">
-        <div class="circle">
+      <div class="contact-item">
+        <div class="contact-circle">
           <i class="fa-solid fa-phone"></i>
         </div>
         <p>+36 30 123 4567</p>
       </div>
-      <div class="contact">
-        <div class="circle">
+      <div class="contact-item">
+        <div class="contact-circle">
           <i class="fa-solid fa-envelope"></i>
         </div>
-        <p>info@példa.hu</p>
+        <p>info&#64;példa.hu</p>
       </div>
     </div>
-    <div class="col-6">
-      <div class="contact-form">
-        <form>
-          <h3>Adja meg az adatait</h3>
-          <label for="vezeteknev">Vezetéknév</label>
-          <input type="text" id="vezeteknev" name="vezeteknev" placeholder="Minta" />
-          <label for="keresztnev">Keresztnév</label>
-          <input type="text" id="keresztnev" name="keresztnev" placeholder="Pista" />
-          <label for="name">Email</label>
-          <input type="email" id="name" name="name" placeholder="mintapista@gmail.com" />
-          <label for="name">Telefonszám</label>
-          <input type="text" id="name" name="name" placeholder="06 70 678 8765" />
-          <label for="name">Üzenet</label>
-          <input type="text" id="name" name="name" placeholder="Üzenet" />
 
-          <button>Küldés</button>
+    <div class="col-12 col-lg-7 d-flex justify-content-center">
+      <div class="contact-form">
+        <form (ngSubmit)="sendForm()">
+          <h3>Adja meg az adatait</h3>
+
+          <label for="vezeteknev">Vezetéknév</label>
+          <input [(ngModel)]="formdata.lastName" type="text" id="vezeteknev" name="vezeteknev" placeholder="Minta" />
+          @if (lastNameError()) {
+            <p class="error-message">{{ lastNameError() }}</p>
+          }
+
+          <label for="keresztnev">Keresztnév</label>
+          <input [(ngModel)]="formdata.firstName" type="text" id="keresztnev" name="keresztnev" placeholder="Pista" />
+          @if (firstNameError()) {
+            <p class="error-message">{{ firstNameError() }}</p>
+          }
+
+          <label for="email">Email</label>
+          <input [(ngModel)]="formdata.emailAddress" type="email" id="email" name="email" placeholder="mintapista&#64;gmail.com" />
+          @if (emailError()) {
+            <p class="error-message">{{ emailError() }}</p>
+          }
+
+          <label for="telefon">Telefonszám</label>
+          <input [(ngModel)]="formdata.phoneNumber" type="text" id="telefon" name="telefon" placeholder="06 70 678 8765" />
+          @if (phoneError()) {
+            <p class="error-message">{{ phoneError() }}</p>
+          }
+
+          <label for="uzenet">Üzenet</label>
+          <input [(ngModel)]="formdata.message" type="text" id="uzenet" name="uzenet" placeholder="Üzenet" />
+          @if (messageError()) {
+            <p class="error-message">{{ messageError() }}</p>
+          }
+
+          <button class="contact-btn" type="submit">Küldés</button>
         </form>
       </div>
     </div>
   </div>
 
-  <div class="google-map-container container-fluid">
+  <div class="google-map-container">
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.522486486823!2d19.62223031567479!3d46.07273597911609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4743f6f7b8e4e5b5%3A0x400af0f6616f160!2zUGXDomVhLCBGw7xybyB1dGNhIDE!5e0!3m2!1shu!2shu!4v1696358765432!5m2!1shu!2shu"
       width="100%"

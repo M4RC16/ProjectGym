@@ -10,6 +10,7 @@ export interface Trainer {
   shortDescription: string;
   description: string;
   imageUrl: string;
+  hourlyWage: number;
 }
 
 export interface Role {
@@ -26,7 +27,14 @@ export interface User {
   phoneNumber: string | null;
   validUntil: string | null;
   hourlyWage: number | null;
+}
 
+export interface UserFormData {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+  phoneNumber: string;
+  message: string;
 }
 
 export interface loginData {
@@ -37,13 +45,15 @@ export interface loginData {
 
 export interface loginResponse {
   accessToken: string;
-
 }
 
-export interface registerData{
+export interface AppJwtPayload {
+  userId: number;
+}
+
+export interface registerData {
   email: string;
   password: string;
-/*   passwordConfirmation: string; */
 }
 
 export interface CalendarEvent {
@@ -71,7 +81,27 @@ export interface BookingRequest {
   date: string;
 }
 
-export interface AdminUser {
+export interface AdminUser {}
 
+
+
+
+
+
+
+/* reservation */
+
+export interface reservationCreateRequest {
+  trainerId: string;
+  date: string;
 }
 
+export interface allFreeTrainingsTodayRequest {
+  trainerId: string;
+  date: string;
+}
+
+export interface allFreeTrainingsTodayResponse {
+  scheduledAt: string;
+  free: boolean;
+}

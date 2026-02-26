@@ -1,57 +1,43 @@
-.container-fluid {
+/* (MOBIL, <576px)*/
+
+.footer-wrapper {
     background-image: url("../../assets/SVG/footer2.svg");
     background-color: gray;
-    padding: 3rem;
-/*     height: 800px; */
-    background-size:cover;
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     color: black;
     position: sticky;
     bottom: 0;
+    padding: 2rem 0.5rem;
 }
 
 .brand .logo {
-    max-width: 15rem;
-    margin: 1rem;
+    max-width: 8rem;
+    margin: 0.5rem;
 }
 
-.brand .slogen {
-    font-size: 3rem;
-    color: black;
-    margin-left: -40px;
-    margin-top: 2rem;
-    .slogen-first {
-        text-align: start;
-    }
-    .slogen-last {
-        text-align: end;
-        margin-right: -40px;
-    }
-
-    span {
-        display: block;
-    }
+.contact-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.4;
 }
 
-.contact {
-    padding-right: 8rem;
-}
-
-button {
+.contact-btn {
     font-weight: bold;
     border: none;
     border-radius: 10px;
     color: black;
     background-color: yellow;
-    padding: 10px 20px;
-    margin: 1rem 1rem;
+    padding: 8px 18px;
+    font-size: 0.9rem;
     box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
     -webkit-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
     -moz-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
     transition: 0.2s;
 }
 
-button:hover {
+.contact-btn:hover {
     background-color: rgb(37, 35, 35);
     color: yellow;
     cursor: pointer;
@@ -59,20 +45,35 @@ button:hover {
 }
 
 .icons {
-    font-size: 3rem;
+    font-size: 1.8rem;
     color: white;
+    transition: 0.2s;
+}
+
+.icons:hover {
+    transform: scale(1.15);
 }
 
 .footer-bottom {
-    margin-top: 7rem;
     padding-top: 1rem;
     color: white;
     font-weight: bold;
-    border-top:black 1px solid;
-    a {
-        text-decoration: none;
-        color: white;
-    }
+    border-top: black 1px solid;
+}
+
+.footer-bottom a {
+    text-decoration: none;
+    color: white;
+    transition: 0.2s;
+}
+
+.footer-bottom a:hover {
+    color: yellow;
+}
+
+.footer-bottom p,
+.footer-bottom a {
+    font-size: 0.75rem;
 }
 
 .hovered {
@@ -81,4 +82,153 @@ button:hover {
 
 .hovered:hover {
     transform: scale(1.1);
+}
+
+/* (350px - 575px)*/
+
+@media (max-width: 575.98px) {
+    .footer-links {
+        gap: 0.25rem !important;
+    }
+
+    .footer-bottom p,
+    .footer-bottom a {
+        font-size: 0.7rem;
+    }
+}
+
+/*(576px - 767px)*/
+
+@media (min-width: 576px) {
+    .footer-wrapper {
+        padding: 2.5rem 1rem;
+    }
+
+    .brand .logo {
+        max-width: 10rem;
+    }
+
+    .contact-title {
+        font-size: 1.3rem;
+    }
+
+    .contact-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .icons {
+        font-size: 2rem;
+    }
+
+    .footer-bottom p,
+    .footer-bottom a {
+        font-size: 0.8rem;
+    }
+}
+
+/*(768px - 991px)*/
+
+@media (min-width: 768px) {
+    .footer-wrapper {
+        padding: 3rem 1.5rem;
+    }
+
+    .brand .logo {
+        max-width: 12rem;
+    }
+
+    .contact-title {
+        font-size: 1.5rem;
+    }
+
+    .contact-btn {
+        padding: 10px 24px;
+        font-size: 1rem;
+    }
+
+    .icons {
+        font-size: 2.5rem;
+    }
+
+    .footer-bottom {
+        margin-top: 5rem;
+    }
+
+    .footer-bottom p,
+    .footer-bottom a {
+        font-size: 0.85rem;
+    }
+}
+
+/* (992px - 1199px)*/
+
+@media (min-width: 992px) {
+    .footer-wrapper {
+        padding: 3rem 2rem;
+    }
+
+    .brand .logo {
+        max-width: 13rem;
+    }
+
+    .contact {
+        padding-right: 4rem;
+    }
+
+    .contact-title {
+        font-size: 1.6rem;
+    }
+
+    .icons {
+        font-size: 2.8rem;
+    }
+
+    .footer-bottom {
+        margin-top: 6rem;
+    }
+
+    .footer-bottom p,
+    .footer-bottom a {
+        font-size: 0.9rem;
+    }
+}
+
+/*(1200px+)*/
+
+@media (min-width: 1200px) {
+    .footer-wrapper {
+        padding: 3rem 3rem;
+    }
+
+    .brand .logo {
+        max-width: 15rem;
+        margin: 1rem;
+    }
+
+    .contact {
+        padding-right: 8rem;
+    }
+
+    .contact-title {
+        font-size: 1.8rem;
+    }
+
+    .contact-btn {
+        padding: 12px 28px;
+        font-size: 1.05rem;
+    }
+
+    .icons {
+        font-size: 3rem;
+    }
+
+    .footer-bottom {
+        margin-top: 7rem;
+    }
+
+    .footer-bottom p,
+    .footer-bottom a {
+        font-size: 1rem;
+    }
 }

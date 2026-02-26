@@ -10,7 +10,7 @@ export class RequestsService {
   private httpClient = inject(HttpClient);
 
   getTrainers(): Observable<Trainer[]> {
-    return this.httpClient.get<Trainer[]>(`${this.baseUrl}/trainers`, { withCredentials: true });
+    return this.httpClient.get<Trainer[]>(`${this.baseUrl}/api/requests/getAllTrainer`, { withCredentials: true });
   }
 
   getTrainerTimeSlots(trainerId: string, date: string): Observable<TimeSlot[]> {
@@ -25,29 +25,5 @@ export class RequestsService {
   }
 
   // Admin endpoints
-  getAllUsers() {
-    return this.httpClient.get<User[]>(`${this.baseUrl}/api/user/requests/getAllUser`, {
-      withCredentials: true,
-    });
-  }
 
-  deleteUser(email: string) {
-    return this.httpClient.delete(`${this.baseUrl}/api/user/delete/${email}`, {
-      withCredentials: true,
-    });
-  }
-
-  updateUserRole(id: number, roleId: number) {
-    return this.httpClient.post(
-      this.baseUrl + `/api/user/change/role`,
-      { id, roleId },
-      { withCredentials: true },
-    );
-  }
-
-  getUserById(id: number) {
-    return this.httpClient.get<User>(`${this.baseUrl}/api/user/requests/userById/${id}`, {
-      withCredentials: true,
-    });
-  }
 }

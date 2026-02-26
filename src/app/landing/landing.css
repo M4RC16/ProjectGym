@@ -1,98 +1,381 @@
 
-/*Trainer rész*/
+.section-subtitle {
+    color: yellow;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+}
+
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+
+.section-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+    margin-bottom: 1.5rem;
+}
+
+.section-img {
+    border: 4px solid yellow;
+    border-radius: 24px;
+    max-width: 85%;
+    transition: transform 0.3s;
+}
+
+.section-img:hover {
+    transform: scale(1.03);
+}
+
+.section-btn {
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    background-color: yellow;
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transition: 0.2s;
+    display: inline-block;
+}
+
+.section-btn:hover {
+    background-color: rgb(37, 35, 35);
+    color: yellow;
+    cursor: pointer;
+    transform: scale(1.08);
+}
+
 
 .trainer {
-    padding: 10rem 10rem;
+    padding: 4rem 1rem;
     background-color: rgb(129, 128, 128);
 }
 
-.img-box {
-    justify-items: center;
-}
-
-.trainer img {
-    max-width: 60%;
-    height: auto;
-    display: block;
-    border: 5px solid yellow;
-    border-radius: 50px;
-    
-}
-
-.trainer button {
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    color: black;
-    background-color: yellow;
-    padding: 10px 20px;
-    margin: 1rem 1rem;
-    box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
-    -moz-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
-    transition: 0.2s;
-    float: inline-start;
-}
-
-.trainer button:hover {
-    background-color: rgb(37, 35, 35);
-    color: yellow;
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-
-
-/*Galéria rész*/
 
 .gallery {
-    padding: 10rem 10rem;
+    padding: 4rem 1rem;
     background-color: rgb(68, 66, 66);
 }
 
-.gallery img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border: 5px solid yellow;
-    border-radius: 50px;
-}
-
-.gallery button {
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    color: black;
-    background-color: yellow;
-    padding: 10px 20px;
-    margin: 1rem 1rem;
-    box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
-    -webkit-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
-    -moz-box-shadow: -1px 10px 49px -5px rgba(0, 0, 0, 1);
-    transition: 0.2s;
-    float: inline-end;
-}
-
-.gallery button:hover {
-    background-color: rgb(37, 35, 35);
-    color: yellow;
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-
-
-
-/* Jegyek szekció */
-
 .tickets {
-    padding: 10rem 10rem;
+    padding: 4rem 1rem;
     background-color: #6C6C6C;
 }
 
-.ticket {
-    border: solid 1px black;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    border-radius: -10rem;
+.tickets-subtitle {
+    color: yellow;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+}
+
+.tickets-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.ticket-card {
+    position: relative;
+    background: rgba(223, 223, 223, 0.315);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.ticket-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.ticket-card--popular {
+    border: 2px solid yellow;
+    box-shadow: 0 0 30px rgba(255, 255, 0, 0.15);
+}
+
+.ticket-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: yellow;
+    color: black;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 16px;
+    border-radius: 20px;
+}
+
+.ticket-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+    color: yellow;
+}
+
+.ticket-name {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.ticket-duration {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.ticket-divider {
+    width: 50px;
+    height: 2px;
+    background: yellow;
+    margin: 0 auto 1.25rem;
+    border-radius: 2px;
+}
+
+.ticket-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.ticket-features li {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.ticket-features li:last-child {
+    border-bottom: none;
+}
+
+.ticket-features li i {
+    color: yellow;
+    font-size: 0.75rem;
+}
+
+.ticket-btn {
+    font-weight: 700;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    color: yellow;
+    background: transparent;
+    padding: 10px 28px;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    margin-top: auto;
+}
+
+.ticket-btn:hover {
+    background: yellow;
+    color: black;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+@media (min-width: 576px) {
+    .trainer,
+    .gallery {
+        padding: 5rem 2rem;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .section-text {
+        font-size: 1rem;
+    }
+
+    .section-img {
+        max-width: 75%;
+    }
+}
+
+@media (min-width: 768px) {
+    .trainer,
+    .gallery {
+        padding: 6rem 3rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-text {
+        font-size: 1.05rem;
+    }
+
+    .section-img {
+        max-width: 90%;
+        border-radius: 32px;
+    }
+
+    .section-btn {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .trainer,
+    .gallery {
+        padding: 8rem 5rem;
+    }
+
+    .section-title {
+        font-size: 2.3rem;
+    }
+
+    .section-text {
+        font-size: 1.1rem;
+    }
+
+    .section-img {
+        max-width: 80%;
+        border-width: 5px;
+        border-radius: 40px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .trainer,
+    .gallery {
+        padding: 10rem 10rem;
+    }
+
+    .section-title {
+        font-size: 2.7rem;
+    }
+
+    .section-text {
+        font-size: 1.15rem;
+    }
+
+    .section-img {
+        max-width: 70%;
+        border-radius: 50px;
+    }
+
+    .section-btn {
+        padding: 12px 32px;
+        font-size: 1.05rem;
+    }
+}
+
+
+@supports not (backdrop-filter: blur(10px)) {
+    .ticket-card {
+        background: #69696952;
+    }
+}
+
+@media (min-width: 576px) {
+    .tickets {
+        padding: 5rem 2rem;
+    }
+
+    .tickets-title {
+        font-size: 1.7rem;
+    }
+
+    .ticket-card {
+        padding: 2.5rem 2rem;
+    }
+
+    .ticket-name {
+        font-size: 1.4rem;
+    }
+
+    .ticket-features li {
+        font-size: 0.9rem;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .tickets {
+        padding: 6rem 3rem;
+    }
+
+    .tickets-title {
+        font-size: 1.9rem;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .tickets {
+        padding: 8rem 5rem;
+    }
+
+    .tickets-title {
+        font-size: 2.2rem;
+    }
+
+    .ticket-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.6rem;
+    }
+
+    .ticket-name {
+        font-size: 1.5rem;
+    }
+
+    .ticket-features li {
+        font-size: 0.95rem;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .tickets {
+        padding: 10rem 10rem;
+    }
+
+    .tickets-title {
+        font-size: 2.5rem;
+    }
+
+    .ticket-card {
+        padding: 3rem 2.5rem;
+    }
 }

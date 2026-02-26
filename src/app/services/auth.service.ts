@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { loginData, loginResponse, registerData, User } from '../models/models.model';
+import { AppJwtPayload, loginData, loginResponse, registerData, User } from '../models/models.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { RequestsService } from './requests.service';
 import { environment } from '../../environments/environment';
+import { UserService } from './user.service';
 
-interface AppJwtPayload extends JwtPayload {
-  userId: number;
-}
+
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ interface AppJwtPayload extends JwtPayload {
 export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
-  private userService = inject(RequestsService);
+  private userService = inject(UserService);
 
   private readonly baseUrl = environment.apiUrl;
   private JWTtoken: string | null = null;
@@ -62,6 +61,7 @@ export class AuthService {
       next: (user) => {
         this.currentUserSubject.next(user);
         console.log('✅ Auth success:', user.firstName, user.role?.[0]?.roleName);
+        localStorage.setItem("loggedInUser", user.role?.[0]?.id.toString() || '');
         this.scheduleTokenRefresh(1000);
       },
       error: (err) => {
@@ -115,6 +115,7 @@ export class AuthService {
   // Auth state törlése
   private clearAuthState(): void {
     this.JWTtoken = null;
+    localStorage.removeItem("loggedInUser");
     this.currentUserSubject.next(null);
 
     if (this.refreshTimeout) {
@@ -122,14 +123,14 @@ export class AuthService {
       this.refreshTimeout = null;
     }
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
   // Logout
   logout(): void {
     this.httpClient
       .post(
-        this.baseUrl + '/api/user/logout',
+        this.baseUrl + '/api/auth/logout',
         {},
         {
           withCredentials: true,
@@ -144,7 +145,7 @@ export class AuthService {
 
   // register
   register(data: registerData) {
-    return this.httpClient.post(this.baseUrl + '/register', data);
+    return this.httpClient.post(this.baseUrl + '/api/user/register', data);
   }
 
   // egyéb
@@ -154,7 +155,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.JWTtoken !== null;
+    return localStorage.getItem("loggedInUser") !== null;
   }
 
   getCurrentUser(): User | null {

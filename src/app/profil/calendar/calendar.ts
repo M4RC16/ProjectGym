@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RequestsService } from '../../services/requests.service';
 import { AuthService } from '../../services/auth.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-calendar',
@@ -14,6 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class Calendar implements OnInit {
   private requestsService = inject(RequestsService);
   private auth = inject(AuthService);
+  private alertService = inject(AlertService);
   currentUser = toSignal(this.auth.currentUser$);
 
   today = new Date();
@@ -310,7 +312,7 @@ export class Calendar implements OnInit {
       },
       error: (err) => {
         console.error('Foglalás sikertelen:', err);
-        alert('Foglalás sikertelen!');
+        this.alertService.error('Foglalás sikertelen!');
       }
     });
   }

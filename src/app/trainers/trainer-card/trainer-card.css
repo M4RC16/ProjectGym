@@ -1,9 +1,10 @@
 .trainer-card {
   position: relative;
-  max-width: 15rem;
+  width: 100%;
+  max-width: 12rem;
   height: auto;
   aspect-ratio: 3 / 4;
-  border-radius: 50px;
+  border-radius: 30px;
   overflow: hidden;
 }
 
@@ -21,9 +22,9 @@
   left: 0;
   width: 100%;
   max-height: 40%;
-  padding: 20px;
-  text-align: st;
-  border-radius: 50px;
+  padding: 12px;
+  text-align: start;
+  border-radius: 30px;
   background: linear-gradient(to top,
       rgba(223, 223, 223, 0.32) 0%,
       rgba(223, 223, 223, 0.22) 30%,
@@ -32,8 +33,8 @@
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
   overflow: clip;
   color: white;
   transition: max-height 0.5s ease-in-out;
@@ -41,15 +42,16 @@
 
 .informations h4 {
   text-align: start;
-  max-height: 2rem; 
+  max-height: 2rem;
   opacity: 1;
   overflow: hidden;
-  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out; 
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+  font-size: 0.85rem;
 }
 
 .informations img {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   margin: 0px 0px 0px 2px;
 }
 
@@ -61,7 +63,7 @@
   border: none;
   display: flex;
   justify-content: center;
-  max-width: 2rem;
+  max-width: 1.5rem;
   justify-self: center;
   rotate: 90deg;
 }
@@ -71,27 +73,44 @@
   transform: rotate(180deg);
 }
 
-/* Description rész */
 
 
 .trainer-description {
   height: 0;
   overflow: hidden;
-  padding: 0 20px;
+  padding: 0 10px;
   transition: height .5s ease-in-out, padding .5s ease;
-  text-align: justify;
+  text-align: start;
+}
+
+.trainer-wage {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: yellow;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.trainer-description h4 {
+  font-size: 0.85rem;
+}
+
+.trainer-description p {
+  font-size: 0.7rem;
+  line-height: 1.4;
 }
 
 .trainer-description h4,
 .trainer-description p {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-
 }
 
 .trainer-card.open {
   .informations {
-    max-height: 60%;
+    max-height: 50%;
     padding-top: 0px;
 
     h4 {
@@ -107,7 +126,7 @@
 
   .trainer-description {
     height: 200px;
-    padding: 10px 5px 0 5px;
+    padding: 8px 5px 0 5px;
     transition: height .5s ease-in-out, padding .5s ease;
 
     h4,
@@ -120,5 +139,87 @@
       margin: 0;
     }
 
+    .trainer-wage {
+      opacity: 1;
+    }
+  }
+}
+
+/* reszponzivitás */
+
+@media (min-width: 576px) {
+  .trainer-card {
+    max-width: 13rem;
+    border-radius: 40px;
+  }
+
+  .informations {
+    padding: 16px;
+    border-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+
+  .informations h4 {
+    font-size: 0.9rem;
+  }
+
+  .trainer-description h4 {
+    font-size: 0.9rem;
+  }
+
+  .trainer-description p {
+    font-size: 0.75rem;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .trainer-card {
+    max-width: 14rem;
+  }
+
+  .informations h4 {
+    font-size: 0.95rem;
+  }
+
+  .trainer-description p {
+    font-size: 0.8rem;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .trainer-card {
+    max-width: 15rem;
+    border-radius: 50px;
+  }
+
+  .informations {
+    padding: 20px;
+    border-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+
+  .informations h4 {
+    font-size: 1rem;
+  }
+
+  .informations img {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .informations button {
+    max-width: 2rem;
+  }
+
+  .trainer-description h4 {
+    font-size: 1rem;
+  }
+
+  .trainer-description p {
+    font-size: 0.85rem;
   }
 }

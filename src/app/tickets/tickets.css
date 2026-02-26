@@ -1,49 +1,65 @@
 .tickets {
-    margin-bottom: 15rem;
+    margin-bottom: 6rem;
 }
+
 
 .title {
-    margin-top: 9rem;
+    margin-top: 6rem;
+    padding: 0 1rem;
     color: white;
-
-    p {
-        font-size: 1.2rem;
-        font-weight: bold;
-        opacity: 0.8;
-        max-width: 800px;
-        justify-self: center;
-        margin: 2rem 0;
-    }
 }
 
+.tickets-subtitle {
+    color: yellow;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+}
+
+.tickets-title {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.tickets-description {
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.75;
+    max-width: 700px;
+    margin: 1rem auto 2rem;
+    line-height: 1.6;
+}
+
+
 .ticket-table {
-    font-size: 1.5rem;
     justify-self: center;
     max-width: 1200px;
-    width: 90%;
-    border-radius: 4rem;
-    padding: 2rem;
+    width: 95%;
+    border-radius: 1.5rem;
+    padding: 1.25rem;
     color: white;
-    background-color: rgba(105, 105, 105, 0.320);
+    background-color: #69696952;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow-x: auto;
+}
 
-    a {
-        text-decoration: none;
-        font-weight: bold;
-        color: #e5e5e5;
-        transition: .3s ease-in;
-    }
-
-    a:hover {
-        color: #FAFA01;
+/* Android fallback */
+@supports not (backdrop-filter: blur(12px)) {
+    .ticket-table {
+        background-color: #69696952;
     }
 }
 
 table {
     table-layout: fixed;
     width: 100%;
+    border-collapse: collapse;
 }
 
 table th,
@@ -53,19 +69,161 @@ table td {
 }
 
 th {
-    padding-bottom: .5rem;
+    padding: 0.6rem 0.25rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: yellow;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(255, 255, 0, 0.3);
 }
 
 td {
-    padding: .5rem 0;
-    transition: .5 ease-in;
-    border-bottom: 1px solid black;
+    padding: 0.6rem 0.25rem;
+    font-size: 0.75rem;
     color: #e5e5e5;
-
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: 0.2s ease-in;
 }
 
-tr:hover {
-    background-color: rgba(213, 213, 213, 0.400);
-    transform: scale(1.01);
+tbody tr {
+    transition: 0.2s;
+    border-radius: 8px;
+}
 
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.ticket-table a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #e5e5e5;
+    transition: 0.3s ease-in;
+    font-size: 1rem;
+}
+
+.ticket-table a:hover {
+    color: yellow;
+    transform: scale(1.15);
+    display: inline-block;
+}
+
+/* reszponzivitás */
+
+@media (min-width: 576px) {
+    .title {
+        margin-top: 7rem;
+    }
+
+    .tickets-title {
+        font-size: 1.9rem;
+    }
+
+    .tickets-description {
+        font-size: 1rem;
+    }
+
+    .ticket-table {
+        width: 90%;
+        padding: 1.5rem;
+        border-radius: 2rem;
+    }
+
+    th {
+        font-size: 0.85rem;
+    }
+
+    td {
+        font-size: 0.95rem;
+        padding: 0.7rem 0.5rem;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .title {
+        margin-top: 8rem;
+    }
+
+    .tickets-title {
+        font-size: 2.2rem;
+    }
+
+    .ticket-table {
+        padding: 2rem;
+        border-radius: 2.5rem;
+    }
+
+    th {
+        font-size: 0.9rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    td {
+        font-size: 1.1rem;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .tickets {
+        margin-bottom: 8rem;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .title {
+        margin-top: 9rem;
+    }
+
+    .tickets-title {
+        font-size: 2.5rem;
+    }
+
+    .tickets-description {
+        font-size: 1.1rem;
+    }
+
+    .ticket-table {
+        padding: 2rem;
+        border-radius: 3rem;
+    }
+
+    th {
+        font-size: 1rem;
+    }
+
+    td {
+        font-size: 1.25rem;
+        padding: 0.8rem 0.5rem;
+    }
+
+    .tickets {
+        margin-bottom: 10rem;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .tickets-title {
+        font-size: 2.8rem;
+    }
+
+    .ticket-table {
+        padding: 2rem 3rem;
+        border-radius: 4rem;
+    }
+
+    th {
+        font-size: 1.05rem;
+        letter-spacing: 2px;
+    }
+
+    td {
+        font-size: 1.5rem;
+    }
+
+    .tickets {
+        margin-bottom: 15rem;
+    }
 }

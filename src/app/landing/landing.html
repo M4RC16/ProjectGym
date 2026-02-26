@@ -5,46 +5,39 @@
 <!-- Trainer section -->
 
 <div class="trainer container-fluid">
-  <div class="row g-5">
-    <div class="col-6 align-self-center">
-      <h1 class="text-white mb-5">Felkészült edzők, valódi eredmények.</h1>
-      <p class="text-white fs-4">
+  <div class="row g-4 g-lg-5 align-items-center">
+    <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-start">
+      <h2 class="section-subtitle">Edzőink</h2>
+      <h1 class="section-title text-white mb-3 mb-md-4">Felkészült edzők, valódi eredmények.</h1>
+      <p class="section-text text-white">
         Csapatunk tapasztalt, képzett edzőkből áll: oklevelek, szakmai tréningek és többéves
         gyakorlati tapasztalat garantálja a profi irányítást. Minden edzés személyre szabott,
-        biztonságos és eredményorientált melletted állunk a fejlődés minden lépésénél. Edzőink
-        nemcsak irányítanak, hanem motiválnak és figyelnek a helyes kivitelezésre, hogy elkerüld a
-        sérüléseket. Legyen szó kezdő vagy haladó szintről, céljaidhoz igazított szakmai támogatást
-        kapsz minden edzésen.
+        biztonságos és eredményorientált. Melletted állunk a fejlődés minden lépésénél.
       </p>
-
-      <button class="">Edzőink</button>
+      <button class="section-btn" routerLink="/trainers">Edzőink</button>
     </div>
-    <div class="img-box col-6">
-      <img src="assets/trainers/NAI.jpg" alt="asd" />
+    <div class="col-12 col-md-6 order-1 order-md-2 d-flex justify-content-center">
+      <img class="img-fluid section-img" src="/assets/trainers/NAI.jpg" alt="Edző" />
     </div>
   </div>
 </div>
 
-<!-- <app-trainers /> -->
-<!-- <app-img-slider [ImgData]="imgData"/> -->
-
 <!-- Gallery Section -->
 
 <div class="gallery container-fluid">
-  <div class="row g-5">
-    <div class="col-6">
-      <img src="assets/epulet.jpg" alt="asd" />
+  <div class="row g-4 g-lg-5 align-items-center">
+    <div class="col-12 col-md-6 d-flex justify-content-center">
+      <img class="img-fluid section-img" src="/assets/epulet.jpg" alt="Edzőterem" />
     </div>
-    <div class="col-6 align-self-center">
-      <h1 class="text-white mb-5">A hely, ahol fejlődsz</h1>
-      <p class="text-white fs-4">
-        Nálunk az edzés nem csak a súlyokról szól. Modern, gondosan karbantartott felszerelések,
-        tágas és tiszta terek várnak, ahol minden adott a hatékony és motiváló edzéshez. Az épület
-        kialakítása, a minőségi géppark és a részletekre való odafigyelés mind azt szolgálja, hogy
-        az edzés valódi élménnyé váljon.
+    <div class="col-12 col-md-6 text-center text-md-start">
+      <h2 class="section-subtitle">A terem</h2>
+      <h1 class="section-title text-white mb-3 mb-md-4">A hely, ahol fejlődsz</h1>
+      <p class="section-text text-white">
+        Modern, gondosan karbantartott felszerelések, tágas és tiszta terek várnak, ahol minden
+        adott a hatékony és motiváló edzéshez. A minőségi géppark és a részletekre való
+        odafigyelés mind azt szolgálja, hogy az edzés valódi élménnyé váljon.
       </p>
-
-      <button class="" routerLink="/gallery">Fedezd fel a termet</button>
+      <button class="section-btn" routerLink="/gallery">Fedezd fel a termet</button>
     </div>
   </div>
 </div>
@@ -52,31 +45,61 @@
 <!-- Ticket Section -->
 
 <div class="container-fluid tickets">
-  <h1 class="text-center mb-5">Bestseller</h1>
-  <div class="row justify-content-center">
+  <h2 class="tickets-subtitle text-center">Bérleteink</h2>
+  <h1 class="tickets-title text-center mb-4 mb-md-5">Válaszd ki a hozzád illő bérletet</h1>
 
-    <div class="col-4 ticket">
-      <h2 class="text-white mb-4">Egyalkalamas bérlet</h2>
-      <p class="text-white fs-4 mb-4">
-        Hozzáférés a konditeremhez és csoportos órákhoz. Ideális választás kezdőknek és alkalmi
-        látogatóknak.
-      </p>
+  <div class="row justify-content-center g-4">
+
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+      <div class="ticket-card">
+        <div class="ticket-icon">
+          <i class="fa-solid fa-dumbbell"></i>
+        </div>
+        <h3 class="ticket-name">Egyalkalmas</h3>
+        <p class="ticket-duration">1 alkalom</p>
+        <div class="ticket-divider"></div>
+        <ul class="ticket-features">
+          <li><i class="fa-solid fa-check"></i> Teljes géppark hozzáférés</li>
+          <li><i class="fa-solid fa-check"></i> Öltöző és zuhanyzó használat</li>
+          <li><i class="fa-solid fa-check"></i> Kötelezettség nélkül</li>
+        </ul>
+        <button class="ticket-btn" routerLink="/tickets">Részletek</button>
+      </div>
     </div>
 
-        <div class="col-4 ticket">
-      <h2 class="text-white mb-4">Havi bérlet</h2>
-      <p class="text-white fs-4 mb-4">
-        Hozzáférés a konditeremhez és csoportos órákhoz. Ideális választás kezdőknek és alkalmi
-        látogatóknak.
-      </p>
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+      <div class="ticket-card ticket-card--popular">
+        <span class="ticket-badge">Népszerű</span>
+        <div class="ticket-icon">
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <h3 class="ticket-name">Havi bérlet</h3>
+        <p class="ticket-duration">30 nap</p>
+        <div class="ticket-divider"></div>
+        <ul class="ticket-features">
+          <li><i class="fa-solid fa-check"></i> Korlátlan edzés 30 napig</li>
+          <li><i class="fa-solid fa-check"></i> Teljes géppark hozzáférés</li>
+          <li><i class="fa-solid fa-check"></i> Öltöző és zuhanyzó használat</li>
+        </ul>
+        <button class="ticket-btn" routerLink="/tickets">Részletek</button>
+      </div>
     </div>
 
-        <div class="col-4 ticket">
-      <h2 class="text-white mb-4">Fél éves bérlet</h2>
-      <p class="text-white fs-4 mb-4">
-        Hozzáférés a konditeremhez és csoportos órákhoz. Ideális választás kezdőknek és alkalmi
-        látogatóknak.
-      </p>
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+      <div class="ticket-card">
+        <div class="ticket-icon">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <h3 class="ticket-name">Féléves bérlet</h3>
+        <p class="ticket-duration">180 nap</p>
+        <div class="ticket-divider"></div>
+        <ul class="ticket-features">
+          <li><i class="fa-solid fa-check"></i> Korlátlan edzés 180 napig</li>
+          <li><i class="fa-solid fa-check"></i> Teljes géppark hozzáférés</li>
+          <li><i class="fa-solid fa-check"></i> Legjobb ár/érték arány</li>
+        </ul>
+        <button class="ticket-btn" routerLink="/tickets">Részletek</button>
+      </div>
     </div>
 
   </div>

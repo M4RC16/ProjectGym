@@ -1,0 +1,110 @@
+
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.55) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    padding: 1rem;
+}
+
+.slogan-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    margin-bottom: 0.5rem;
+    animation: floatUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 0.3s;
+}
+
+.slogan-sub {
+    color: yellow;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    animation: floatUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 0.7s;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* reszponzivitas */
+
+@media (min-width: 576px) {
+    .slogan-title {
+        font-size: 2.4rem;
+        letter-spacing: 3px;
+    }
+
+    .slogan-sub {
+        font-size: 1.1rem;
+        letter-spacing: 5px;
+    }
+}
+
+@media (min-width: 768px) {
+    .slogan-title {
+        font-size: 3rem;
+        letter-spacing: 4px;
+    }
+
+    .slogan-sub {
+        font-size: 1.2rem;
+        letter-spacing: 6px;
+    }
+}
+
+@media (min-width: 992px) {
+    .slogan-title {
+        font-size: 3.8rem;
+        letter-spacing: 5px;
+    }
+
+    .slogan-sub {
+        font-size: 1.35rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .slogan-title {
+        font-size: 4.5rem;
+        letter-spacing: 6px;
+    }
+
+    .slogan-sub {
+        font-size: 1.5rem;
+        letter-spacing: 8px;
+    }
+}

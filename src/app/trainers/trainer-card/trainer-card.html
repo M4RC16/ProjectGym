@@ -2,10 +2,11 @@
   <img [src]="trainer.imageUrl" [alt]="trainer.name" />
   <div class="informations">
     <h4>{{ trainer.name }}</h4>
-    <button (click)="toggle()"><img src="assets/icons/chevronRight.svg" alt="" /></button>
+    <button (click)="toggle()"><img src="/assets/icons/chevronRight.svg" alt="" /></button>
     <div class="trainer-description">
       <h4>{{ trainer.name }}</h4>
       <p>{{ trainer.description }}</p>
+      <span class="trainer-wage"><i class="fa-solid fa-coins"></i> {{ trainer.hourlyWage }} Ft/óra</span>
     </div>
   </div>
 </div>

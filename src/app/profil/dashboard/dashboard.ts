@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RequestsService } from '../../services/requests.service';
 import { type User } from '../../models/models.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +10,7 @@ import { type User } from '../../models/models.model';
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
-  private requestsService = inject(RequestsService);
+  private userService = inject(UserService);
 
   users = signal<User[]>([]);
   availableRoles = [
@@ -24,7 +24,7 @@ export class Dashboard implements OnInit {
   }
 
   loadUsers() {
-    this.requestsService.getAllUsers().subscribe({
+    this.userService.getAllUsers().subscribe({
       next: (users) => {
         console.log('Backend users response:', JSON.stringify(users[0]));
         this.users.set(users);
@@ -34,7 +34,7 @@ export class Dashboard implements OnInit {
   }
 
   onRoleChange(user: User, roleId: number) {
-    this.requestsService.updateUserRole(user.id, roleId).subscribe({
+    this.userService.updateUserRole(user.id, roleId).subscribe({
       next: () => {
 /*         user.role.id = roleId; */
         console.log(`${user.email} role módosítva: ${roleId}`);
@@ -46,7 +46,7 @@ export class Dashboard implements OnInit {
   deleteUser(user: User) {
     if (!confirm(`Biztosan törölni szeretnéd: ${user.firstName} ${user.lastName} (${user.email})?`)) return;
 
-    this.requestsService.deleteUser(user.email).subscribe({
+    this.userService.deleteUser(user.email).subscribe({
       next: () => {
         this.users.update(users => users.filter(u => u.email !== user.email));
         console.log(`${user.email} törölve`);

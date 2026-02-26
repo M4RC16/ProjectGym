@@ -1,6 +1,15 @@
-<ngb-carousel class="carousel" *ngIf="images.length" [interval]="2000" [pauseOnHover]="false" [showNavigationArrows]="false" [pauseOnFocus]="false" [showNavigationIndicators]="false">
-  <ng-template ngbSlide *ngFor="let img of images; let i = index">
-    <img [src]="img" class="d-block w-100" alt="Slide {{i + 1}}" loading="lazy">
-  </ng-template>
-</ngb-carousel>
+<div class="carousel-wrapper">
+  <ngb-carousel class="carousel" *ngIf="images.length" [interval]="2000" [pauseOnHover]="false" [showNavigationArrows]="false" [pauseOnFocus]="false" [showNavigationIndicators]="false">
+    <ng-template ngbSlide *ngFor="let img of images; let i = index">
+      <img [src]="img" class="d-block w-100" alt="Slide {{i + 1}}" loading="lazy">
+    </ng-template>
+  </ngb-carousel>
+
+  <div class="carousel-overlay">
+    <div class="overlay-content">
+      <h1 class="slogan-title">Fejlődj. Erősödj. Lépj szintet.</h1>
+      <p class="slogan-sub">A te utad itt kezdődik.</p>
+    </div>
+  </div>
+</div>
 

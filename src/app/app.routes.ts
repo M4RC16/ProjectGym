@@ -12,6 +12,7 @@ import { Calendar } from './profil/calendar/calendar';
 import { Dashboard } from './profil/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
+import { redirectGuard } from './guards/redirect-guard';
 
 export const routes: Routes = [
   {
@@ -45,8 +46,13 @@ export const routes: Routes = [
   {
     path: 'profil',
     component: Profil,
-/*  */
+    canActivate: [authGuard],
     children: [
+      {
+        path: '',
+        canActivate: [redirectGuard],
+        children: [],
+      },
       {
         path: 'user',
         component: Calendar,

@@ -1,24 +1,52 @@
-<div class="div-sticky container p-0">
-  <div class="navBar d-flex align-items-center w-100">
-    <img
-      src="assets/logo.svg"
-      alt="A weboldal logója"
-      class="logo"
-      style="width: auto"
-      routerLink="/"
-    />
+<nav class="navbar navbar-expand-lg fixed-top navbar-custom">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <img src="/assets/logo.svg" alt="A weboldal logója" class="logo" />
+    </a>
 
-    <div class="buttons flex-grow-1 d-flex justify-content-center">
-      <button routerLink="/">Kezdőlap</button>
-      <button routerLink="/gallery">Galéria</button>
-      <button routerLink="/tickets">Bérlet árak</button>
-      <button routerLink="/trainers">Edzőink</button>
-      <button routerLink="/contact-us">Kapcsolat</button>
-    </div>
+    <span class="brand-name d-lg-none">ProjectGym</span>
 
-    <div class="login">
-      <button class="registerButton" routerLink="/register">Regisztráció</button>
-      <button class="loginButton" routerLink="/login">Bejelentkezés</button>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Menü"
+    >
+      <span class="toggler-icon">
+        <i class="fa-solid" [class.fa-bars]="!menuOpen()" [class.fa-xmark]="menuOpen()"></i>
+      </span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="menuOpen()">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" (click)="closeMenu()">Kezdőlap</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/gallery" (click)="closeMenu()">Galéria</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tickets" (click)="closeMenu()">Bérlet árak</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/trainers" (click)="closeMenu()">Edzőink</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact-us" (click)="closeMenu()">Kapcsolat</a>
+        </li>
+      </ul>
+
+      <div class="auth-buttons d-flex align-items-center">
+        @if (currentUser()) {
+          <a routerLink="/profil" class="profile-icon" title="Profil" (click)="closeMenu()">
+            <i class="fa-solid fa-user"></i>
+          </a>
+        } @else {
+          <button class="registerButton" routerLink="/register" (click)="closeMenu()">Regisztráció</button>
+          <button class="loginButton" routerLink="/login" (click)="closeMenu()">Bejelentkezés</button>
+        }
+      </div>
     </div>
   </div>
-</div>
+</nav>

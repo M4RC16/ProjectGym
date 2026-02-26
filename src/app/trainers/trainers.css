@@ -1,21 +1,100 @@
 .title {
-    margin-top: 9rem;
+    margin-top: 6rem;
+    padding: 0 1rem;
     color: white;
-    p {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-top: 0.5rem;
-        opacity: 0.8;
-        max-width: 800px;
-        justify-self: center;
-        margin-top: 2rem;
-    }
+}
+
+.trainers-subtitle {
+    color: yellow;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+}
+
+.trainers-title {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.trainers-description {
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.75;
+    max-width: 700px;
+    margin: 1rem auto 0;
+    line-height: 1.6;
 }
 
 .trainers-container {
-    margin: 4rem auto;
+    margin: 2rem auto;
 }
 
 .trainer {
-      text-align: -webkit-center;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+/* reszponzivitás */
+
+@media (min-width: 576px) {
+    .title {
+        margin-top: 7rem;
+    }
+
+    .trainers-title {
+        font-size: 1.9rem;
+    }
+
+    .trainers-description {
+        font-size: 1rem;
+    }
+
+    .trainers-container {
+        margin: 3rem auto;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .title {
+        margin-top: 8rem;
+    }
+
+    .trainers-title {
+        font-size: 2.2rem;
+    }
+
+    .trainers-container {
+        margin: 3.5rem auto;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .title {
+        margin-top: 9rem;
+    }
+
+    .trainers-title {
+        font-size: 2.5rem;
+    }
+
+    .trainers-description {
+        font-size: 1.1rem;
+    }
+
+    .trainers-container {
+        margin: 4rem auto;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .trainers-title {
+        font-size: 2.8rem;
+    }
 }

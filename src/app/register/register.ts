@@ -21,6 +21,17 @@ export class Register {
   emailError = signal('');
   passwordError = signal('');
   confirmPasswordError = signal('');
+  registrationSuccess = signal(false);
+  showPassword = signal(false);
+  showConfirmPassword = signal(false);
+
+  togglePassword() {
+    this.showPassword.set(!this.showPassword());
+  }
+
+  toggleConfirmPassword() {
+    this.showConfirmPassword.set(!this.showConfirmPassword());
+  }
 
   onRegister() {
     this.emailError.set('');
@@ -54,6 +65,7 @@ export class Register {
       .subscribe({
         next: (response) => {
           console.log('Registration successful:', response);
+          this.registrationSuccess.set(true);
         },
         error: (error) => {
           console.error('Registration failed:', error);

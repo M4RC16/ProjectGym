@@ -9,56 +9,64 @@ export class TrainerService {
             name: 'John Doe',
             shortDescription: 'Certified Personal Trainer',
             description: 'Expert in strength training and nutrition.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5000
         },
         {
             id: '2',
             name: 'Jane Smith',
             shortDescription: 'Yoga Instructor',
             description: 'Specializes in Vinyasa and Hatha yoga styles.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 6000
         },
         {
             id: '3',
             name: 'Mike Johnson',
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5500
         },
         {
             id: '4',
             name: 'Mike Johnson',
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5500
         },
                 {
             id: '5',
             name: 'Mike Johnson',
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5500
         },
                 {
             id: '6',
             name: 'Mike Johnson',
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5500
         },
                 {
             id: '7',
             name: 'Mike Johnson',
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5500
         },
                 {
             id: '8',
             name: 'Mike Johnson',
             shortDescription: 'Cardio Specialist',
             description: 'Focuses on high-intensity interval training.',
-            imageUrl: 'assets/trainers/NAI.jpg'
+            imageUrl: '/assets/trainers/NAI.jpg',
+            hourlyWage: 5500
         }
         
     ];
