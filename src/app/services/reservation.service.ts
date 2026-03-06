@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {
   allFreeTrainingsTodayRequest,
   allFreeTrainingsTodayResponse,
+  CalendarEvent,
+  deleteRequest,
   reservationCreateRequest,
 } from '../models/models.model';
 
@@ -22,12 +24,27 @@ export class ReservationService {
   }
 
   getAllReservationsToday(data: allFreeTrainingsTodayRequest) {
-    return this.httpClient.post<allFreeTrainingsTodayResponse[]>(
+    return this.httpClient.get<allFreeTrainingsTodayResponse[]>(
       `${this.baseUrl}/api/reservation/getFreeTrainings`,
-      data,
       {
+        params: { ...data},
         withCredentials: true,
       },
     );
   }
+
+  getMyTrainings() {
+    return this.httpClient.get<CalendarEvent[]>(`${this.baseUrl}/api/reservation/getMyTrainings`, {
+      withCredentials: true,
+    });
+  }
+
+  deleteReservation(data: deleteRequest) {
+    return this.httpClient.delete(`${this.baseUrl}/api/reservation/delete`, {
+      params: { ...data },
+      withCredentials: true,
+    });
+  }
+
+  
 }

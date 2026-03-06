@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Carousel } from './carousel/carousel';
-import { Trainers } from './trainers/trainers';
-import { ImgSlider } from './img-slider/img-slider';
 import { type Img } from '../models/models.model';
 import { RouterLink } from "@angular/router";
 

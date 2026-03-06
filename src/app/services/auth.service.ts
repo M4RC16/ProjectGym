@@ -141,6 +141,7 @@ export class AuthService {
       });
 
     this.clearAuthState();
+    localStorage.clear();
   }
 
   // register

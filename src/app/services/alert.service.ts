@@ -7,9 +7,15 @@ export interface AlertData {
   type: AlertType;
 }
 
+export interface ConfirmData {
+  message: string;
+  resolve: (value: boolean) => void;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AlertService {
   alert = signal<AlertData | null>(null);
+  confirmData = signal<ConfirmData | null>(null);
   private timeout: any;
 
   show(message: string, type: AlertType = 'success', duration = 4000) {
@@ -29,5 +35,19 @@ export class AlertService {
   dismiss() {
     clearTimeout(this.timeout);
     this.alert.set(null);
+  }
+
+  confirm(message: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.confirmData.set({ message, resolve });
+    });
+  }
+
+  confirmResolve(result: boolean) {
+    const data = this.confirmData();
+    if (data) {
+      data.resolve(result);
+      this.confirmData.set(null);
+    }
   }
 }

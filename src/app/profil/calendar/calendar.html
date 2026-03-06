@@ -47,14 +47,14 @@
       <div class="event-date">{{ eventDateString }}</div>
     </div>
     <div class="events" [class.displayNoEvents]="addEventActive">
-      @for (event of displayedEvents; track event.title) {
+      @for (event of displayedEvents; track event.reservationId) {
         <div class="event" (click)="deleteEvent(event)">
           <div class="title">
             <i class="fas fa-circle"></i>
-            <h3 class="event-title">{{ event.title }}</h3>
+            <h3 class="event-title">{{ event.trainerName }}</h3>
           </div>
           <div class="event-time">
-            <span class="event-time">{{ event.time }}</span>
+            <span class="event-time">{{ event.scheduledAt }}</span>
           </div>
         </div>
       }
@@ -73,8 +73,8 @@
         <div class="add-event-input">
           <select class="trainer-select" [(ngModel)]="selectedTrainerId" (change)="onTrainerSelect()">
             <option value="" disabled>Válassz edzőt</option>
-            @for (trainer of trainers; track trainer.id) {
-              <option [value]="trainer.id">{{ trainer.name }}</option>
+            @for (trainer of trainers; track trainer.trainerId) {
+              <option [value]="trainer.trainerId">{{ trainer.trainerName }}</option>
             }
           </select>
         </div>
@@ -83,19 +83,19 @@
           <div class="time-slots">
             <label>Válassz időpontot:</label>
             <div class="time-slot-list">
-              @for (slot of timeSlots; track slot.id) {
+              @for (slot of timeSlots; track slot.scheduledAt) {
                 <label
                   class="time-slot-item"
-                  [class.disabled]="!slot.available"
+                  [class.disabled]="!slot.free"
                 >
                   <input
                     type="radio"
                     name="timeSlot"
-                    [value]="slot.id"
-                    [(ngModel)]="selectedTimeSlotId"
-                    [disabled]="!slot.available"
+                    [checked]="selectedTimeSlot === slot"
+                    (change)="selectedTimeSlot = slot"
+                    [disabled]="!slot.free"
                   />
-                  <span class="time-slot-label">{{ slot.time }}</span>
+                  <span class="time-slot-label">{{ slot.scheduledAt }}</span>
                 </label>
               }
             </div>
@@ -109,7 +109,7 @@
         }
       </div>
       <div class="add-event-footer">
-        <button class="add-event-btn" (click)="addBooking()" [disabled]="!selectedTrainerId || !selectedTimeSlotId">Foglalás</button>
+        <button class="add-event-btn" (click)="addBooking()" [disabled]="!selectedTrainerId || !selectedTimeSlot">Foglalás</button>
       </div>
     </div>
   </div>

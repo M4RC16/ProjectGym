@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profil',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLinkWithHref],
   templateUrl: './profil.html',
   styleUrl: './profil.css',
 })

@@ -5,12 +5,11 @@ export interface Img {
 }
 
 export interface Trainer {
-  id: string;
-  name: string;
-  shortDescription: string;
+  trainerId: number;
+  trainerName: string;
+  profilePicture: string;
   description: string;
-  imageUrl: string;
-  hourlyWage: number;
+  hourlyRate: number;
 }
 
 export interface Role {
@@ -57,8 +56,11 @@ export interface registerData {
 }
 
 export interface CalendarEvent {
-  title: string;
-  time: string;
+  reservationXUserId: number;
+  reservationId: number;
+  scheduledAt: string;
+  trainerName: string;
+  trainerId: number;
 }
 
 export interface EventDay {
@@ -68,26 +70,19 @@ export interface EventDay {
   events: CalendarEvent[];
 }
 
-export interface TimeSlot {
-  id: number;
+/* export interface TimeSlot {
   time: string;
   available: boolean;
-}
+} */
 
-export interface BookingRequest {
+/* export interface BookingRequest {
   trainerId: string;
   trainerName: string;
   timeSlotId: number;
   date: string;
-}
+} */
 
 export interface AdminUser {}
-
-
-
-
-
-
 
 /* reservation */
 
@@ -104,4 +99,10 @@ export interface allFreeTrainingsTodayRequest {
 export interface allFreeTrainingsTodayResponse {
   scheduledAt: string;
   free: boolean;
+}
+
+export interface deleteRequest {
+  reservationXUserId: number;
+  reservationId: number;
+  trainerId: number;
 }

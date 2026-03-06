@@ -16,7 +16,7 @@ export class Register {
   password = signal('');
   confirmPassword = signal('');
   emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+  passwordRegex = /^(?=.*[0-9])(?=.*[+!@#$%^&*]).{8,}$/;
 
   emailError = signal('');
   passwordError = signal('');

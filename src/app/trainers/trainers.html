@@ -8,7 +8,7 @@
 
 <div class="container trainers-container">
     <div class="row justify-content-center gy-4 gy-md-5">
-        @for (trainer of Trainers; track trainer) {
+        @for (trainer of trainers; track trainer) {
             <div class="trainer col-6 col-sm-6 col-md-4 col-lg-3">
                 <app-trainer-card [trainer]="trainer" />
             </div>

@@ -84,3 +84,41 @@
         transform: translateY(0) scale(1);
     }
 }
+
+/* Confirm dialog */
+.alert-box.confirm .alert-icon {
+    color: #f59e0b;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-btn {
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 36px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.confirm-btn.cancel {
+    background: #6b7280;
+}
+
+.confirm-btn.cancel:hover {
+    background: #4b5563;
+}
+
+.confirm-btn.ok {
+    background: #ef4444;
+}
+
+.confirm-btn.ok:hover {
+    background: #dc2626;
+}

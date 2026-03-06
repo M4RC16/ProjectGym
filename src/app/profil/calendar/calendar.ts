@@ -1,10 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CalendarEvent, EventDay, TimeSlot, Trainer } from '../../models/models.model';
+import {
+  allFreeTrainingsTodayResponse,
+  CalendarEvent,
+  EventDay,
+  Trainer,
+} from '../../models/models.model';
 import { FormsModule } from '@angular/forms';
-import { RequestsService } from '../../services/requests.service';
 import { AuthService } from '../../services/auth.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AlertService } from '../../services/alert.service';
+import { TrainerService } from '../../services/trainer.service';
+import { ReservationService } from '../../services/reservation.service';
 
 @Component({
   selector: 'app-calendar',
@@ -13,7 +19,8 @@ import { AlertService } from '../../services/alert.service';
   styleUrl: './calendar.css',
 })
 export class Calendar implements OnInit {
-  private requestsService = inject(RequestsService);
+  private Trainer = inject(TrainerService);
+  private reservation = inject(ReservationService);
   private auth = inject(AuthService);
   private alertService = inject(AlertService);
   currentUser = toSignal(this.auth.currentUser$);
@@ -56,8 +63,8 @@ export class Calendar implements OnInit {
   // Booking
   trainers: Trainer[] = [];
   selectedTrainerId: string = '';
-  timeSlots: TimeSlot[] = [];
-  selectedTimeSlotId: number | null = null;
+  timeSlots: allFreeTrainingsTodayResponse[] = [];
+  selectedTimeSlot: allFreeTrainingsTodayResponse | null = null;
   loadingSlots: boolean = false;
 
   ngOnInit() {
@@ -184,7 +191,7 @@ export class Calendar implements OnInit {
     this.initCalendar();
   }
 
-/*   onDateInputChange() {
+  /*   onDateInputChange() {
     this.dateInput = this.dateInput.replace(/[^0-9/]/g, '');
     if (this.dateInput.length === 2 && !this.dateInput.includes('/')) {
       this.dateInput += '/';
@@ -225,7 +232,6 @@ export class Calendar implements OnInit {
       }
     });
     this.showNoEvent = this.displayedEvents.length === 0;
-    this.saveEvents();
   }
 
   toggleAddEvent() {
@@ -238,126 +244,108 @@ export class Calendar implements OnInit {
   }
 
   loadTrainers() {
-    this.requestsService.getTrainers().subscribe({
-      next: (trainers) => this.trainers = trainers,
-      error: (err) => console.error('Edzők betöltése sikertelen:', err)
+    this.Trainer.getAllTrainer().subscribe({
+      next: (trainers) => (this.trainers = trainers),
+      error: (err) => console.error('Edzők betöltése sikertelen:', err),
     });
   }
 
   onTrainerSelect() {
-    this.selectedTimeSlotId = null;
+    this.selectedTimeSlot = null;
     this.timeSlots = [];
 
     if (!this.selectedTrainerId) return;
 
-    const dateStr = `${this.year}-${String(this.month + 1).padStart(2, '0')}-${String(this.activeDay).padStart(2, '0')}`;
+    const dateStr = `${this.year}.${String(this.month + 1).padStart(2, '0')}.${String(this.activeDay).padStart(2, '0')} 11:00`;
     this.loadingSlots = true;
 
-    this.requestsService.getTrainerTimeSlots(this.selectedTrainerId, dateStr).subscribe({
-      next: (slots) => {
-        this.timeSlots = slots;
-        this.loadingSlots = false;
-      },
-      error: (err) => {
-        console.error('Időpontok betöltése sikertelen:', err);
-        this.loadingSlots = false;
-      }
-    });
+    this.reservation
+      .getAllReservationsToday({ trainerId: this.selectedTrainerId, date: dateStr })
+      .subscribe({
+        next: (slots) => {
+          this.timeSlots = slots;
+          this.loadingSlots = false;
+        },
+        error: (err) => {
+          console.error('Időpontok betöltése sikertelen:', err);
+          this.loadingSlots = false;
+        },
+      });
   }
 
   addBooking() {
-    if (!this.selectedTrainerId || !this.selectedTimeSlotId) return;
+    if (!this.selectedTrainerId || !this.selectedTimeSlot) return;
 
-    const trainer = this.trainers.find(t => t.id === this.selectedTrainerId);
+    const trainer = this.trainers.find(
+      (t) => String(t.trainerId) === String(this.selectedTrainerId),
+    );
     if (!trainer) return;
+    const dateStr = `${this.year}.${String(this.month + 1).padStart(2, '0')}.${String(this.activeDay).padStart(2, '0')} ${this.selectedTimeSlot.scheduledAt}`;
 
-    const dateStr = `${this.year}-${String(this.month + 1).padStart(2, '0')}-${String(this.activeDay).padStart(2, '0')}`;
-    const selectedSlot = this.timeSlots.find(s => s.id === this.selectedTimeSlotId);
-
-    this.requestsService.createBooking({
-      trainerId: trainer.id,
-      trainerName: trainer.name,
-      timeSlotId: this.selectedTimeSlotId,
-      date: dateStr
-    }).subscribe({
-      next: () => {
-        // Event hozzáadása a naptárhoz
-        const newEvent: CalendarEvent = {
-          title: trainer.name,
-          time: selectedSlot ? selectedSlot.time : ''
-        };
-
-        let eventAdded = false;
-        this.eventsArr.forEach(item => {
-          if (item.day === this.activeDay && item.month === this.month + 1 && item.year === this.year) {
-            item.events.push(newEvent);
-            eventAdded = true;
-          }
-        });
-
-        if (!eventAdded) {
-          this.eventsArr.push({
-            day: this.activeDay,
-            month: this.month + 1,
-            year: this.year,
-            events: [newEvent]
-          });
-        }
-
-        const activeDayObj = this.days.find(d => d.isActive);
-        if (activeDayObj) activeDayObj.hasEvent = true;
-
-        this.updateEvents(this.activeDay);
-        this.closeAddEvent();
-      },
-      error: (err) => {
-        console.error('Foglalás sikertelen:', err);
-        this.alertService.error('Foglalás sikertelen!');
-      }
-    });
+    this.reservation
+      .createreservation({
+        trainerId: this.selectedTrainerId,
+        date: dateStr,
+      })
+      .subscribe({
+        next: () => {
+          this.getEvents();
+          this.closeAddEvent();
+          this.alertService.success('Foglalás sikeres!');
+        },
+        error: (err) => {
+          console.error('Foglalás sikertelen:', err);
+          this.alertService.error('Foglalás sikertelen!');
+        },
+      });
   }
 
   resetBookingForm() {
     this.selectedTrainerId = '';
-    this.selectedTimeSlotId = null;
+    this.selectedTimeSlot = null;
     this.timeSlots = [];
   }
 
-  deleteEvent(event: CalendarEvent) {
-    if (confirm('Are you sure you want to delete this event?')) {
-      this.eventsArr.forEach((eventDay) => {
-        if (
-          eventDay.day === this.activeDay &&
-          eventDay.month === this.month + 1 &&
-          eventDay.year === this.year
-        ) {
-          const index = eventDay.events.findIndex((e) => e.title === event.title);
-          if (index > -1) {
-            eventDay.events.splice(index, 1);
-          }
-          if (eventDay.events.length === 0) {
-            const dayIndex = this.eventsArr.indexOf(eventDay);
-            this.eventsArr.splice(dayIndex, 1);
-            const activeDayObj = this.days.find((d) => d.isActive);
-            if (activeDayObj) {
-              activeDayObj.hasEvent = false;
-            }
-          }
-        }
-      });
-      this.updateEvents(this.activeDay);
-    }
-  }
+  async deleteEvent(event: CalendarEvent) {
+    const confirmed = await this.alertService.confirm('Biztosan törölni szeretnéd ezt a foglalást?');
+    if (!confirmed) return;
 
-  saveEvents() {
-    localStorage.setItem('events', JSON.stringify(this.eventsArr));
+    this.reservation.deleteReservation({reservationXUserId: event.reservationXUserId, reservationId: event.reservationId, trainerId: event.trainerId }).subscribe({
+      next: () => {
+        this.alertService.success('Foglalás törlése sikeres!');
+        this.getEvents();
+        this.updateEvents(this.activeDay);
+      },
+      error: (err) => {
+        console.error('Foglalás törlése sikertelen:', err);
+        this.alertService.error('Foglalás törlése sikertelen!');
+      }
+    });
   }
 
   getEvents() {
-    const events = localStorage.getItem('events');
-    if (events) {
-      this.eventsArr = JSON.parse(events);
-    }
+    this.reservation.getMyTrainings().subscribe({
+      next: (events) => {
+        this.eventsArr = [];
+        events.forEach((event) => {
+          const date = new Date(event.scheduledAt);
+          const day = date.getDate();
+          const month = date.getMonth() + 1;
+          const year = date.getFullYear();
+
+          const existing = this.eventsArr.find(
+            (e) => e.day === day && e.month === month && e.year === year,
+          );
+          if (existing) {
+            existing.events.push(event);
+          } else {
+            this.eventsArr.push({ day, month, year, events: [event] });
+          }
+        });
+        this.initCalendar();
+      },
+      error: (err) => console.error('Edzések betöltése sikertelen:', err),
+    });
   }
 
   convertTime(time: string): string {

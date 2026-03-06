@@ -1,79 +1,19 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Trainer } from '../models/models.model';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class TrainerService {
 
-    private trainers = [
-        {
-            id: '1',
-            name: 'John Doe',
-            shortDescription: 'Certified Personal Trainer',
-            description: 'Expert in strength training and nutrition.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5000
-        },
-        {
-            id: '2',
-            name: 'Jane Smith',
-            shortDescription: 'Yoga Instructor',
-            description: 'Specializes in Vinyasa and Hatha yoga styles.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 6000
-        },
-        {
-            id: '3',
-            name: 'Mike Johnson',
-            shortDescription: 'Cardio Specialist',
-            description: 'Focuses on high-intensity interval training.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5500
-        },
-        {
-            id: '4',
-            name: 'Mike Johnson',
-            shortDescription: 'Cardio Specialist',
-            description: 'Focuses on high-intensity interval training.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5500
-        },
-                {
-            id: '5',
-            name: 'Mike Johnson',
-            shortDescription: 'Cardio Specialist',
-            description: 'Focuses on high-intensity interval training.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5500
-        },
-                {
-            id: '6',
-            name: 'Mike Johnson',
-            shortDescription: 'Cardio Specialist',
-            description: 'Focuses on high-intensity interval training.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5500
-        },
-                {
-            id: '7',
-            name: 'Mike Johnson',
-            shortDescription: 'Cardio Specialist',
-            description: 'Focuses on high-intensity interval training.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5500
-        },
-                {
-            id: '8',
-            name: 'Mike Johnson',
-            shortDescription: 'Cardio Specialist',
-            description: 'Focuses on high-intensity interval training.',
-            imageUrl: '/assets/trainers/NAI.jpg',
-            hourlyWage: 5500
-        }
-        
-    ];
+  private readonly baseUrl = environment.apiUrl;
 
-    getFirstThreeTrainers() {
-        return [...this.trainers];
+  private httpClient = inject(HttpClient);
+
+    getAllTrainer() 
+    {
+        return this.httpClient.get<Trainer[]>(`${this.baseUrl}/api/user/requests/getAllTrainer`, {
+            withCredentials: true,
+        });
     }
-
-
 }
