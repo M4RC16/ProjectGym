@@ -1,0 +1,32 @@
+package com.projectgym.service;
+
+import com.projectgym.exception.NotFoundException;
+import com.projectgym.model.User;
+import com.projectgym.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+
+@Service
+public class CustomerUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    public CustomerUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws NotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Felhasználó nem található: " + email));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                new ArrayList<>()
+        );
+    }
+}
