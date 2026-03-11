@@ -1,13 +1,13 @@
 package com.projectgym.controller;
 
+import com.projectgym.model.ContactForm;
 import com.projectgym.service.ContactFromService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api/form")
 @RestController
@@ -22,6 +22,11 @@ public class ContactFormController {
     public ResponseEntity<?> Form(@RequestBody FormInfo form) {
         String result = service.saveForm(form);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/get/contactForm")
+    public ResponseEntity<List<ContactForm>> getContactForm() {
+        return ResponseEntity.ok(service.getAllForms());
     }
 
     @Setter

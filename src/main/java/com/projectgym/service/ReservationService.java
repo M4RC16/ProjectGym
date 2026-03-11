@@ -165,7 +165,7 @@ public class ReservationService {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class FreeTrainingResponse {
-        @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
+        @JsonFormat(pattern = "HH:mm")
         private LocalDateTime scheduledAt;
         private boolean isFree;
     }

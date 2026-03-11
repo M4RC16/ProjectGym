@@ -6,17 +6,16 @@ import com.projectgym.model.User;
 import com.projectgym.service.AuthService;
 import com.projectgym.service.EmailService;
 import com.projectgym.service.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,15 +47,15 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse httpResponse) {
         LoginResponse response = authService.login(loginRequest);
 
-        Cookie refreshTokenCookie = new Cookie("refreshToken", response.getRefreshToken());
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); // ha deploy akkor true
-        refreshTokenCookie.setMaxAge(60 * 60 * 24 * 30);
-        refreshTokenCookie.setPath("/");
+        ResponseCookie  refreshTokenCookie = ResponseCookie.from("refreshToken", response.getRefreshToken())
+                .httpOnly(true)
+                .secure(true) // todo, ha deploy true, ha dev false
+                .maxAge(60 * 60 * 24 * 30)
+                .path("/")
+                .sameSite("Lax")
+                .build();
 
-        httpResponse.addCookie(refreshTokenCookie);
-
-        System.out.println(response.getRefreshToken());
+        httpResponse.addHeader(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
 
         response.setRefreshToken(null);
 
@@ -69,8 +68,15 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Email elküldve"));
     }
 
-    @PostMapping("/resetPassword")
-    public ResponseEntity<ApiResponse> resetPassword(@RequestBody PasswordResetRequest request) {
+    @PostMapping("/resetPassword/")
+    public ResponseEntity<ApiResponse> changePassword(@CookieValue("refreshToken") String token, @RequestBody ResetPasswordRequest request) {
+        String email = service.getEmailByRefreshToken(token);
+
+        return ResponseEntity.ok(ApiResponse.success(authService.changePassword(email, request)));
+    }
+
+    @PostMapping("/forgottenPassword")
+    public ResponseEntity<ApiResponse> resetPassword(@RequestBody ForgottenPasswordRequest request) {
         service.resetPassword(request);
         return ResponseEntity.ok(ApiResponse.success("Sikeres jelszóvisszaállítás"));
     }
@@ -97,28 +103,20 @@ public class UserController {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
-    @GetMapping("/get/myName")
-    public ResponseEntity<GetMyNameResponse> getMyName() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = auth.getName();
-        return ResponseEntity.ok(service.getMyName(currentUserEmail));
-    }
-
     @PostMapping("/change/name")
-    @PreAuthorize("hasRole('USER') or hasRole('TRAINER')")
-    public ResponseEntity<ApiResponse> changeName(@RequestBody NameChangeRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = auth.getName();
-        service.changeName(currentUserEmail, request.getFirstName(), request.getLastName());
+    @PreAuthorize("hasRole('felhasználó') or hasRole('edző')")
+    public ResponseEntity<ApiResponse> changeName(@CookieValue("refreshToken") String token, @RequestBody NameChangeRequest request) {
+        String email = service.getEmailByRefreshToken(token);
+        service.changeName(email, request.getFirstName(), request.getLastName());
         return ResponseEntity.ok(ApiResponse.success("Sikeres név változtatás"));
     }
 
     @PostMapping("/change/number")
-    @PreAuthorize("hasRole('USER') or hasRole('TRAINER')")
-    public ResponseEntity<ApiResponse> changeNumber(@RequestBody NumberRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = auth.getName();
-        service.changeNumber(currentUserEmail, request.getNumber());
+    @PreAuthorize("hasRole('felhasználó') or hasRole('edző')")
+    public ResponseEntity<ApiResponse> changeNumber(@CookieValue("refreshToken") String token, @RequestBody NumberRequest request) {
+        String email = service.getEmailByRefreshToken(token);
+
+        service.changeNumber(email, request.getNumber());
         return ResponseEntity.ok(ApiResponse.success("Sikeres telefonszám átállítás"));
     }
 
@@ -130,10 +128,9 @@ public class UserController {
     }
 
     @GetMapping("get/pfp")
-    public ResponseEntity<String> getProfilePicture() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = auth.getName();
-        return ResponseEntity.ok(service.getpfp(currentUserEmail));
+    public ResponseEntity<String> getProfilePicture(@CookieValue("refreshToken") String token) {
+        String email = service.getEmailByRefreshToken(token);
+        return ResponseEntity.ok(service.getpfp(email));
     }
 
     @DeleteMapping("/delete/{email}")
@@ -144,22 +141,36 @@ public class UserController {
     }
 
     @DeleteMapping("user/delete")
-    public ResponseEntity<ApiResponse> deleteMe(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = auth.getName();
+    public ResponseEntity<ApiResponse> deleteMe(@CookieValue("refreshToken") String token){
+        String currentUserEmail = service.getEmailByRefreshToken(token);
         service.deleteMe(currentUserEmail);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("change/pfp")
-    @PreAuthorize("hasRole('USER') or hasRole('Trainer')")
-    public ResponseEntity<ApiResponse> updateProfilePicture(@RequestParam("file") MultipartFile file) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = auth.getName();
+    @PreAuthorize("hasRole('felhasználó') or hasRole('edző')")
+    public ResponseEntity<ApiResponse> updateProfilePicture(@CookieValue("refreshToken") String token, @RequestParam("file") MultipartFile file) {
+        String currentUserEmail = service.getEmailByRefreshToken(token);
 
         String newImgUrl = service.changePfp(currentUserEmail, file);
 
         return ResponseEntity.ok(ApiResponse.success("Sikeres profilkép változatatás " + newImgUrl));
+    }
+
+    @PutMapping("change/description")
+    @PreAuthorize("hasRole('edző')")
+    public ResponseEntity<ApiResponse> changeDescription(@CookieValue("refreshToken") String token, @RequestBody String description) {
+        String currentUserEmail = service.getEmailByRefreshToken(token);
+         service.changeDescription(currentUserEmail, description);
+        return ResponseEntity.ok(ApiResponse.success("Sikeres leírás változtatás"));
+    }
+
+    @PutMapping("change/wage")
+    @PreAuthorize("hasRole('edző')")
+    public ResponseEntity<ApiResponse> changeWage(@CookieValue("refreshToken") String token, @RequestBody int wage) {
+        String currentUserEmail = service.getEmailByRefreshToken(token);
+        service.changeWage(currentUserEmail, wage);
+        return ResponseEntity.ok(ApiResponse.success("Sikeres óradíj változtatás"));
     }
 
     @Setter
@@ -205,8 +216,18 @@ public class UserController {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class PasswordResetRequest {
+    public static class ForgottenPasswordRequest {
         private String token;
+        private String password1;
+        private String password2;
+    }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResetPasswordRequest {
+        private String oldPassword;
         private String password1;
         private String password2;
     }
@@ -239,15 +260,6 @@ public class UserController {
     public static class NameChangeRequest {
         private String firstName;
         private String lastName;
-    }
-
-    @Setter
-    @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class GetMyNameResponse {
-        private String first_name;
-        private String last_name;
     }
 
 }

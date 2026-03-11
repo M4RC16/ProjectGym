@@ -1,5 +1,7 @@
 package com.projectgym.service;
 
+import com.projectgym.model.RefreshToken;
+import com.projectgym.model.ReservationXUser;
 import com.projectgym.repository.*;
 import com.projectgym.controller.UserController;
 import com.projectgym.exception.NotValidException;
@@ -8,7 +10,6 @@ import com.projectgym.exception.BadRequestException;
 import com.projectgym.exception.AlreadyExistsException;
 import com.projectgym.model.Role;
 import com.projectgym.model.User;
-import com.projectgym.repository.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    @Value("${file.upload-dir}")
+    @Value("${file.upload-dir-user}")
     private String uploadDir;
 
     String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
@@ -41,14 +42,18 @@ public class UserService {
     private final EmailService emailService;
     private final RoleRepository roleRepository;
     private final RefreshTokenRepository refreshRep;
+    private final ReservationXUserRepository rxuRep;
+    private final ReservationRepository resRep;
 
     @Lazy
-    public UserService(RefreshTokenRepository refreshRep, UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
+    public UserService(ReservationRepository resRep, ReservationXUserRepository rxuRep, RefreshTokenRepository refreshRep, UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
         this.roleRepository = roleRepository;
         this.refreshRep = refreshRep;
+        this.rxuRep = rxuRep;
+        this.resRep = resRep;
     }
 
     public void registerUser(User user) {
@@ -109,7 +114,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("A felhasználó nem található"));
 
-        if (user.getResetTokenExpiryDate() != null && user.getResetTokenExpiryDate().isBefore(LocalDateTime.now())) {
+        if (user.getResetTokenExpiryDate() != null && user.getResetTokenExpiryDate().isAfter(LocalDateTime.now())) {
             throw new RuntimeException("A kért token még érvényes, nem küldök újat.");
         }
 
@@ -121,7 +126,7 @@ public class UserService {
         return resetToken;
     }
 
-    public void resetPassword(UserController.PasswordResetRequest request) {
+    public void resetPassword(UserController.ForgottenPasswordRequest request) {
 
         String password;
         if (!Objects.equals(request.getPassword1(), request.getPassword2())) {
@@ -167,8 +172,13 @@ public class UserService {
 
     @Transactional
     public void deleteUser(String email) {
-        userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Nem található felhasználó"));
+        int id = user.getId();
+        refreshRep.deleteByUserId(id);
+        List<ReservationXUser> reservations = rxuRep.findByUserId(id);
+        reservations.forEach(reservation -> rxuRep.deleteById(Long.valueOf(reservation.getId())));
+        reservations.forEach(reservation -> resRep.deleteById(reservation.getReservation().getId()));
         userRepository.deleteByEmail(email);
     }
 
@@ -231,7 +241,7 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("Felhasználó nem található:  " + email));
 
         try {
-            Path uploadPath = Paths.get(uploadDir + pfp);
+            Path uploadPath = Paths.get(uploadDir);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
@@ -241,11 +251,11 @@ public class UserService {
                 throw new BadRequestException("Érvénytelen fájlformátum!");
             }
 
-            String newFileName = UUID.randomUUID() + originalName.substring(originalName.lastIndexOf(".") + 1);
+            String newFileName = UUID.randomUUID() + originalName.substring(originalName.lastIndexOf("."));
 
             Path filePath = uploadPath.resolve(newFileName);
             Files.copy(pfp.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            String dbImagePath = "/images/" + newFileName;
+            String dbImagePath = "/images/users/" + newFileName;
             user.setProfilePicture(dbImagePath);
             userRepository.save(user);
 
@@ -255,11 +265,26 @@ public class UserService {
         }
     }
 
-    public UserController.GetMyNameResponse getMyName(String email) {
+    public String getEmailByRefreshToken(String refreshToken) {
+        RefreshToken token = refreshRep.findByToken(refreshToken)
+                .orElseThrow(() -> new NotFoundException("Refresh token nem található"));
+        int id = token.getUser().getId();
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Felhasználó nem található ID: " + id));
+        return user.getEmail();
+    }
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Felhasználó nem található ID: " + email));
+    public void changeDescription(String currentUserEmail, String description) {
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new NotFoundException("Felhasználó nem található ID: " + currentUserEmail));
+        user.setDescription(description);
+        userRepository.save(user);
+    }
 
-        return new UserController.GetMyNameResponse(user.getFirstName(), user.getLastName());
+    public void changeWage(String currentUserEmail, int wage) {
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new NotFoundException("Felhasználó nem található ID: " + currentUserEmail));
+        user.setHourlyWage(wage);
+        userRepository.save(user);
     }
 }

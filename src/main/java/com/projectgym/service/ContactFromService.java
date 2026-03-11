@@ -6,6 +6,8 @@ import com.projectgym.repository.ContactFormRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContactFromService {
 
@@ -41,5 +43,7 @@ public class ContactFromService {
         return "Sikeres küldés";
     }
 
-    
+    public List<ContactForm> getAllForms() {
+        return repository.findAll();
+    }
 }

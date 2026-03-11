@@ -8,8 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
-    @Value("${file.upload-dir}")
+    @Value("${file.upload-dir-user}")
     private String uploadDir;
+
+    @Value("${file.upload-dir-gallery}")
+    private String uploadDirGallery;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -19,20 +22,21 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "http://localhost:4200",
-                                "http://projectgym.hu",
                                 "https://projectgym.hu",
-                                "http://www.projectgym.hu",
                                 "https://www.projectgym.hu"
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE, OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
 
             @Override
             public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/images/**")
+                registry.addResourceHandler("/images/users/**")
                         .addResourceLocations("file:" + uploadDir + "/");
+
+                registry.addResourceHandler("/images/gallery/**")
+                        .addResourceLocations("file:" + uploadDirGallery + "/");
             }
         };
     }

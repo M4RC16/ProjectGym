@@ -1,7 +1,9 @@
 package com.projectgym.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "contact_form")
 public class ContactForm {
@@ -21,6 +23,8 @@ public class ContactForm {
 
     @Column(name = "message", nullable = false)
     private String message;
+
+    public ContactForm() {}
 
     public ContactForm(String name, String phoneNumber, String emailAddress, String message) {
         this.name = name;

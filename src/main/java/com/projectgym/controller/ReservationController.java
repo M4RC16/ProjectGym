@@ -31,7 +31,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse> deleteTraining(@RequestBody ReservationService.TrainingResponse reservation) {
+    public ResponseEntity<ApiResponse> deleteTraining(@ModelAttribute ReservationService.TrainingResponse reservation) {
         int trainerId = reservation.getTrainerId();
         int reservationId = reservation.getReservationId();
         int reservationXUserId = reservation.getReservationXUserId();
@@ -57,8 +57,8 @@ public class ReservationController {
     @Getter
     public static class TrainingRequest {
         private int trainerId;
-        @DateTimeFormat(pattern = "HH:mm")
-        @JsonFormat(pattern = "HH:mm")
+        @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm")
+        @JsonFormat(pattern = "yyyy.MM.dd HH:mm")
         private LocalDateTime date;
     }
 }
