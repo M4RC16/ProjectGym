@@ -35,7 +35,7 @@ public class UserService {
     private String uploadDir;
 
     String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    String passwordRegex = "^(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$";
+    String passwordRegex = "^(?=.[0-9])(?=.[^a-zA-Z0-9\\s]).{8,}$";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

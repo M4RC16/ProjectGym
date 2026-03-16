@@ -22,9 +22,7 @@ public class GalleryController {
 
     @PostMapping("add/galery")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> addToGallery(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam String text)  {
+    public ResponseEntity<String> addToGallery(@RequestParam("file") MultipartFile file, @RequestParam String text)  {
         service.saveToGallery(file, text);
         return ResponseEntity.ok("Sikeres feltöltés");
     }

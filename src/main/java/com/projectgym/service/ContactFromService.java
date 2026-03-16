@@ -19,7 +19,7 @@ public class ContactFromService {
     String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     String phoneRegex = "^[0-9+ ]{7,15}$";
 
-    public String saveForm(ContactFormController.FormInfo form) {
+    public void saveForm(ContactFormController.FormInfo form) {
         if (form.getPhoneNumber() != null && !form.getPhoneNumber().matches(phoneRegex)) {
             throw new BadCredentialsException("Érvénytelen telefonszám formátum!");
         }
@@ -39,8 +39,6 @@ public class ContactFromService {
                 form.getEmailAddress(),
                 form.getMessage()
         ));
-
-        return "Sikeres küldés";
     }
 
     public List<ContactForm> getAllForms() {

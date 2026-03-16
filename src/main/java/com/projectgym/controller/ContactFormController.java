@@ -1,8 +1,11 @@
 package com.projectgym.controller;
 
+import com.projectgym.ApiResponse;
 import com.projectgym.model.ContactForm;
 import com.projectgym.service.ContactFromService;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +22,9 @@ public class ContactFormController {
     }
 
     @PostMapping("/ContactForm")
-    public ResponseEntity<?> Form(@RequestBody FormInfo form) {
-        String result = service.saveForm(form);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<ApiResponse> Form(@RequestBody FormInfo form) {
+        service.saveForm(form);
+        return ResponseEntity.ok(ApiResponse.success("Sikeres küldés"));
     }
 
     @GetMapping("/get/contactForm")
@@ -29,22 +32,14 @@ public class ContactFormController {
         return ResponseEntity.ok(service.getAllForms());
     }
 
-    @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class FormInfo {
         private String lastName;
         private String firstName;
         private String emailAddress;
         private String phoneNumber;
         private String message;
-
-        public FormInfo(String lastName, String firstName, String emailAddress, String phoneNumber, String message) {
-            this.lastName = lastName;
-            this.firstName = firstName;
-            this.emailAddress = emailAddress;
-            this.phoneNumber = phoneNumber;
-            this.message = message;
-        }
     }
-
 }

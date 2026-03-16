@@ -173,19 +173,13 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Sikeres óradíj változtatás"));
     }
 
-    @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class LoginRequest {
         private String email;
         private String password;
         private String deviceInfo;
-
-        public LoginRequest(String email, String password, String deviceInfo) {
-            this.email = email;
-            this.password = password;
-            this.deviceInfo = deviceInfo;
-        }
-
     }
 
     @Setter
@@ -198,7 +192,6 @@ public class UserController {
 
     }
 
-    @Setter
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -206,13 +199,13 @@ public class UserController {
         private String number;
     }
 
-    @Setter
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class EmailRequest {
         private String email;
     }
 
-    @Setter
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -222,7 +215,6 @@ public class UserController {
         private String password2;
     }
 
-    @Setter
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -253,7 +245,6 @@ public class UserController {
         private Integer hourlyRate;
     }
 
-    @Setter
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
