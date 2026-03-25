@@ -44,7 +44,7 @@ public class User {
     private String phoneNumber;
 
     @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "sex", length = 50)

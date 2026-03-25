@@ -44,4 +44,13 @@ public class ContactFromService {
     public List<ContactForm> getAllForms() {
         return repository.findAll();
     }
+
+    public String deleteForm(int id) {
+        return repository.findById((long) id)
+                .map(form -> {
+                    repository.delete(form);
+                    return "Sikeres törlés!";
+                })
+                .orElse("Nincs ilyen id-val form!");
+    }
 }

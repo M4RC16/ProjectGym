@@ -6,7 +6,6 @@ import com.projectgym.service.ContactFromService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +20,18 @@ public class ContactFormController {
         this.service = service;
     }
 
-    @PostMapping("/ContactForm")
+    @PostMapping("/add")
     public ResponseEntity<ApiResponse> Form(@RequestBody FormInfo form) {
         service.saveForm(form);
         return ResponseEntity.ok(ApiResponse.success("Sikeres küldés"));
     }
 
-    @GetMapping("/get/contactForm")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ApiResponse> deleteForm(@PathVariable int id) {
+        return ResponseEntity.ok(ApiResponse.success(service.deleteForm(id)));
+    }
+
+    @GetMapping("/get")
     public ResponseEntity<List<ContactForm>> getContactForm() {
         return ResponseEntity.ok(service.getAllForms());
     }

@@ -40,6 +40,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     void deleteByEmail(String email);
 
-    @Query("SELECT u.id as trainerId, CONCAT( u.firstName, ' ', u.lastName) as trainerName FROM User u WHERE u.role.id = 2")
+    @Query("SELECT u.id as trainerId, CONCAT( u.firstName, ' ', u.lastName) as trainerName, u.description as description, u.profilePicture as profilePicture, u.hourlyWage as hourlyWage FROM User u WHERE u.role.id = 2")
     List<TrainerProjection> findAllTrainers();
 }

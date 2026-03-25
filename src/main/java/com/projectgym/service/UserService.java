@@ -35,7 +35,7 @@ public class UserService {
     private String uploadDir;
 
     String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    String passwordRegex = "^(?=.[0-9])(?=.[^a-zA-Z0-9\\s]).{8,}$";
+    String passwordRegex = "^(?=.*[0-9])(?=.*[^a-zA-Z0-9\\s]).{8,}$";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -197,7 +197,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteMe(String email){
+    public void deleteMe(String email) {
         userRepository.deleteByEmail(email);
     }
 
@@ -255,7 +255,7 @@ public class UserService {
 
             Path filePath = uploadPath.resolve(newFileName);
             Files.copy(pfp.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            String dbImagePath = "/images/users/" + newFileName;
+            String dbImagePath = "/var/www/projectgym/uploads/images/users/" + newFileName;
             user.setProfilePicture(dbImagePath);
             userRepository.save(user);
 

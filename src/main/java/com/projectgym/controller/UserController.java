@@ -47,7 +47,7 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse httpResponse) {
         LoginResponse response = authService.login(loginRequest);
 
-        ResponseCookie  refreshTokenCookie = ResponseCookie.from("refreshToken", response.getRefreshToken())
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", response.getRefreshToken())
                 .httpOnly(true)
                 .secure(true) // todo, ha deploy true, ha dev false
                 .maxAge(60 * 60 * 24 * 30)
@@ -68,7 +68,7 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Email elküldve"));
     }
 
-    @PostMapping("/resetPassword/")
+    @PostMapping("/resetPassword")
     public ResponseEntity<ApiResponse> changePassword(@CookieValue("refreshToken") String token, @RequestBody ResetPasswordRequest request) {
         String email = service.getEmailByRefreshToken(token);
 
@@ -159,9 +159,9 @@ public class UserController {
 
     @PutMapping("change/description")
     @PreAuthorize("hasRole('edző')")
-    public ResponseEntity<ApiResponse> changeDescription(@CookieValue("refreshToken") String token, @RequestBody String description) {
+    public ResponseEntity<ApiResponse> changeDescription(@CookieValue("refreshToken") String token, @RequestBody Description request) {
         String currentUserEmail = service.getEmailByRefreshToken(token);
-         service.changeDescription(currentUserEmail, description);
+        service.changeDescription(currentUserEmail, request.getDescription());
         return ResponseEntity.ok(ApiResponse.success("Sikeres leírás változtatás"));
     }
 
@@ -209,6 +209,13 @@ public class UserController {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class Description {
+        private String description;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class ForgottenPasswordRequest {
         private String token;
         private String password1;
@@ -240,8 +247,8 @@ public class UserController {
     public static class Trainers {
         private int trainerId;
         private String trainerName;
-        private String profilePicture;
         private String description;
+        private String profilePicture;
         private Integer hourlyRate;
     }
 
