@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name = "reservation", uniqueConstraints = @UniqueConstraint(columnNames = {"scheduled_at"}))
+@Table(name = "reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +23,4 @@ public class Reservation {
     @CreationTimestamp
     @Column(name = "reservation_date", nullable = false)
     private LocalDateTime reservationDate;
-
 }

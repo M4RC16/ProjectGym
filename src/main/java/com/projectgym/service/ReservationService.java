@@ -2,6 +2,7 @@ package com.projectgym.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projectgym.exception.AlreadyExistsException;
+import com.projectgym.exception.NotAllowedException;
 import com.projectgym.model.Reservation;
 import com.projectgym.exception.NotFoundException;
 import com.projectgym.model.RefreshToken;
@@ -51,18 +52,34 @@ public class ReservationService {
                 .orElseThrow(() -> new RuntimeException("RefreshToken nem található"));
 
         int userId = token.getUser().getId();
+        int role = token.getUser().getRole().getId();
 
-        List<ReservationXUser> reservations = reservationXUserRepository.findByUserId(userId);
+        if (role == 3) {
+            List<ReservationXUser> reservations = reservationXUserRepository.findByUserId(userId);
 
-        return reservations.stream()
-                .map(rxu -> new TrainingResponse(
-                        rxu.getId(),
-                        rxu.getReservation().getId(),
-                        rxu.getReservation().getScheduledAt(),
-                        rxu.getTrainer().getFirstName() + " " + rxu.getTrainer().getLastName(),
-                        rxu.getTrainer().getId()
-                ))
-                .collect(Collectors.toList());
+            return reservations.stream()
+                    .map(rxu -> new TrainingResponse(
+                            rxu.getId(),
+                            rxu.getReservation().getId(),
+                            rxu.getReservation().getScheduledAt(),
+                            rxu.getTrainer().getFirstName() + " " + rxu.getTrainer().getLastName(),
+                            rxu.getTrainer().getId()
+                    ))
+                    .collect(Collectors.toList());
+        } else if (role == 2) {
+            List<ReservationXUser> reservations = reservationXUserRepository.findByTrainerId(userId);
+
+            return reservations.stream()
+                    .map(rxu -> new TrainingResponse(
+                            rxu.getId(),
+                            rxu.getReservation().getId(),
+                            rxu.getReservation().getScheduledAt(),
+                            rxu.getUser().getFirstName() + " " + rxu.getUser().getLastName(),
+                            rxu.getUser().getId()
+                    ))
+                    .collect(Collectors.toList());
+        }
+        throw new NotAllowedException("Nincs jogosultság a lekérdezésére");
     }
 
     @Transactional

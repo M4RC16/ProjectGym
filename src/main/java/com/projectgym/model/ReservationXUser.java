@@ -9,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Getter
 @Entity
-@Table(name = "reservation_x_user", uniqueConstraints = @UniqueConstraint(columnNames = "trainer_id"), indexes = {
+@Table(name = "reservation_x_user", indexes = {
         @Index(name = "user_id", columnList = "user_id"),
         @Index(name = "reservation_id", columnList = "reservation_id"),
         @Index(name = "trainer_id", columnList = "trainer_id")})
@@ -33,5 +33,4 @@ public class ReservationXUser {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "trainer_id")
     private User trainer;
-
 }
