@@ -1,105 +1,57 @@
 :host {
-  display: flex;
+/*   display: flex;
   flex: 1;
-  overflow: hidden;
+  overflow: hidden; */
 }
-
 
 :root {
   --primary-clr: #b38add;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /*   font-family: "Poppins", sans-serif; */
-}
-
-/* nice scroll bar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f5f5f5;
-  border-radius: 50px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-clr);
-  border-radius: 50px;
-}
-
-body {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 30px;
-  background-color: #e2e1dc;
-} 
+/* ==================== CONTAINER ==================== */
 
 .container {
   position: relative;
-  width: 1200px;
-  min-height: 850px;
+  width: 100%;
+  min-height: auto;
   margin: 0 auto;
   padding: 5px;
   color: #fff;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  flex: 1;
+  border-radius: 4rem;
   background-color: #212529;
 }
 
+/* ==================== LEFT — NAPTÁR ==================== */
+
 .left {
-  /*   width: 60%; */
-  /*   padding: 20px; */
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   justify-items: center;
 }
 
 .calendar {
   position: relative;
-  width: 80%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   color: #212529;
-  border-radius: 3rem;
+  border-radius: 1.5rem;
   background-color: #D6D6D6;
 }
 
-/* set after behind the main element */
-/* .calendar::before,
-.calendar::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  width: 12px;
-  height: 97%;
-  border-radius: 0 5px 5px 0;
-  background-color: #d3d4d6d7;
-  transform: translateY(-50%);
-}
-.calendar::before 
-  height: 94%;
-  left: calc(100% + 12px);
-  background-color: rgb(153, 153, 153);
-} */
 .calendar .month {
   width: 100%;
-  height: 80px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50px;
-  font-size: 1.2rem;
+  padding: 0 20px;
+  font-size: 0.95rem;
   font-weight: 500;
   text-transform: capitalize;
 }
@@ -116,12 +68,12 @@ body {
 
 .calendar .weekdays {
   width: 100%;
-  height: 50px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  font-size: 1rem;
+  padding: 0 10px;
+  font-size: 0.7rem;
   font-weight: 500;
   text-transform: capitalize;
 }
@@ -134,43 +86,20 @@ body {
   justify-content: center;
 }
 
-/* .calendar .days {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0 20px;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 20px;
-} */
-
-/* .calendar .days .day {
-  width: 10.28%;
-  height: 60px;
-  margin-top: .5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--primary-clr);
-  border: 1px solid #f5f5f5;
-} */
-
 .calendar .days {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
-  padding: 0 20px;
-  font-size: 1rem;
+  padding: 0 10px;
+  font-size: 0.7rem;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .calendar .days .day {
   width: 100%;
-  height: 60px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,7 +137,7 @@ body {
 
 .calendar .days .active {
   position: relative;
-  font-size: 2rem;
+  font-size: 1rem;
   color: #fff;
   background-color: var(--primary-clr);
 }
@@ -224,7 +153,7 @@ body {
 }
 
 .calendar .days .today {
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .calendar .days .event {
@@ -237,7 +166,7 @@ body {
   bottom: 10%;
   left: 50%;
   width: 75%;
-  height: 6px;
+  height: 4px;
   border-radius: 30px;
   transform: translateX(-50%);
   background-color: var(--primary-clr);
@@ -265,28 +194,9 @@ body {
   justify-content: space-between;
   gap: 5px;
   padding: 0 20px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: var(--primary-clr);
 }
-
-/* .calendar .goto-today .goto {
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  overflow: hidden;
-  border: 1px solid var(--primary-clr);
-} */
-
-/* .calendar .goto-today .goto input {
-  width: 100%;
-  height: 30px;
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  padding: 0 20px;
-  color: var(--primary-clr);
-  border-radius: 5px;
-} */
 
 .calendar .goto-today button {
   padding: 5px 10px;
@@ -296,6 +206,7 @@ body {
   background-color: transparent;
   cursor: pointer;
   color: #212529;
+  font-size: 0.8rem;
 }
 
 .calendar .goto-today button:hover {
@@ -303,55 +214,47 @@ body {
   background-color: var(--primary-clr);
 }
 
-/* .calendar .goto-today .goto button {
-  border: none;
-  border-left: 1px solid var(--primary-clr);
-  border-radius: 0;
-} */
+/* ==================== RIGHT — ESEMÉNYEK ==================== */
 
 .container .right {
   position: relative;
-  /*   width: 40%; */
-  min-height: 300px;
-  padding: 20px 0;
+  min-height: 200px;
+  padding: 10px 0;
 }
 
 .right .today-date {
   width: 100%;
-  height: 50px;
+  height: auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
-  padding-left: 70px;
-  margin-top: 50px;
-  margin-bottom: 20px;
+  padding: 0 15px;
+  margin-top: 1.5rem;
+  margin-bottom: 15px;
   text-transform: capitalize;
 }
 
 .right .today-date .event-day {
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 500;
 }
 
 .right .today-date .event-date {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: #878895;
 }
 
 .events {
   width: 100%;
-  /*   height: 50%; */
   max-height: 200px;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   padding-left: 4px;
-
   transition: opacity 320ms ease, transform 320ms ease, max-height 420ms ease;
   transform-origin: top;
   opacity: 1;
@@ -362,13 +265,13 @@ body {
 .events .event {
   position: relative;
   width: 95%;
-  min-height: 70px;
+  min-height: 55px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 5px;
-  padding: 0 20px;
-  padding-left: 50px;
+  gap: 4px;
+  padding: 0 12px;
+  padding-left: 35px;
   color: #fff;
   background: linear-gradient(90deg, #3f4458, transparent);
   cursor: pointer;
@@ -389,9 +292,9 @@ body {
 }
 
 .events .event .title .event-title {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 400;
-  margin-left: 20px;
+  margin-left: 12px;
 }
 
 .events .event i {
@@ -404,10 +307,10 @@ body {
 }
 
 .events .event .event-time {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 400;
   color: #878895;
-  margin-left: 15px;
+  margin-left: 12px;
   pointer-events: none;
 }
 
@@ -420,7 +323,7 @@ body {
   position: absolute;
   top: 50%;
   right: 0;
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 1;
   display: none;
   align-items: center;
@@ -443,16 +346,18 @@ body {
   transition: opacity .5s ease, transform .5s ease, max-height .5s ease;
 }
 
+/* ==================== ESEMÉNY HOZZÁADÁS ==================== */
+
 .add-event {
   position: absolute;
-  bottom: 30px;
-  right: 30px;
-  width: 40px;
-  height: 40px;
+  bottom: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #878895;
   border: 2px solid #878895;
   opacity: 0.5;
@@ -475,46 +380,44 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: #878895;
 }
 
 .add-event-wrapper {
   position: relative;
-  bottom: 100px;
+  bottom: 60px;
   left: 50%;
-  width: 90%;
+  width: 92%;
   max-height: 0;
   overflow: hidden;
-  border-radius: .60rem;
+  border-radius: 0.6rem;
   background-color: #fff;
   transform: translateX(-50%);
   transition: box-shadow 0.5s ease, max-height 0.5s ease, margin-top 1s ease;
 }
 
-
-
 .add-event-wrapper.active {
   max-height: 500px;
-  margin-top: 8rem;
+  margin-top: 5rem;
   box-shadow: 0px 3px 10px 2px black;
   overflow-y: auto;
 }
 
 .add-event-header {
   width: 100%;
-  height: 50px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 15px;
   color: #373c4f;
   border-bottom: 1px solid #f5f5f5;
 }
 
 .add-event-header .close {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 
@@ -523,7 +426,7 @@ body {
 }
 
 .add-event-header .title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -533,12 +436,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 20px;
+  padding: 15px;
 }
 
 .add-event-body .add-event-input {
   width: 100%;
-  min-height: 40px;
+  min-height: 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -547,12 +450,12 @@ body {
 
 .trainer-select {
   width: 100%;
-  height: 40px;
+  height: 36px;
   outline: none;
   border: none;
   border-bottom: 1px solid #f5f5f5;
-  padding: 0 10px;
-  font-size: 1rem;
+  padding: 0 8px;
+  font-size: 0.85rem;
   font-weight: 400;
   color: #373c4f;
   background: transparent;
@@ -565,30 +468,30 @@ body {
 
 .time-slots {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .time-slots label:first-child {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: #373c4f;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   display: block;
 }
 
 .time-slot-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  max-height: 150px;
+  gap: 4px;
+  max-height: 120px;
   overflow-y: auto;
 }
 
 .time-slot-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: 8px;
+  padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s;
@@ -605,22 +508,22 @@ body {
 
 .time-slot-item input[type="radio"] {
   accent-color: var(--primary-clr);
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   cursor: pointer;
 }
 
 .time-slot-label {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   color: #373c4f;
 }
 
 .loading-slots {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 0;
-  font-size: 0.9rem;
+  gap: 6px;
+  padding: 8px 0;
+  font-size: 0.8rem;
   color: #878895;
 }
 
@@ -633,12 +536,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 15px;
 }
 
 .add-event-footer .add-event-btn {
-  height: 40px;
-  font-size: 1rem;
+  height: 36px;
+  font-size: 0.85rem;
   font-weight: bold;
   outline: none;
   border: none;
@@ -655,98 +558,337 @@ body {
   color: #a8b0b5;
 }
 
-/* media queries */
+/* ==================== 576px+ ==================== */
 
-@media screen and (max-width: 1000px) {
-  body {
-    align-items: flex-start;
-    justify-content: flex-start;
-  } 
-
-  .container {
-    min-height: 100vh;
-    flex-direction: column;
-    border-radius: 0;
+@media (min-width: 576px) {
+  .calendar {
+    width: 95%;
+    border-radius: 2rem;
   }
 
-  .container .left {
-    width: 100%;
-    height: 100%;
-    padding: 20px 0;
+  .calendar .month {
+    height: 65px;
+    padding: 0 30px;
+    font-size: 1rem;
+  }
+
+  .calendar .weekdays {
+    height: 40px;
+    padding: 0 15px;
+    font-size: 0.8rem;
+  }
+
+  .calendar .days {
+    padding: 0 15px;
+    font-size: 0.8rem;
+  }
+
+  .calendar .days .day {
+    height: 42px;
+  }
+
+  .calendar .days .active,
+  .calendar .days .today {
+    font-size: 1.2rem;
+  }
+
+  .right .today-date {
+    padding: 0 25px;
+    margin-top: 2rem;
+  }
+
+  .right .today-date .event-day {
+    font-size: 1.5rem;
+  }
+
+  .events .event {
+    min-height: 60px;
+    padding-left: 40px;
+  }
+
+  .events .event .title .event-title {
+    font-size: 0.9rem;
+  }
+
+  .add-event-wrapper {
+    width: 90%;
+  }
+}
+
+/* ==================== 768px+ ==================== */
+
+@media (min-width: 768px) {
+  .left {
+    margin-top: 2rem;
+  }
+
+  .calendar {
+    width: 90%;
+    border-radius: 2.5rem;
+  }
+
+  .calendar .month {
+    height: 70px;
+    padding: 0 40px;
+    font-size: 1.1rem;
+  }
+
+  .calendar .weekdays {
+    height: 45px;
+    padding: 0 20px;
+    font-size: 0.9rem;
+  }
+
+  .calendar .days {
+    padding: 0 20px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .calendar .days .day {
+    height: 50px;
+  }
+
+  .calendar .days .active,
+  .calendar .days .today {
+    font-size: 1.5rem;
+  }
+
+  .calendar .days .event::after {
+    height: 5px;
+  }
+
+  .right .today-date {
+    padding: 0 35px;
+    margin-top: 2.5rem;
+  }
+
+  .right .today-date .event-day {
+    font-size: 1.7rem;
+  }
+
+  .right .today-date .event-date {
+    font-size: 0.9rem;
+  }
+
+  .events .event {
+    min-height: 65px;
+    padding-left: 45px;
+  }
+
+  .events .event .title .event-title {
+    font-size: 0.95rem;
+    margin-left: 15px;
+  }
+
+  .events .event .event-time {
+    font-size: 0.75rem;
+  }
+
+  .events .event::after {
+    font-size: 2.5rem;
+  }
+
+  .events .no-event {
+    font-size: 1.3rem;
+  }
+
+  .add-event {
+    bottom: 25px;
+    right: 25px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .add-event-wrapper {
+    bottom: 80px;
+  }
+
+  .add-event-wrapper.active {
+    margin-top: 6rem;
+  }
+
+  .trainer-select {
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  .time-slot-list {
+    max-height: 140px;
+  }
+}
+
+/* ==================== 992px+ ==================== */
+
+@media (min-width: 992px) {
+  .left {
+    margin-top: 3rem;
+  }
+
+  .calendar {
+    width: 85%;
+    border-radius: 3rem;
+  }
+
+  .calendar .month {
+    height: 80px;
+    padding: 0 50px;
+    font-size: 1.2rem;
+  }
+
+  .calendar .weekdays {
+    height: 50px;
+    padding: 0 20px;
+    font-size: 1rem;
+  }
+
+  .calendar .days {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .calendar .days .day {
+    height: 60px;
+  }
+
+  .calendar .days .active,
+  .calendar .days .today {
+    font-size: 2rem;
+  }
+
+  .calendar .days .event::after {
+    height: 6px;
   }
 
   .container .right {
-    width: 100%;
-    height: 100%;
+    min-height: 300px;
     padding: 20px 0;
   }
 
-  .calendar::before,
-  .calendar::after {
-    top: 100%;
-    left: 50%;
-    width: 97%;
-    height: 12px;
-    border-radius: 0 0 5px 5px;
-    transform: translateX(-50%);
+  .right .today-date {
+    padding: 0 40px;
+    padding-left: 70px;
+    margin-top: 50px;
+    margin-bottom: 20px;
   }
 
-  .calendar::before {
-    width: 94%;
-    top: calc(100% + 12px);
+  .right .today-date .event-day {
+    font-size: 2rem;
   }
 
-  .events {
-    padding-bottom: 340px;
+  .right .today-date .event-date {
+    font-size: 1rem;
+  }
+
+  .events .event {
+    min-height: 70px;
+    padding-left: 50px;
+    padding-right: 20px;
+  }
+
+  .events .event .title .event-title {
+    font-size: 1rem;
+    margin-left: 20px;
+  }
+
+  .events .event .event-time {
+    font-size: 0.8rem;
+    margin-left: 15px;
+  }
+
+  .events .event::after {
+    font-size: 3rem;
+  }
+
+  .events .no-event {
+    font-size: 1.5rem;
+  }
+
+  .add-event {
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 
   .add-event-wrapper {
     bottom: 100px;
   }
-}
 
-@media screen and (max-width: 500px) {
-  .calendar .month {
-    height: 75px;
+  .add-event-wrapper.active {
+    margin-top: 8rem;
   }
 
-  .calendar .weekdays {
+  .add-event-header {
     height: 50px;
+    padding: 0 20px;
   }
 
-  .calendar .days .day {
+  .add-event-header .title {
+    font-size: 1.2rem;
+  }
+
+  .add-event-header .close {
+    font-size: 1.5rem;
+  }
+
+  .add-event-body {
+    padding: 20px;
+  }
+
+  .trainer-select {
     height: 40px;
-    font-size: 0.8rem;
-  }
-
-  .calendar .days .day.active,
-  .calendar .days .day.today {
+    padding: 0 10px;
     font-size: 1rem;
   }
 
-  .right .today-date {
+  .time-slots label:first-child {
+    font-size: 0.9rem;
+  }
+
+  .time-slot-list {
+    max-height: 150px;
+    gap: 6px;
+  }
+
+  .time-slot-item {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .time-slot-item input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .time-slot-label {
+    font-size: 0.95rem;
+  }
+
+  .loading-slots {
+    gap: 8px;
+    font-size: 0.9rem;
+  }
+
+  .add-event-footer {
     padding: 20px;
+  }
+
+  .add-event-footer .add-event-btn {
+    height: 40px;
+    font-size: 1rem;
   }
 }
 
-/* .credits {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-  padding: 10px;
-  font-size: 12px;
-  color: #fff;
-  background-color: #b38add;
-}
+/* ==================== 1200px+ ==================== */
 
-.credits a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-}
+@media (min-width: 1200px) {
+  .calendar {
+    width: 80%;
+  }
 
-.credits a:hover {
-  text-decoration: underline;
-} */
+  .events {
+    padding-bottom: 0;
+  }
+}

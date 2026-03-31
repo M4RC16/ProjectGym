@@ -123,7 +123,7 @@ export class AuthService {
       this.refreshTimeout = null;
     }
 
-    this.router.navigate(['']);
+    /* this.router.navigate(['']); */
   }
 
   // Logout
@@ -141,7 +141,7 @@ export class AuthService {
       });
 
     this.clearAuthState();
-    localStorage.clear();
+    this.router.navigate(['']);
   }
 
   // register
@@ -163,6 +163,14 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-
+  refreshCurrentUser(): void {
+    const token = this.JWTtoken;
+    if (!token) return;
+    const decoded = jwtDecode<AppJwtPayload>(token);
+    this.userService.getUserById(decoded.userId).subscribe({
+      next: (user) => this.currentUserSubject.next(user),
+      error: (err) => console.error('Failed to refresh user data', err),
+    });
+  }
 
 }

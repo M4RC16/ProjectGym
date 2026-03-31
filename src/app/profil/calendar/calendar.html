@@ -113,7 +113,7 @@
       </div>
     </div>
   </div>
-  @if (currentUser()?.role?.[0]?.roleName !== 'TRAINER') {
+  @if (currentUser()?.role?.[0]?.id !== 2) {
     <button class="add-event" (click)="toggleAddEvent()">
       <i class="fas fa-plus"></i>
     </button>

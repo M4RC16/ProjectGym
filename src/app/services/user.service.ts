@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { User, UserFormData } from '../models/models.model';
+import { ChangePasswordRequest, message, UpdateUserNameRequest, User, UserFormData } from '../models/models.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,11 +37,65 @@ export class UserService {
     });
   }
 
+  getProfilPicture(){
+
+  }
+
+  updateUserName(data: UpdateUserNameRequest) {
+    return this.httpClient.post(`${this.baseUrl}/api/user/change/name`, data, {
+      withCredentials: true,
+    });
+  }
+
+  updatePhoneNumber(payLoad: {number: string} ) {
+    return this.httpClient.post(`${this.baseUrl}/api/user/change/number`, payLoad, {
+      withCredentials: true,
+    });
+  }
+
+  changePassword(data: ChangePasswordRequest) {
+    return this.httpClient.post(`${this.baseUrl}/api/user/resetPassword`, data, {
+      withCredentials: true,
+    });
+  }
+
+  changeProfilPicture(payLoad: File){
+    const formData = new FormData();
+    formData.append('file', payLoad);
+    return this.httpClient.post(`${this.baseUrl}/api/user/change/pfp`, formData, {
+      withCredentials: true,
+    });
+  }
+
+  changeDescription(payLoad: string){
+    return this.httpClient.put(`${this.baseUrl}/api/user/change/description`,{"description":payLoad}, {
+      withCredentials: true,
+    });
+  }
+
+  changeWage(payLoad: number){
+    return this.httpClient.put(`${this.baseUrl}/api/user/change/wage`,payLoad, {
+      withCredentials: true,
+    });
+  }
+
   sendUserForm(data: UserFormData){
     return this.httpClient.post(`${this.baseUrl}/api/form/ContactForm`, data, {
       withCredentials: true,
       responseType: 'text',
     });
   }
-  
+
+  getAllMessages() {
+    return this.httpClient.get<message[]>(`${this.baseUrl}/api/form/get`);
+  }
+
+  deleteMessage(id: number){
+    return this.httpClient.delete(`${this.baseUrl}/api/form/delete/${id}`, {
+      withCredentials: true,
+    });
+  }
+
 }
+
+

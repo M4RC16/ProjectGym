@@ -17,56 +17,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
-        <tr>
-          <td>Napi jegy</td>
-          <td>2000 Ft</td>
-          <td><a href=""><i class="fa-solid fa-cart-shopping"></i></a></td>
-        </tr>
+        @for (ticket of this.tickets; track $index) {
+          <tr>
+            <td>{{ticket.ticketName}}</td>
+            <td>{{ticket.price}} Ft</td>
+            <td>
+              <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

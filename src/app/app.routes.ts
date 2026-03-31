@@ -10,6 +10,8 @@ import { Trainers } from './trainers/trainers';
 import { Profil } from './profil/profil';
 import { Calendar } from './profil/calendar/calendar';
 import { Dashboard } from './profil/dashboard/dashboard';
+import { Settings } from './profil/settings/settings';
+import { Messages } from './profil/messages/messages';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { redirectGuard } from './guards/redirect-guard';
@@ -68,6 +70,16 @@ export const routes: Routes = [
       {
         path: 'admin',
         component: Dashboard,
+        data: { role: 1 },
+        canActivate: [roleGuard],
+      },
+      {
+        path: 'settings',
+        component: Settings,
+      },
+      {
+        path: 'messages',
+        component: Messages,
         data: { role: 1 },
         canActivate: [roleGuard],
       },

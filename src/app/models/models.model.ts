@@ -106,3 +106,40 @@ export interface deleteRequest {
   reservationId: number;
   trainerId: number;
 }
+
+export interface UpdateUserNameRequest {
+  firstName: string;
+  lastName: string;
+}
+
+export interface ChangePasswordRequest {
+  oldPassword: string;
+  password1: string;
+  password2: string;
+}
+
+/* Ticket response */
+
+export interface Ticket {
+  id: number;
+  price: number;
+  ticketName: string;
+  unit: string;
+  validityLength: number;
+}
+
+export interface addTicket {
+  price: number;
+  ticketName: string;
+  unit: string;
+  validityLength: number;
+}
+
+
+export interface message {
+  id: number;
+  name: string;
+  phoneNumber: string;
+  email: string;
+  message: string;
+}

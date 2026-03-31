@@ -1,11 +1,24 @@
+:host {
+    display: block;
+    text-align: center;
+    background:
+        linear-gradient(215deg, yellow 0%, yellow 10%, transparent 10.1%) no-repeat,
+        linear-gradient(35deg, #4a4a4a 0%, #4a4a4a 20%, transparent 20.1%) no-repeat,
+        linear-gradient(35deg, yellow 12%, yellow 20.2%, transparent 20.5%) no-repeat,
+        #2a2a2a;
+    min-height: 100vh;
+    padding-top: 1rem;
+}
+
 .tickets {
-    margin-bottom: 6rem;
+    padding-bottom: 6rem;
 }
 
 
 .title {
-    margin-top: 6rem;
-    padding: 0 1rem;
+    padding-top: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     color: white;
 }
 
@@ -42,7 +55,7 @@
     border-radius: 1.5rem;
     padding: 1.25rem;
     color: white;
-    background-color: #69696952;
+    background-color: rgba(223, 223, 223, 0.315);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -52,7 +65,7 @@
 /* Android fallback */
 @supports not (backdrop-filter: blur(12px)) {
     .ticket-table {
-        background-color: #69696952;
+        background-color: rgba(223, 223, 223, 0.315);
     }
 }
 
@@ -82,7 +95,7 @@ td {
     padding: 0.6rem 0.25rem;
     font-size: 0.75rem;
     color: #e5e5e5;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.261);
     transition: 0.2s ease-in;
 }
 
@@ -100,7 +113,7 @@ tbody tr:hover {
     font-weight: bold;
     color: #e5e5e5;
     transition: 0.3s ease-in;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 .ticket-table a:hover {
@@ -113,7 +126,7 @@ tbody tr:hover {
 
 @media (min-width: 576px) {
     .title {
-        margin-top: 7rem;
+        padding-top: 7rem;
     }
 
     .tickets-title {
@@ -143,7 +156,7 @@ tbody tr:hover {
 
 @media (min-width: 768px) {
     .title {
-        margin-top: 8rem;
+        padding-top: 8rem;
     }
 
     .tickets-title {
@@ -166,14 +179,14 @@ tbody tr:hover {
     }
 
     .tickets {
-        margin-bottom: 8rem;
+        padding-bottom: 8rem;
     }
 }
 
 
 @media (min-width: 992px) {
     .title {
-        margin-top: 9rem;
+        padding-top: 9rem;
     }
 
     .tickets-title {
@@ -199,7 +212,7 @@ tbody tr:hover {
     }
 
     .tickets {
-        margin-bottom: 10rem;
+        padding-bottom: 10rem;
     }
 }
 
@@ -224,6 +237,6 @@ tbody tr:hover {
     }
 
     .tickets {
-        margin-bottom: 15rem;
+        padding-bottom: 15rem;
     }
 }

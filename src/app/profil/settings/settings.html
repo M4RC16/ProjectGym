@@ -1,0 +1,268 @@
+<div class="settings-wrapper">
+  <h1 class="settings-title">Beállítások</h1>
+
+  <div class="settings-cards">
+    <div class="settings-card">
+      <div class="card-header">
+        <i class="fa-solid fa-user-pen"></i>
+        <h2>Személyes adatok</h2>
+      </div>
+
+      @if (currentUser()?.role?.[0]?.id !== 1) {
+        <div class="form-group">
+          <label for="lastName">Vezetéknév</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-user"></i>
+            <input id="lastName" type="text" [(ngModel)]="lastName" placeholder="Vezetéknév" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName">Keresztnév</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-user"></i>
+            <input id="firstName" type="text" [(ngModel)]="firstName" placeholder="Keresztnév" />
+          </div>
+        </div>
+
+        <button
+          class="save-btn"
+          (click)="changeUserName()"
+          [disabled]="profileLoading || !isProfileFormValid"
+        >
+          @if (profileLoading) {
+            <i class="fa-solid fa-spinner fa-spin"></i> Mentés...
+          } @else {
+            <i class="fa-solid fa-floppy-disk"></i> Mentés
+          }
+        </button>
+      }
+
+      <div class="form-group">
+        <label for="phone">Telefonszám</label>
+        <div class="input-wrapper" [class.input-error]="phoneNumberError">
+          <i class="fa-solid fa-phone"></i>
+          <input id="phone" type="tel" [(ngModel)]="phoneNumber" placeholder="+36 20 123 4567" />
+        </div>
+        @if (phoneNumberError) {
+          <p class="error-hint">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ phoneNumberError }}
+          </p>
+        }
+      </div>
+
+      <button
+        class="save-btn"
+        (click)="changePhoneNumber()"
+        [disabled]="profileLoading || this.phoneNumberError || !this.phoneNumber"
+      >
+        @if (profileLoading) {
+          <i class="fa-solid fa-spinner fa-spin"></i> Mentés...
+        } @else {
+          <i class="fa-solid fa-floppy-disk"></i> Mentés
+        }
+      </button>
+
+      @if (currentUser()?.role?.[0]?.id !== 1) {
+        <div class="form-group">
+          <label for="profileImage">Profilkép</label>
+          <div class="upload-box">
+            <input
+              id="profileImage"
+              class="file-input"
+              type="file"
+              accept="image/*"
+              (change)="uploadProfilePicture($event)"
+            />
+            <label for="profileImage" class="file-label">
+              <i class="fa-solid fa-image"></i>
+              <span>Kép kiválasztása</span>
+            </label>
+            <p class="upload-hint">PNG, JPG vagy WEBP formátum ajánlott</p>
+          </div>
+        </div>
+      }
+
+      <div class="spacer"></div>
+    </div>
+
+    <!-- Jelszó változtatás -->
+    <div class="settings-card">
+      <div class="card-header">
+        <i class="fa-solid fa-lock"></i>
+        <h2>Jelszó változtatás</h2>
+      </div>
+
+      <div class="form-group">
+        <label for="currentPassword">Jelenlegi jelszó</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-key"></i>
+          <input
+            id="currentPassword"
+            [type]="showCurrentPassword ? 'text' : 'password'"
+            [(ngModel)]="currentPassword"
+            placeholder="Jelenlegi jelszó"
+          />
+          <button class="toggle-pw" (click)="togglePassword('current')" type="button">
+            <i [class]="showCurrentPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newPassword">Új jelszó</label>
+        <div class="input-wrapper" [class.input-error]="newPasswordError">
+          <i class="fa-solid fa-lock"></i>
+          <input
+            id="newPassword"
+            [type]="showNewPassword ? 'text' : 'password'"
+            [(ngModel)]="newPassword"
+            placeholder="Új jelszó (min. 8 karakter)"
+          />
+          <button class="toggle-pw" (click)="togglePassword('new')" type="button">
+            <i [class]="showNewPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+        @if (newPasswordError) {
+          <p class="error-hint">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ newPasswordError }}
+          </p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Új jelszó megerősítése</label>
+        <div class="input-wrapper" [class.input-error]="confirmPasswordError">
+          <i class="fa-solid fa-lock"></i>
+          <input
+            id="confirmPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            [(ngModel)]="confirmPassword"
+            placeholder="Jelszó megerősítése"
+          />
+          <button class="toggle-pw" (click)="togglePassword('confirm')" type="button">
+            <i [class]="showConfirmPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+        @if (confirmPasswordError) {
+          <p class="error-hint">
+            <i class="fa-solid fa-circle-exclamation"></i> {{ confirmPasswordError }}
+          </p>
+        }
+      </div>
+
+      <div class="spacer"></div>
+
+      <button
+        class="save-btn"
+        (click)="changePassword()"
+        [disabled]="passwordLoading || !isPasswordFormValid"
+      >
+        @if (passwordLoading) {
+          <i class="fa-solid fa-spinner fa-spin"></i> Mentés...
+        } @else {
+          <i class="fa-solid fa-key"></i> Jelszó módosítása
+        }
+      </button>
+    </div>
+
+    <!-- Ticket hozzáadása (admin) -->
+    @if (currentUser()?.role?.[0]?.id === 1) {
+      <div class="settings-card">
+        <div class="card-header">
+          <i class="fa-solid fa-ticket"></i>
+          <h2>Ticket hozzáadása</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="ticketName">Ticket neve</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-ticket"></i>
+            <input id="ticketName" type="text" [(ngModel)]="ticketName" placeholder="Pl. Havi bérlet" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ticketLength">Ticket hossza (nap)</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-calendar-days"></i>
+            <input id="ticketLength" type="number" min="1" [(ngModel)]="ticketLength" placeholder="Pl. 30" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ticketPrice">Ára (Ft)</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            <input id="ticketPrice" type="number" min="1" [(ngModel)]="ticketPrice" placeholder="Pl. 12000" />
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="save-btn" (click)="addTicket()" [disabled]="ticketLoading || !isTicketFormValid">
+          @if (ticketLoading) {
+            <i class="fa-solid fa-spinner fa-spin"></i> Mentés...
+          } @else {
+            <i class="fa-solid fa-plus"></i> Ticket hozzáadása
+          }
+        </button>
+      </div>
+    }
+
+    <!-- Edző adatok -->
+    @if (currentUser()?.role?.[0]?.id === 2) {
+      <div class="settings-card">
+        <div class="card-header">
+          <i class="fa-solid fa-dumbbell"></i>
+          <h2>Edző adatok módosítása</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Leírás</label>
+          <div class="input-wrapper textarea-wrapper">
+            <i class="fa-solid fa-align-left"></i>
+            <textarea
+              id="description"
+              rows="2"
+              [(ngModel)]="description"
+              placeholder="Adj meg egy rövid leírást"
+            ></textarea>
+          </div>
+        </div>
+
+        <button
+          class="save-btn"
+          (click)="changeDescription()"
+          [disabled]="profileLoading || description.length < 10"
+        >
+          <i class="fa-solid fa-pen"></i> Leírás mentése
+        </button>
+
+        <div class="form-group">
+          <label for="hourlyWage">Órabér</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-money-bill-wave"></i>
+            <input
+              id="hourlyWage"
+              type="number"
+              min="0"
+              [(ngModel)]="wage"
+              placeholder="Pl. 8000"
+            />
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button
+          class="save-btn"
+          (click)="changeWage()"
+          [disabled]="profileLoading || wage === null"
+        >
+          <i class="fa-solid fa-coins"></i> Órabér mentése
+        </button>
+      </div>
+    }
+  </div>
+</div>

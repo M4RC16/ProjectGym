@@ -2,11 +2,19 @@
 :host {
     display: block;
     text-align: center;
+    background:
+        linear-gradient(150deg, yellow 0%, yellow 2%, transparent 2.1%) no-repeat,
+        linear-gradient(330deg, #4a4a4a 0%, #4a4a4a 15%, transparent 15.1%) no-repeat,
+        linear-gradient(330deg, yellow 12%, yellow 15.1%, transparent 15.2%) no-repeat,
+        #2a2a2a;
+    min-height: 100vh;
+    padding-top:1rem;
 }
 
 .title {
-    margin-top: 6rem;
-    padding: 0 1rem;
+    padding-top: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     color: white;
 }
 
@@ -219,7 +227,7 @@
 
 @media (min-width: 576px) {
     .title {
-        margin-top: 7rem;
+        padding-top: 7rem;
     }
 
     .gallery-title {
@@ -245,8 +253,16 @@
 }
 
 @media (min-width: 768px) {
+    :host {
+        background:
+            linear-gradient(150deg, yellow 0%, yellow 8%, transparent 8.1%) no-repeat,
+            linear-gradient(330deg, #4a4a4a 0%, #4a4a4a 15%, transparent 15.1%) no-repeat,
+            linear-gradient(330deg, yellow 12%, yellow 15.1%, transparent 15.2%) no-repeat,
+            #2a2a2a;
+    }
+
     .title {
-        margin-top: 8rem;
+        padding-top: 8rem;
     }
 
     .gallery-title {
@@ -275,7 +291,7 @@
 
 @media (min-width: 992px) {
     .title {
-        margin-top: 9rem;
+        padding-top: 9rem;
     }
 
     .gallery-title {

@@ -12,7 +12,9 @@ export class TrainerCard {
 
   @Input({required:true}) trainer!: Trainer;
 
-    isOpen = false;
+  readonly fallbackImage = '/assets/trainers/NAI.jpg';
+
+  isOpen = false;
 
   open() {
     this.isOpen = true;
@@ -24,6 +26,11 @@ export class TrainerCard {
 
   toggle() {
     this.isOpen = !this.isOpen;
+  }
+
+  onImageError(event: Event) {
+    const image = event.target as HTMLImageElement;
+    image.src = this.fallbackImage;
   }
 
 }

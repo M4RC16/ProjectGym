@@ -1,12 +1,17 @@
-<div class="profil-container container">
-    
+<div class="profil-container" [class.calendar-active]="isCalendarRoute()">
   <div class="side-bar" [class.admin]="currentUser()?.role?.[0]?.id === 1">
     <div class="personal-info">
       @if (currentUser(); as user) {
         <div class="profile-avatar">
           <i class="fa-solid fa-user"></i>
         </div>
-        <h2 class="profile-name">{{ (user.firstName || user.lastName) ? user.firstName+' '+user.lastName : (user.role?.[0]?.roleName ?? 'Ismeretlen')+' felhasználó' }}</h2>
+        <h2 class="profile-name">
+          {{
+            user.firstName || user.lastName
+              ? user.firstName + ' ' + user.lastName
+              : (user.role?.[0]?.roleName ?? 'Ismeretlen') + ' felhasználó'
+          }}
+        </h2>
         <span class="profile-role">{{ user.role?.[0]?.roleName }}</span>
 
         <div class="profile-details">
@@ -18,10 +23,12 @@
             <i class="fa-solid fa-phone"></i>
             <span>{{ user.phoneNumber }}</span>
           </div>
-          <div class="detail-item">
-            <i class="fa-solid fa-ticket"></i>
-            <span>{{ user.validUntil }} jegy</span>
-          </div>
+          @if (currentUser()?.role?.[0]?.id !== 1) {
+            <div class="detail-item">
+              <i class="fa-solid fa-ticket"></i>
+              <span>{{ user.validUntil }} jegy</span>
+            </div>
+          }
         </div>
       } @else {
         <h2 class="profile-name">Nincs bejelentkezve</h2>
@@ -30,13 +37,43 @@
 
     <div class="controls">
       <ul>
-        <li><a routerLink="settings"><i class="fa-solid fa-sliders"></i>Beállítások</a></li>
-        <li><a (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+        @if (currentUser()?.role?.[0]?.id === 1) {
+          <li>
+            <a routerLink="admin" routerLinkActive="active-link"
+              ><i class="fa-solid fa-shield-halved"></i>Admin panel</a
+            >
+          </li>
+          <li>
+            <a routerLink="messages" routerLinkActive="active-link"
+              ><i class="fa-solid fa-envelope"></i>Üzenetek</a
+            >
+          </li>
+        } @else if (currentUser()?.role?.[0]?.id === 2) {
+          <li>
+            <a routerLink="trainer" routerLinkActive="active-link"
+              ><i class="fa-solid fa-calendar-days"></i>Naptár</a
+            >
+          </li>
+        } @else {
+          <li>
+            <a routerLink="user" routerLinkActive="active-link"
+              ><i class="fa-solid fa-calendar-days"></i>Naptár</a
+            >
+          </li>
+        }
+        <li>
+          <a routerLink="settings" routerLinkActive="active-link"
+            ><i class="fa-solid fa-sliders"></i>Beállítások</a
+          >
+        </li>
+        <li>
+          <a (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i>Kijelentkezés</a>
+        </li>
       </ul>
     </div>
   </div>
 
-  <div class="profil-content ">
-    <router-outlet/>
+  <div class="profil-content">
+    <router-outlet />
   </div>
 </div>

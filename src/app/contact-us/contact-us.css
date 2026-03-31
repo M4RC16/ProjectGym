@@ -1,9 +1,19 @@
+:host {
+    display: block;
+    background:
+        linear-gradient(150deg, yellow 0%, yellow 8%, transparent 8.1%) no-repeat,
+        linear-gradient(330deg, #4a4a4a 0%, #4a4a4a 15%, transparent 15.1%) no-repeat,
+        linear-gradient(330deg, yellow 12%, yellow 15.2%, transparent 15.5%) no-repeat,
+        #2a2a2a;
+    min-height: 100vh;
+}
+
 .contact-us {
     padding: 0;
 }
 
 .hero {
-    background-color: gray;
+    background-color: transparent;
 }
 
 .hero-body .container {
@@ -159,6 +169,10 @@
     height: 20rem;
     margin-top: 2rem;
 }
+
+/* .google-map-container iframe {
+    filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%);;
+} */
 
 
 @media (min-width: 576px) {

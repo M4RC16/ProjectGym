@@ -1,0 +1,45 @@
+<div class="messages">
+  <h2 class="messages-title">Üzenetek</h2>
+
+  <div class="message-list">
+    @for (msg of messages; track msg.id) {
+      <div class="message-item" [class.opened]="openedId === msg.id">
+
+        <div class="message-header" (click)="toggle(msg.id)">
+          <div class="sender-info">
+            <i class="fa-solid fa-envelope"></i>
+            <span class="sender-name">{{ msg.name }}</span>
+          </div>
+          <i class="fa-solid fa-chevron-down arrow" [class.rotated]="openedId === msg.id"></i>
+        </div>
+
+        @if (openedId === msg.id) {
+          <div class="message-body">
+            <div class="detail">
+              <i class="fa-solid fa-at"></i>
+              <span>{{ msg.email }}</span>
+            </div>
+            <div class="detail">
+              <i class="fa-solid fa-phone"></i>
+              <span>{{ msg.phoneNumber || '–' }}</span>
+            </div>
+            <div class="message-text">
+              <p>{{ msg.message }}</p>
+            </div>
+            <button class="delete-button" type="button" (click)="delete(msg.id)">
+              <i class="fa-solid fa-trash"></i>
+              Törlés
+            </button>
+          </div>
+        }
+
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <i class="fa-solid fa-inbox"></i>
+        <p>Nincsenek üzenetek</p>
+      </div>
+    }
+  </div>
+</div>
+

@@ -9,7 +9,7 @@
     color: black;
     position: sticky;
     bottom: 0;
-    padding: 2rem 0.5rem;
+    padding: 1.2rem 0.5rem;
 }
 
 .brand .logo {
@@ -42,6 +42,24 @@
     color: yellow;
     cursor: pointer;
     transform: scale(1.1);
+}
+
+.opening-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: yellow;
+}
+
+.opening-list p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+    color: white;
+    font-weight: 500;
+}
+
+.opening-list span {
+    font-weight: 700;
 }
 
 .icons {
@@ -101,7 +119,7 @@
 
 @media (min-width: 576px) {
     .footer-wrapper {
-        padding: 2.5rem 1rem;
+        padding: 1.5rem 1rem;
     }
 
     .brand .logo {
@@ -125,13 +143,19 @@
     .footer-bottom a {
         font-size: 0.8rem;
     }
-}
 
-/*(768px - 991px)*/
+    .opening-title {
+        font-size: 1.2rem;
+    }
+
+    .opening-list p {
+        font-size: 0.9rem;
+    }
+}
 
 @media (min-width: 768px) {
     .footer-wrapper {
-        padding: 3rem 1.5rem;
+        padding: 1.5rem 1.5rem;
     }
 
     .brand .logo {
@@ -151,8 +175,16 @@
         font-size: 2.5rem;
     }
 
+    .opening-title {
+        font-size: 1.3rem;
+    }
+
+    .opening-list p {
+        font-size: 1rem;
+    }
+
     .footer-bottom {
-        margin-top: 5rem;
+        margin-top: 1rem;
     }
 
     .footer-bottom p,
@@ -165,7 +197,7 @@
 
 @media (min-width: 992px) {
     .footer-wrapper {
-        padding: 3rem 2rem;
+        padding: 1.5rem 2rem;
     }
 
     .brand .logo {
@@ -184,8 +216,16 @@
         font-size: 2.8rem;
     }
 
+    .opening-title {
+        font-size: 1.4rem;
+    }
+
+    .opening-list p {
+        font-size: 1.05rem;
+    }
+
     .footer-bottom {
-        margin-top: 6rem;
+        margin-top: 1.2rem;
     }
 
     .footer-bottom p,
@@ -198,7 +238,7 @@
 
 @media (min-width: 1200px) {
     .footer-wrapper {
-        padding: 3rem 3rem;
+        padding: 1.5rem 3rem;
     }
 
     .brand .logo {
@@ -223,8 +263,16 @@
         font-size: 3rem;
     }
 
+    .opening-title {
+        font-size: 1.5rem;
+    }
+
+    .opening-list p {
+        font-size: 1.1rem;
+    }
+
     .footer-bottom {
-        margin-top: 7rem;
+        margin-top: 1.5rem;
     }
 
     .footer-bottom p,
