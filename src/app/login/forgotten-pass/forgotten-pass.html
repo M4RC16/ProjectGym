@@ -1,0 +1,112 @@
+<div class="container h-100">
+	<div class="row justify-content-center align-items-center h-100">
+		<div class="col-12 col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
+			<div class="login-box">
+				<img src="assets/logo.svg" class="login-logo" alt="ProjectGym Logo" />
+
+				@if (!isResetStep()) {
+					<h2 class="login-title">Elfelejtett jelszó</h2>
+					<p class="login-sub">Add meg az email címed, és küldünk reset tokent</p>
+
+					<form (ngSubmit)="onSendResetEmail()">
+						<input
+							placeholder="Email"
+							[(ngModel)]="email"
+							type="email"
+							id="email"
+							name="email"
+							class="login-input"
+							required
+						/>
+						@if (emailError()) {
+							<p class="error-message">{{ emailError() }}</p>
+						}
+
+						<button type="submit" class="login-btn" [disabled]="loading()">
+							@if (loading()) {
+								Feldolgozás...
+							} @else {
+								Token küldése
+							}
+						</button>
+
+						<a class="other-bt" href="/login">Vissza a bejelentkezéshez</a>
+					</form>
+				} @else {
+
+					<h2 class="login-title">Jelszó visszaállítás</h2>
+					<p class="login-sub">Add meg a tokened és az új jelszót</p>
+
+					<form (ngSubmit)="onResetPassword()">
+						<input
+							placeholder="Token"
+							[(ngModel)]="token"
+							type="text"
+							id="token"
+							name="token"
+							class="login-input"
+							required
+						/>
+						@if (tokenError()) {
+							<p class="error-message">{{ tokenError() }}</p>
+						}
+
+						<div class="password-wrapper">
+							<input
+								placeholder="Új jelszó"
+								[(ngModel)]="password1"
+								[type]="showPassword1() ? 'text' : 'password'"
+								id="password1"
+								name="password1"
+								class="login-input"
+								required
+							/>
+							<button type="button" class="toggle-password" (click)="togglePassword1()">
+								@if (showPassword1()) {
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+								} @else {
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+								}
+							</button>
+						</div>
+						@if (password1Error()) {
+							<p class="error-message">{{ password1Error() }}</p>
+						}
+
+						<div class="password-wrapper">
+							<input
+								placeholder="Új jelszó megerősítése"
+								[(ngModel)]="password2"
+								[type]="showPassword2() ? 'text' : 'password'"
+								id="password2"
+								name="password2"
+								class="login-input"
+								required
+							/>
+							<button type="button" class="toggle-password" (click)="togglePassword2()">
+								@if (showPassword2()) {
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+								} @else {
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+								}
+							</button>
+						</div>
+						@if (password2Error()) {
+							<p class="error-message">{{ password2Error() }}</p>
+						}
+
+						<button type="submit" class="login-btn" [disabled]="loading()">
+							@if (loading()) {
+								Feldolgozás...
+							} @else {
+								Jelszó visszaállítása
+							}
+						</button>
+
+						<a class="other-bt" href="/login">Vissza a bejelentkezéshez</a>
+					</form>
+				}
+			</div>
+		</div>
+	</div>
+</div>

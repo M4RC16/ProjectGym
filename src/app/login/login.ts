@@ -20,6 +20,7 @@ export class Login {
   passwordError = signal('');
   loginError = signal('');
   showPassword = signal(false);
+  private authService = inject(AuthService);
 
   togglePassword() {
     this.showPassword.set(!this.showPassword());
@@ -107,4 +108,5 @@ export class Login {
         },
       });
   }
+
 }

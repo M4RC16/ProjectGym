@@ -118,6 +118,12 @@ export interface ChangePasswordRequest {
   password2: string;
 }
 
+export interface ForgottenPasswordRequest {
+  token: string;
+  password1: string;
+  password2: string;
+}
+
 /* Ticket response */
 
 export interface Ticket {

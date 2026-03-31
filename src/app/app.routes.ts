@@ -15,6 +15,7 @@ import { Messages } from './profil/messages/messages';
 import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { redirectGuard } from './guards/redirect-guard';
+import { ForgottenPass } from './login/forgotten-pass/forgotten-pass';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,14 @@ export const routes: Routes = [
     path: 'trainers',
     component: Trainers,
   },
+    {
+    path: 'forgotten-password',
+    component: ForgottenPass,
+  },
+    {
+      path: 'forgotten-password/reset',
+      component: ForgottenPass,
+    },
   {
     path: 'profil',
     component: Profil,

@@ -1,14 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AppJwtPayload, loginData, loginResponse, registerData, User } from '../models/models.model';
+import {
+  AppJwtPayload,
+  ForgottenPasswordRequest,
+  loginData,
+  loginResponse,
+  registerData,
+  User,
+} from '../models/models.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { RequestsService } from './requests.service';
 import { environment } from '../../environments/environment';
 import { UserService } from './user.service';
-
-
 
 @Injectable({
   providedIn: 'root',
@@ -61,16 +66,14 @@ export class AuthService {
       next: (user) => {
         this.currentUserSubject.next(user);
         console.log('✅ Auth success:', user.firstName, user.role?.[0]?.roleName);
-        localStorage.setItem("loggedInUser", user.role?.[0]?.id.toString() || '');
+        localStorage.setItem('loggedInUser', user.role?.[0]?.id.toString() || '');
         this.scheduleTokenRefresh(1000);
       },
       error: (err) => {
         console.error('❌ Failed to fetch user data after login', err);
         this.clearAuthState();
-      }
+      },
     });
-
-
   }
 
   // Token frissítés ütemezése
@@ -115,7 +118,7 @@ export class AuthService {
   // Auth state törlése
   private clearAuthState(): void {
     this.JWTtoken = null;
-    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem('loggedInUser');
     this.currentUserSubject.next(null);
 
     if (this.refreshTimeout) {
@@ -156,7 +159,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return localStorage.getItem("loggedInUser") !== null;
+    return localStorage.getItem('loggedInUser') !== null;
   }
 
   getCurrentUser(): User | null {
@@ -173,4 +176,19 @@ export class AuthService {
     });
   }
 
+  forgottenPasswordEmail(email: string) {
+    return this.httpClient.post(
+      `${this.baseUrl}/api/user/sendForgottenPassEmail`,
+      { email },
+      { withCredentials: true },
+    );
+  }
+
+  forgottenPassword(data: ForgottenPasswordRequest){
+    return this.httpClient.post(
+      `${this.baseUrl}/api/user/forgottenPassword`,
+      data,
+      { withCredentials: true },
+    );
+  }
 }
