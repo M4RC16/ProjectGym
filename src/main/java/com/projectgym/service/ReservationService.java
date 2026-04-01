@@ -83,18 +83,42 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteReservation(int reservationXUserId, int reservationId, int trainerId) {
+    public void userDeleteReservation(int reservationXUserId, int reservationId, int trainerId) {
 
         ReservationXUser reservationXUser = reservationXUserRepository.findById((long) reservationXUserId)
                 .orElseThrow(() -> new NotFoundException("Nincs ilyen foglalás: " + reservationXUserId));
 
         LocalDateTime scheduledAt = reservationXUser.getReservation().getScheduledAt();
 
+        User user = reservationXUser.getUser();
+
         User trainer = userRepository.findById(trainerId)
                 .orElseThrow(() -> new NotFoundException("Nincs ilyen edző: " + trainerId));
 
         String trainerEmail = trainer.getEmail();
-        emailService.SendDeleteReservation(trainerEmail, scheduledAt);
+        String name = user.getFirstName() + " " + user.getLastName();
+        emailService.SendDeleteReservation(name, trainerEmail, scheduledAt);
+
+        reservationXUserRepository.deleteById((long) reservationXUserId);
+        reservationRepository.deleteById(reservationId);
+    }
+
+    @Transactional
+    public void trainerDeleteReservation(int reservationXUserId, int reservationId, int userId) {
+
+        ReservationXUser reservationXUser = reservationXUserRepository.findById((long) reservationXUserId)
+                .orElseThrow(() -> new NotFoundException("Nincs ilyen foglalás: " + reservationXUserId));
+
+        LocalDateTime scheduledAt = reservationXUser.getReservation().getScheduledAt();
+
+        User trainer = reservationXUser.getTrainer();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Nincs ilyen felhasználó: " + userId));
+
+        String userEmail = user.getEmail();
+        String name = trainer.getFirstName() + " " + trainer.getLastName();
+        emailService.SendDeleteReservation(name, userEmail, scheduledAt);
 
         reservationXUserRepository.deleteById((long) reservationXUserId);
         reservationRepository.deleteById(reservationId);
@@ -111,7 +135,7 @@ public class ReservationService {
         }
 
         RefreshToken token = refreshTokenRepository.findByToken(refreshToken)
-                .orElseThrow(() -> new RuntimeException("RefreshToken nem található"));
+                .orElseThrow(() -> new RuntimeException("Felhasználó nem található"));
 
         User user = token.getUser();
 
@@ -128,6 +152,7 @@ public class ReservationService {
         rxu.setReservation(savedReservation);
         reservationXUserRepository.save(rxu);
 
+        emailService.SendNewReservation(user.getFirstName() + " " + user.getLastName(), trainer.getEmail(), scheduledAt);
     }
 
     public List<FreeTrainingResponse> getFreeTrainings(int trainerId, LocalDateTime date) {

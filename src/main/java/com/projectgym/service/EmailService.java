@@ -18,7 +18,7 @@ public class EmailService {
     }
 
     public void SendVerificationEmail(String toEmail, String token) {
-        String verificationLink = "https://projectgym.hu/verify/" + token;
+        String verificationLink = "https://projectgym.hu/verify/api/user" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
@@ -38,20 +38,19 @@ public class EmailService {
         message.setTo(toEmail);
         message.setFrom("***REMOVED***");
         message.setSubject("Jelszó megváltoztatás - ForeverGym");
-        message.setText("Írd be a kódot" +
-                "a kód: " + token);
+        message.setText("Írd be a kódot a weboldalon:" + token);
 
         mailSender.send(message);
 
     }
 
-    public void SendDeleteReservation(String toEmail, LocalDateTime scheduledAt) {
+    public void SendDeleteReservation(String name, String toEmail, LocalDateTime scheduledAt) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setFrom("***REMOVED***");
         message.setSubject("Lemondott óra - ForeverGym");
-        message.setText("Egy ügyfél lemondta az órát.\n\n" +
+        message.setText(name + " lemondta az órát.\n\n" +
                 "Időpont: " + scheduledAt + "\n\n" +
                 "Üdvözlettel,\nAutómata üzenetküldő");
 
@@ -59,12 +58,12 @@ public class EmailService {
 
     }
 
-    public void SendNewReservation(String toEmail, LocalDateTime scheduledAt) {
+    public void SendNewReservation(String name, String toEmail, LocalDateTime scheduledAt) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Foglalt óra - ForeverGym");
         message.setFrom("***REMOVED***");
-        message.setText("Egy ügyfél foglalt egy órát.\n\n" +
+        message.setText(name + " foglalt egy órát.\n\n" +
                 "Időpont: " + scheduledAt + "\n\n" +
                 "Üdvözlettel,\nAutómata üzenetküldő");
 

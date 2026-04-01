@@ -1,15 +1,12 @@
 package com.projectgym.service;
 
-import com.projectgym.model.RefreshToken;
-import com.projectgym.model.ReservationXUser;
+import com.projectgym.model.*;
 import com.projectgym.repository.*;
 import com.projectgym.controller.UserController;
 import com.projectgym.exception.NotValidException;
 import com.projectgym.exception.NotFoundException;
 import com.projectgym.exception.BadRequestException;
 import com.projectgym.exception.AlreadyExistsException;
-import com.projectgym.model.Role;
-import com.projectgym.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +19,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.SecureRandom;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -44,9 +43,9 @@ public class UserService {
     private final RefreshTokenRepository refreshRep;
     private final ReservationXUserRepository rxuRep;
     private final ReservationRepository resRep;
-
+    private final TicketRepository ticketRep;
     @Lazy
-    public UserService(ReservationRepository resRep, ReservationXUserRepository rxuRep, RefreshTokenRepository refreshRep, UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
+    public UserService(TicketRepository ticketRep, ReservationRepository resRep, ReservationXUserRepository rxuRep, RefreshTokenRepository refreshRep, UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -54,6 +53,7 @@ public class UserService {
         this.refreshRep = refreshRep;
         this.rxuRep = rxuRep;
         this.resRep = resRep;
+        this.ticketRep = ticketRep;
     }
 
     public void registerUser(User user) {
@@ -285,6 +285,17 @@ public class UserService {
         User user = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new NotFoundException("Felhasználó nem található ID: " + currentUserEmail));
         user.setHourlyWage(wage);
+        userRepository.save(user);
+    }
+
+    public void addTicket(String currentUserEmail, int ticketId) {
+        Ticket ticket = ticketRep.findTicketById(ticketId);
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new NotFoundException("Felhasználó nem található ID: " + currentUserEmail));
+
+        int length = ticket.getValidityLength();
+        user.setHasValidTicket(true);
+        user.setValidUntil(LocalDate.now().plusDays(length));
         userRepository.save(user);
     }
 }

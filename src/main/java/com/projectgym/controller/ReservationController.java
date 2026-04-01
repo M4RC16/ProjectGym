@@ -30,13 +30,23 @@ public class ReservationController {
         return ResponseEntity.ok(myTrainings);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse> deleteTraining(@ModelAttribute ReservationService.TrainingResponse reservation) {
+    @DeleteMapping("/delete/user")
+    public ResponseEntity<ApiResponse> userDeleteTraining(@ModelAttribute ReservationService.TrainingResponse reservation) {
         int trainerId = reservation.getTrainerId();
         int reservationId = reservation.getReservationId();
         int reservationXUserId = reservation.getReservationXUserId();
 
-        reservationService.deleteReservation(reservationXUserId, reservationId, trainerId);
+        reservationService.userDeleteReservation(reservationXUserId, reservationId, trainerId);
+        return ResponseEntity.ok(ApiResponse.success("Foglalás sikeresen törölve"));
+    }
+
+    @DeleteMapping("/delete/trainer")
+    public ResponseEntity<ApiResponse> trainerDeleteTraining(@ModelAttribute ReservationService.TrainingResponse reservation) {
+        int trainerId = reservation.getTrainerId();
+        int reservationId = reservation.getReservationId();
+        int reservationXUserId = reservation.getReservationXUserId();
+
+        reservationService.trainerDeleteReservation(reservationXUserId, reservationId, trainerId);
         return ResponseEntity.ok(ApiResponse.success("Foglalás sikeresen törölve"));
     }
 

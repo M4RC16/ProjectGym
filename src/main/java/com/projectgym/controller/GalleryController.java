@@ -4,10 +4,7 @@ import com.projectgym.service.GalleryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -30,6 +27,13 @@ public class GalleryController {
     @GetMapping("getAll/image")
     public ResponseEntity<List<String>> getAllImages() {
         return ResponseEntity.ok(service.getAllImages());
+    }
+
+    @DeleteMapping("delete/image")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteImage(@RequestParam String imageUrl) {
+        service.deleteImage(imageUrl);
+        return ResponseEntity.ok("Sikeres törlés");
     }
 
 }

@@ -35,8 +35,8 @@ public class TicketController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public String addTicket(@RequestBody Ticket ticket) {
-        return ResponseEntity.ok(ticketService.addTicket(ticket)).toString();
+    public ResponseEntity<String> addTicket(@RequestBody Ticket ticket) {
+        return ResponseEntity.ok(ticketService.addTicket(ticket));
     }
 
 }

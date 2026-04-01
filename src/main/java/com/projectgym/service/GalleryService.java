@@ -52,4 +52,16 @@ public class GalleryService {
     public List<String> getAllImages() {
         return repository.findAll().stream().map(Gallery::getImageUrl).toList();
     }
+
+    public void deleteImage(String imageUrl) {
+        Gallery gallery = repository.findByImageUrl(imageUrl)
+                .orElseThrow(() -> new BadRequestException("Nincs ilyen kép a galériában!"));
+        try {
+            Files.deleteIfExists(Paths.get(gallery.getImageUrl()));
+            repository.delete(gallery);
+        } catch (Exception e) {
+            throw new RuntimeException("Hiba a fájl törlésekor: " + e.getMessage());
+        }
+    }
+
 }

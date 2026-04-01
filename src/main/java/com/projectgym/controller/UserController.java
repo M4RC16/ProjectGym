@@ -173,6 +173,14 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Sikeres óradíj változtatás"));
     }
 
+    @PutMapping("add/ticket")
+    @PreAuthorize("hasRole('felhasználó')")
+    public ResponseEntity<ApiResponse> addTicket(@CookieValue("refreshToken") String token, @RequestBody int ticketId) {
+        String currentUserEmail = service.getEmailByRefreshToken(token);
+        service.addTicket(currentUserEmail, ticketId);
+        return ResponseEntity.ok(ApiResponse.success("Sikeres bérlet vásárlás"));
+    }
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor

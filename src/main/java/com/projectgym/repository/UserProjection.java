@@ -22,5 +22,7 @@ public interface UserProjection {
     LocalDate getValidUntil();
 
     Integer getHourlyWage();
+
+    String getProfilePicture();
 }
 

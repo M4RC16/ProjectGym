@@ -16,4 +16,5 @@ public interface TicketRepository extends CrudRepository<Ticket, Long> {
 
     List<TicketProjection> findAllProjectedBy();
 
+    Ticket findTicketById(int ticketId);
 }
