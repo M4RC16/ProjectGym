@@ -25,6 +25,10 @@ export class TicketService {
     return this.httpClient.delete(`${this.baseUrl}/api/tickets/delete/${id}`, { withCredentials: true });
   }
 
+  purchaseTicket(ticketId: number) {
+    return this.httpClient.put(`${this.baseUrl}/api/user/add/ticket`, ticketId, { withCredentials: true });
+  }
+
 
 
 

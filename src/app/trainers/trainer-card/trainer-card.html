@@ -1,12 +1,21 @@
-<div class="trainer-card" [class.open]="isOpen">
-  <img [src]="trainer.profilePicture || fallbackImage" [alt]="trainer.trainerName" (error)="onImageError($event)" />
-  <div class="informations">
-    <h4>{{ trainer.trainerName }}</h4>
-    <button (click)="toggle()"><img src="/assets/icons/chevronRight.svg" alt="" /></button>
-    <div class="trainer-description">
-      <h4>{{ trainer.trainerName }}</h4>
-      <p>{{ trainer.description }}</p>
-      <span class="trainer-wage"><i class="fa-solid fa-coins"></i> {{ trainer.hourlyRate }} Ft/óra</span>
-    </div>
+<article
+  class="trainer-card"
+  role="button"
+  tabindex="0"
+  (click)="onOpenProfile()"
+  (keydown.enter)="onOpenProfile()"
+  (keydown.space)="onOpenProfile()"
+>
+  <img
+    [src]="trainer.profilePicture || fallbackImage"
+    [alt]="trainer.trainerName"
+    (error)="onImageError($event)"
+  />
+
+  <div class="trainer-content">
+    <h3>{{ trainer.trainerName }}</h3>
+    <button type="button" class="details-btn" (click)="$event.stopPropagation(); onOpenProfile()">
+      Profil megtekintése
+    </button>
   </div>
-</div>
+</article>

@@ -7,11 +7,51 @@
 </div>
 
 <div class="container trainers-container">
-    <div class="row justify-content-center gy-4 gy-md-5">
-        @for (trainer of trainers; track trainer) {
-            <div class="trainer col-6 col-sm-6 col-md-4 col-lg-3">
-                <app-trainer-card [trainer]="trainer" />
-            </div>
-        }
-    </div>
+  <div class="row justify-content-center gy-4 gy-md-5">
+    @for (trainer of trainers; track trainer.trainerId) {
+      <div class="trainer col-10 col-sm-6 col-md-4 col-lg-3">
+        <app-trainer-card [trainer]="trainer" (viewProfile)="openProfile($event)" />
+      </div>
+    }
+  </div>
 </div>
+
+@if (isProfileModalOpen && selectedTrainer) {
+  <div class="trainer-modal-overlay" (click)="closeProfile()">
+    <section
+      class="trainer-modal"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="selectedTrainer.trainerName + ' profilja'"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        class="modal-close-btn"
+        aria-label="Bezárás"
+        (click)="closeProfile()"
+      >
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+
+      <div class="modal-grid">
+        <div class="modal-image-wrap">
+          <img
+            [src]="selectedTrainer.profilePicture || fallbackImage"
+            [alt]="selectedTrainer.trainerName"
+            (error)="onModalImageError($event)"
+          />
+        </div>
+
+        <div class="modal-content">
+          <h2>{{ selectedTrainer.trainerName }}</h2>
+          <p class="modal-price">{{ selectedTrainer.hourlyRate }} Ft/óra</p>
+
+          <div class="modal-description-scroll">
+            <p>{{ selectedTrainer.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+}

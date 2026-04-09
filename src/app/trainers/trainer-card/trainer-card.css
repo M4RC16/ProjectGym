@@ -1,225 +1,84 @@
 .trainer-card {
-  position: relative;
   width: 100%;
-  max-width: 12rem;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  border-radius: 30px;
+  max-width: 16rem;
+  border-radius: 18px;
   overflow: hidden;
+  background-color: #2c2c2c;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trainer-card:hover,
+.trainer-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+}
+
+.trainer-card:focus-visible {
+  outline: 2px solid yellow;
+  outline-offset: 2px;
 }
 
 .trainer-card img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: clamp(220px, 34vw, 290px);
   object-fit: cover;
+  object-position: center top;
+  mask-image: linear-gradient(to bottom, black 62%, rgba(0, 0, 0, 0.2) 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 62%, rgba(0, 0, 0, 0.2) 88%, transparent 100%);
 }
 
-
-.informations {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-height: 40%;
-  padding: 12px;
-  text-align: start;
-  border-radius: 30px;
-  background: linear-gradient(to top,
-      rgba(223, 223, 223, 0.32) 0%,
-      rgba(223, 223, 223, 0.22) 30%,
-      rgba(223, 223, 223, 0.10) 60%,
-      rgba(223, 223, 223, 0.00) 100%);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  overflow: clip;
-  color: white;
-  transition: max-height 0.5s ease-in-out;
-}
-
-.informations h4 {
-  text-align: start;
-  max-height: 2rem;
-  opacity: 1;
-  overflow: hidden;
-  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
-  font-size: 0.85rem;
-}
-
-.informations img {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0px 0px 0px 2px;
-}
-
-.informations button {
-  background: transparent;
-  border-radius: 100%;
-  transition: transform 0.5s ease-in-out;
-  font-weight: bold;
-  border: none;
+.trainer-content {
+  padding: 0.9rem 0.85rem 1rem;
   display: flex;
-  justify-content: center;
-  max-width: 1.5rem;
-  justify-self: center;
-  rotate: 90deg;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-.informations button:hover,
-.informations button:active {
-  transform: rotate(180deg);
+.trainer-content h3 {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0;
 }
 
-
-
-.trainer-description {
-  height: 0;
-  overflow: hidden;
-  padding: 0 10px;
-  transition: height .5s ease-in-out, padding .5s ease;
-  text-align: start;
+.details-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  background-color: yellow;
+  color: #222222;
+  font-weight: 800;
+  font-size: 0.88rem;
+  line-height: 1.2;
 }
 
-.trainer-wage {
-  display: inline-block;
-  margin-top: 1rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: yellow;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+.details-btn:hover,
+.details-btn:focus-visible {
+  background-color: yellow;
 }
 
-.trainer-description h4 {
-  font-size: 0.85rem;
-}
-
-.trainer-description p {
-  font-size: 0.7rem;
-  line-height: 1.4;
-}
-
-.trainer-description h4,
-.trainer-description p {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.trainer-card.open {
-  .informations {
-    max-height: 50%;
-    padding-top: 0px;
-
-    h4 {
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-    }
-
-    button {
-      rotate: -90deg;
-    }
-  }
-
-  .trainer-description {
-    height: 200px;
-    padding: 8px 5px 0 5px;
-    transition: height .5s ease-in-out, padding .5s ease;
-
-    h4,
-    p {
-      opacity: 1;
-      max-height: 2rem;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .trainer-wage {
-      opacity: 1;
-    }
-  }
-}
-
-/* reszponzivitás */
-
-@media (min-width: 576px) {
+@media (max-width: 340px) {
   .trainer-card {
-    max-width: 13rem;
-    border-radius: 40px;
+    border-radius: 14px;
   }
 
-  .informations {
-    padding: 16px;
-    border-radius: 40px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+  .trainer-content {
+    padding: 0.75rem;
+    gap: 0.55rem;
   }
 
-  .informations h4 {
-    font-size: 0.9rem;
-  }
-
-  .trainer-description h4 {
-    font-size: 0.9rem;
-  }
-
-  .trainer-description p {
-    font-size: 0.75rem;
-  }
-}
-
-
-@media (min-width: 768px) {
-  .trainer-card {
-    max-width: 14rem;
-  }
-
-  .informations h4 {
+  .trainer-content h3 {
     font-size: 0.95rem;
   }
 
-  .trainer-description p {
-    font-size: 0.8rem;
-  }
-}
-
-
-@media (min-width: 992px) {
-  .trainer-card {
-    max-width: 15rem;
-    border-radius: 50px;
-  }
-
-  .informations {
-    padding: 20px;
-    border-radius: 50px;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-  }
-
-  .informations h4 {
-    font-size: 1rem;
-  }
-
-  .informations img {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .informations button {
-    max-width: 2rem;
-  }
-
-  .trainer-description h4 {
-    font-size: 1rem;
-  }
-
-  .trainer-description p {
-    font-size: 0.85rem;
+  .details-btn {
+    font-size: 0.82rem;
+    padding: 0.55rem 0.65rem;
   }
 }

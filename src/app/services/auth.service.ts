@@ -11,7 +11,6 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { RequestsService } from './requests.service';
 import { environment } from '../../environments/environment';
 import { UserService } from './user.service';
 

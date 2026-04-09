@@ -78,7 +78,26 @@
               <i class="fa-solid fa-image"></i>
               <span>Kép kiválasztása</span>
             </label>
-            <p class="upload-hint">PNG, JPG vagy WEBP formátum ajánlott</p>
+            <p class="upload-hint">PNG, JPG vagy WEBP formátum ajánlott. Max 10Mb</p>
+          </div>
+        </div>
+      }
+            @if (currentUser()?.role?.[0]?.id == 1) {
+        <div class="form-group">
+          <label for="profileImage">Galéria képek</label>
+          <div class="upload-box">
+            <input
+              id="profileImage"
+              class="file-input"
+              type="file"
+              accept="image/*"
+              (change)="uploadProfilePicture($event)"
+            />
+            <label for="profileImage" class="file-label">
+              <i class="fa-solid fa-image"></i>
+              <span>Kép kiválasztása</span>
+            </label>
+            <p class="upload-hint">PNG, JPG vagy WEBP formátum ajánlott. Max 10Mb</p>
           </div>
         </div>
       }

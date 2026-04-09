@@ -169,15 +169,15 @@
   height: 4px;
   border-radius: 30px;
   transform: translateX(-50%);
-  background-color: var(--primary-clr);
+  background-color: yellow;
 }
 
 .calendar .days .day:hover.event::after {
-  background-color: #fff;
+  background-color: yellow;
 }
 
 .calendar .days .active.event::after {
-  background-color: #fff;
+  background-color: yellow;
   bottom: 20%;
 }
 
@@ -485,6 +485,10 @@
   gap: 4px;
   max-height: 120px;
   overflow-y: auto;
+  background-color: #f3f4f6;
+  border: 1px solid #e1e3e8;
+  border-radius: 8px;
+  padding: 6px;
 }
 
 .time-slot-item {

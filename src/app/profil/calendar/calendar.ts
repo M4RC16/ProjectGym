@@ -84,6 +84,11 @@ export class Calendar implements OnInit {
     const startDay = (firstDay.getDay() + 6) % 7; // number of prev-month days to show
     const endDay = (lastDay.getDay() + 6) % 7;
     const nextDays = 6 - endDay;
+    const currentDate = new Date();
+    const isCurrentMonthAndYear =
+      this.month === currentDate.getMonth() && this.year === currentDate.getFullYear();
+    const hasSelectedDay = this.activeDay > 0 && this.activeDay <= lastDate;
+    const dayToActivate = hasSelectedDay ? this.activeDay : isCurrentMonthAndYear ? currentDate.getDate() : 1;
 
     this.currentMonthYear = this.months[this.month] + ' ' + this.year;
     this.days = [];
@@ -104,21 +109,15 @@ export class Calendar implements OnInit {
       );
 
       const isToday =
-        i === new Date().getDate() &&
-        this.year === new Date().getFullYear() &&
-        this.month === new Date().getMonth();
+        i === currentDate.getDate() && this.year === currentDate.getFullYear() && this.month === currentDate.getMonth();
 
-      if (isToday) {
-        this.activeDay = i;
-        this.getActiveDay(i);
-        this.updateEvents(i);
-      }
+      const isActiveDay = i === dayToActivate;
 
       this.days.push({
         day: i,
         type: 'current',
         isToday: isToday,
-        isActive: isToday,
+        isActive: isActiveDay,
         hasEvent: hasEvent,
       });
     }
@@ -132,6 +131,10 @@ export class Calendar implements OnInit {
         hasEvent: false,
       });
     }
+
+    this.activeDay = dayToActivate;
+    this.getActiveDay(dayToActivate);
+    this.updateEvents(dayToActivate);
   }
 
   prevMonth() {

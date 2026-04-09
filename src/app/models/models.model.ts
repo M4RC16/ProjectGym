@@ -26,6 +26,7 @@ export interface User {
   phoneNumber: string | null;
   validUntil: string | null;
   hourlyWage: number | null;
+  profilePicture: string | null;
 }
 
 export interface UserFormData {

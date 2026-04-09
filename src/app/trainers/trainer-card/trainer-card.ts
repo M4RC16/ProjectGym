@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { type Trainer } from '../../models/models.model';
 
 
@@ -11,21 +11,12 @@ import { type Trainer } from '../../models/models.model';
 export class TrainerCard {
 
   @Input({required:true}) trainer!: Trainer;
+  @Output() viewProfile = new EventEmitter<Trainer>();
 
   readonly fallbackImage = '/assets/trainers/NAI.jpg';
 
-  isOpen = false;
-
-  open() {
-    this.isOpen = true;
-  }
-
-  close() {
-    this.isOpen = false;
-  }
-
-  toggle() {
-    this.isOpen = !this.isOpen;
+  onOpenProfile() {
+    this.viewProfile.emit(this.trainer);
   }
 
   onImageError(event: Event) {

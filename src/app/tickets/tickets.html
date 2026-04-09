@@ -22,7 +22,7 @@
             <td>{{ticket.ticketName}}</td>
             <td>{{ticket.price}} Ft</td>
             <td>
-              <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+              <button (click)="purchaseTicket(ticket.id)"><i class="fa-solid fa-cart-shopping"></i></button>
             </td>
           </tr>
         }

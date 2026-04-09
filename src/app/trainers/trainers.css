@@ -44,11 +44,127 @@
 
 .trainers-container {
     margin: 2rem auto;
+    width: 100%;
+    overflow-x: clip;
 }
 
 .trainer {
     text-align: -webkit-center;
     text-align: center;
+}
+
+.trainer-modal-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 1200;
+}
+
+.trainer-modal {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    max-height: min(92vh, 800px);
+    background: #222;
+    border: 1px solid #3b3b3b;
+    border-radius: 16px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    color: #fff;
+}
+
+.modal-close-btn {
+    position: sticky;
+    top: 0.5rem;
+    margin-left: auto;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    z-index: 2;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid #5a5a5a;
+    border-radius: 999px;
+    background: rgba(34, 34, 34, 0.95);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus-visible {
+    color: #222;
+    background: yellow;
+    border-color: yellow;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 1.2rem;
+    padding: 0.4rem 1.2rem 1.2rem;
+    height: calc(100% - 3.1rem);
+}
+
+.modal-image-wrap {
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #171717;
+}
+
+.modal-image-wrap img {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.modal-content h2 {
+    color: #fff;
+    font-size: clamp(1.4rem, 2.1vw, 1.9rem);
+    font-weight: 800;
+    margin: 0 0 0.65rem;
+}
+
+.modal-price {
+    color: yellow;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 800;
+    margin: 0 0 0.9rem;
+}
+
+.modal-description-scroll {
+    overflow-y: auto;
+    max-height: min(54vh, 430px);
+    background: #3a3a3a;
+    border: 1px solid #4a4a4a;
+    border-radius: 10px;
+    padding: 0.8rem;
+    padding-right: 0.4rem;
+}
+
+.modal-description-scroll p {
+    margin: 0;
+    color: #e0e0e0;
+    line-height: 1.6;
+    font-size: 0.98rem;
+    white-space: pre-line;
 }
 
 /* reszponzivitás */
@@ -102,6 +218,103 @@
 
     .trainers-container {
         margin: 4rem auto;
+    }
+}
+
+
+@media (max-width: 767.98px) {
+    .trainer-modal-overlay {
+        padding: 0.75rem;
+    }
+
+    .trainer-modal {
+        max-height: 95vh;
+    }
+
+    .modal-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.95rem;
+        padding: 0.25rem 0.95rem 0.95rem;
+        height: calc(100% - 2.9rem);
+    }
+
+    .modal-image-wrap img {
+        height: 250px;
+        min-height: 250px;
+    }
+
+    .modal-description-scroll {
+        max-height: min(36vh, 300px);
+        padding: 0.7rem;
+    }
+}
+
+
+@media (max-width: 340px) {
+    .title {
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+    }
+
+    .trainers-title {
+        font-size: 1.45rem;
+    }
+
+    .trainers-description {
+        font-size: 0.86rem;
+    }
+
+    .trainer {
+        padding-left: 0.45rem;
+        padding-right: 0.45rem;
+    }
+
+    .trainer-modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .trainer-modal {
+        border-radius: 12px;
+    }
+
+    .modal-close-btn {
+        width: 2rem;
+        height: 2rem;
+        margin-right: 0.35rem;
+    }
+
+    .modal-grid {
+        gap: 0.75rem;
+        padding: 0.2rem 0.7rem 0.7rem;
+    }
+
+    .modal-image-wrap {
+        border-radius: 10px;
+    }
+
+    .modal-image-wrap img {
+        height: 220px;
+        min-height: 220px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .modal-price {
+        font-size: 0.95rem;
+        margin-bottom: 0.7rem;
+    }
+
+    .modal-description-scroll {
+        max-height: min(34vh, 260px);
+        padding: 0.6rem;
+        padding-right: 0.25rem;
+    }
+
+    .modal-description-scroll p {
+        font-size: 0.9rem;
     }
 }
 
