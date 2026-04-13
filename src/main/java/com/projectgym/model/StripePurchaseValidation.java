@@ -1,11 +1,15 @@
 package com.projectgym.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "stripe_purchase_validation", indexes = {
         @Index(name = "user_id", columnList = "user_id"),
@@ -32,45 +36,5 @@ public class StripePurchaseValidation {
 
     @Column(name = "purchase_date", nullable = false)
     private Instant purchaseDate;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Ticket getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
-    }
-
-    public Boolean getSuccessfulPurchase() {
-        return successfulPurchase;
-    }
-
-    public void setSuccessfulPurchase(Boolean successfulPurchase) {
-        this.successfulPurchase = successfulPurchase;
-    }
-
-    public Instant getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Instant purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
 
 }

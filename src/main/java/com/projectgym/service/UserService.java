@@ -255,7 +255,7 @@ public class UserService {
 
             Path filePath = uploadPath.resolve(newFileName);
             Files.copy(pfp.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            String dbImagePath = "/var/www/projectgym/uploads/images/users/" + newFileName;
+            String dbImagePath = "/uploads/users/" + newFileName;
             user.setProfilePicture(dbImagePath);
             userRepository.save(user);
 

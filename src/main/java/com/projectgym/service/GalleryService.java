@@ -37,6 +37,7 @@ public class GalleryService {
             String newFileName = UUID.randomUUID() + originalName.substring(originalName.lastIndexOf("."));
             Path filePath = uploadPath.resolve(newFileName);
             file.transferTo(filePath.toFile());
+            System.out.println(filePath);
 
             Gallery gallery = new Gallery();
             gallery.setAltText(title);
