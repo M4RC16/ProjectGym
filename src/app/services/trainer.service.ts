@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Trainer } from '../models/models.model';
+import { Trainer } from '../models/user.model';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 

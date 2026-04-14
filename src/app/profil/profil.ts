@@ -140,5 +140,23 @@ export class Profil {
     this.auth.logout(); 
   }
 
+  hasValidMembership(validUntil: string | null): boolean {
+    if (!validUntil) return false;
+
+    const dateOnlyPattern = /^\d{4}-\d{2}-\d{2}$/;
+    let expiryDate: Date;
+
+    if (dateOnlyPattern.test(validUntil)) {
+      const [year, month, day] = validUntil.split('-').map(Number);
+      expiryDate = new Date(year, month - 1, day, 23, 59, 59, 999);
+    } else {
+      expiryDate = new Date(validUntil);
+    }
+
+    if (Number.isNaN(expiryDate.getTime())) return false;
+
+    return expiryDate.getTime() >= Date.now();
+  }
+
 
 }

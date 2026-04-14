@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import {
   allFreeTrainingsTodayRequest,
   allFreeTrainingsTodayResponse,
-  CalendarEvent,
   deleteRequest,
   reservationCreateRequest,
-} from '../models/models.model';
+} from '../models/reservation.model';
+import { CalendarEvent } from '../models/calendar.model';
 
 @Injectable({
   providedIn: 'root',

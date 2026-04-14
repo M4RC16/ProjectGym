@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TicketService } from '../services/ticket.service';
-import { Ticket } from '../models/models.model';
+import { Ticket } from '../models/ticket.response.model';
 import { AlertService } from '../services/alert.service';
 import { AuthService } from '../services/auth.service';
 

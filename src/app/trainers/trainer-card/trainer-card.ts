@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { type Trainer } from '../../models/models.model';
+import { type Trainer } from '../../models/user.model';
 
 
 @Component({

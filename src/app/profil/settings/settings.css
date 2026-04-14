@@ -271,6 +271,17 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+.upload-success {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #E8E804;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  word-break: break-word;
+}
+
 /* ==================== 576px+ ==================== */
 
 @media (min-width: 576px) {

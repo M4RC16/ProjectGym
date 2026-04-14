@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { type User } from '../../models/models.model';
+import { type User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
 @Component({

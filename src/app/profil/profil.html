@@ -29,10 +29,10 @@
             <i class="fa-solid fa-phone"></i>
             <span>{{ user.phoneNumber }}</span>
           </div>
-          @if (currentUser()?.role?.[0]?.id !== 1) {
+          @if (currentUser()?.role?.[0]?.id == 3) {
             <div class="detail-item">
               <i class="fa-solid fa-ticket"></i>
-              <span>{{ user.validUntil }}</span>
+              <span>{{ hasValidMembership(user.validUntil) ? user.validUntil : 'Nincs érvényes bérlet' }}</span>
             </div>
           }
         </div>

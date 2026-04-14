@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { UserFormData } from '../models/models.model';
+import { UserFormData } from '../models/user.model';
 import { FormsModule } from "@angular/forms";
 import { UserService } from '../services/user.service';
 import { AlertService } from '../services/alert.service';

@@ -1,7 +1,7 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { TrainerService } from '../services/trainer.service';
 import { TrainerCard } from "./trainer-card/trainer-card";
-import { Trainer } from '../models/models.model';
+import { Trainer } from '../models/user.model';
 
 @Component({
   selector: 'app-trainers',

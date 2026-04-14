@@ -6,8 +6,8 @@ import {
   loginData,
   loginResponse,
   registerData,
-  User,
-} from '../models/models.model';
+} from '../models/auth.model';
+import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';

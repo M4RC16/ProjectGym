@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { TicketService } from '../../services/ticket.service';
+import { GalleryService } from '../../services/gallery.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +18,7 @@ export class Settings implements OnInit {
   private userService = inject(UserService);
   private alertService = inject(AlertService);
   private ticketService = inject(TicketService);
+  private galleryService = inject(GalleryService);
   currentUser = toSignal(this.auth.currentUser$);
 
   // Profile form
@@ -45,6 +47,11 @@ export class Settings implements OnInit {
   ticketLength: number | null = null;
   ticketPrice: number | null = null;
   ticketLoading: boolean = false;
+
+  // Admin gallery form
+  galleryAltText: string = '';
+  galleryFile: File | null = null;
+  galleryLoading: boolean = false;
 
   passwordRegex = /^(?=.*[0-9])(?=.*[^a-zA-Z0-9\s]).{8,}$/;
   phoneRegex = /^\+?[0-9\s\-]{7,15}$/;
@@ -104,6 +111,10 @@ export class Settings implements OnInit {
       this.ticketPrice !== null &&
       this.ticketPrice > 0
     );
+  }
+
+  get isGalleryFormValid(): boolean {
+    return !!this.galleryAltText.trim() && !!this.galleryFile;
   }
 
   ngOnInit() {
@@ -268,4 +279,35 @@ export class Settings implements OnInit {
         },
       });
   }
+
+  onGalleryFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    this.galleryFile = input.files[0];
+  }
+
+  uploadGaleryPicture() {
+    if (!this.isGalleryFormValid || !this.galleryFile) return;
+
+    this.galleryLoading = true;
+    this.galleryService.addGalleryImg(this.galleryFile, this.galleryAltText.trim()).subscribe({
+      next: () => {
+        this.alertService.success('Galéria kép sikeresen feltöltve!');
+        this.galleryAltText = '';
+        this.galleryFile = null;
+        this.galleryLoading = false;
+      },
+      error: (err) => {
+        console.error('Galéria kép feltöltése sikertelen:', err);
+        this.alertService.error('Galéria kép feltöltése sikertelen!');
+        this.galleryLoading = false;
+      },
+    });
+  }
+
+
+
+
+
 }

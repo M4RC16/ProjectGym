@@ -82,26 +82,6 @@
           </div>
         </div>
       }
-            @if (currentUser()?.role?.[0]?.id == 1) {
-        <div class="form-group">
-          <label for="profileImage">Galéria képek</label>
-          <div class="upload-box">
-            <input
-              id="profileImage"
-              class="file-input"
-              type="file"
-              accept="image/*"
-              (change)="uploadProfilePicture($event)"
-            />
-            <label for="profileImage" class="file-label">
-              <i class="fa-solid fa-image"></i>
-              <span>Kép kiválasztása</span>
-            </label>
-            <p class="upload-hint">PNG, JPG vagy WEBP formátum ajánlott. Max 10Mb</p>
-          </div>
-        </div>
-      }
-
       <div class="spacer"></div>
     </div>
 
@@ -224,6 +204,66 @@
             <i class="fa-solid fa-spinner fa-spin"></i> Mentés...
           } @else {
             <i class="fa-solid fa-plus"></i> Ticket hozzáadása
+          }
+        </button>
+      </div>
+    }
+
+    @if (currentUser()?.role?.[0]?.id === 1) {
+      <div class="settings-card">
+        <div class="card-header">
+          <i class="fa-solid fa-images"></i>
+          <h2>Galéria kép feltöltése</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="galleryAltText">ALT szöveg</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-font"></i>
+            <input
+              id="galleryAltText"
+              type="text"
+              [(ngModel)]="galleryAltText"
+              placeholder="Pl. Konditerem kardió részleg"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="galleryImage">Kép</label>
+          <div class="upload-box">
+            <input
+              id="galleryImage"
+              class="file-input"
+              type="file"
+              accept="image/*"
+              (change)="onGalleryFileChange($event)"
+            />
+            <label for="galleryImage" class="file-label">
+              <i class="fa-solid fa-image"></i>
+              <span>Kép kiválasztása</span>
+            </label>
+            <p class="upload-hint">PNG, JPG vagy WEBP formátum ajánlott. Max 10Mb</p>
+            @if (galleryFile) {
+              <p class="upload-success">
+                <i class="fa-solid fa-circle-check"></i>
+                Kép kiválasztva: {{ galleryFile.name }}
+              </p>
+            }
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button
+          class="save-btn"
+          (click)="uploadGaleryPicture()"
+          [disabled]="galleryLoading || !isGalleryFormValid"
+        >
+          @if (galleryLoading) {
+            <i class="fa-solid fa-spinner fa-spin"></i> Mentés...
+          } @else {
+            <i class="fa-solid fa-upload"></i> Galéria kép feltöltése
           }
         </button>
       </div>

@@ -1,10 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  allFreeTrainingsTodayResponse,
-  CalendarEvent,
-  EventDay,
-  Trainer,
-} from '../../models/models.model';
+import { CalendarEvent, EventDay } from '../../models/calendar.model';
+import { allFreeTrainingsTodayResponse } from '../../models/reservation.model';
+import { Trainer } from '../../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { toSignal } from '@angular/core/rxjs-interop';

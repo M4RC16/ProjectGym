@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { ChangePasswordRequest, message, UpdateUserNameRequest, User, UserFormData } from '../models/models.model';
+import { ChangePasswordRequest } from '../models/auth.model';
+import { message, UpdateUserNameRequest, User, UserFormData } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',

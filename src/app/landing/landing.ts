@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Carousel } from './carousel/carousel';
-import { type Img } from '../models/models.model';
+import { type Img } from '../models/img.model';
 import { RouterLink } from "@angular/router";
 
 @Component({

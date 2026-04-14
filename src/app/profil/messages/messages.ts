@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { message } from '../../models/models.model';
+import { message } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 

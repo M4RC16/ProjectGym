@@ -9,10 +9,21 @@
 
 <div class="gallery-lightbox-container">
   <div class="gallery">
-    @for (item of ImgData; track item.imgId) {
+    @for (item of ImgData; track item.imgId; let i = $index) {
 
     <div class="gallery-img">
-      <img (click)="onPreview(item.imgId - 1)" [src]="item.imgUrl" [alt]="item.imgAlt" />
+      @if (isAdmin()) {
+        <button
+          type="button"
+          class="admin-delete-btn"
+          aria-label="Kép törlése"
+          (click)="onDeleteImage(item, $event)"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      }
+
+      <img (click)="onPreview(i)" [src]="item.imgUrl" [alt]="item.imgAlt" />
     </div>
 
     }
