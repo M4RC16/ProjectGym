@@ -81,7 +81,7 @@ export class UserService {
   }
 
   sendUserForm(data: UserFormData){
-    return this.httpClient.post(`${this.baseUrl}/api/form/ContactForm`, data, {
+    return this.httpClient.post(`${this.baseUrl}/api/form/add`, data, {
       withCredentials: true,
       responseType: 'text',
     });
