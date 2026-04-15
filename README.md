@@ -18,10 +18,8 @@ A konditermi webalkalmaz\u00e1s kliensoldali k\u00f3dja. Az alkalmaz\u00e1s **An
 - Személyes felhasználói profil (adatok, edzéstörténet, fejlődési grafikon)
 - Edzők profiloldalai (bemutatkozás, árazás, naptár)
 - Interaktív foglalási naptár (szabad/foglalt időpontok, lemondás)
-- Bérlet, jegy és prémium tartalom vásárlása (Stripe integráció)
-- Oktatóvideók és termékkatalógus megtekintése
-- Admin és edző felület (felhasználókezelés, tartalom szerkesztés, audit-log)
-- QR / vonalkódos belépőkód megjelenítés
+- Bérlet, jegy vásárlása
+- Admin és edző felület (felhasználókezelés, tartalom szerkesztés)
 
 ## Telepítés és Futtatás
 
