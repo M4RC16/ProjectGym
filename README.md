@@ -1,6 +1,6 @@
 # ProjectGym – Backend
 
-A konditermi webalkalmaz\u00e1s szerveroldali (backend) API-ja. **Spring Boot 3.5** és **Java 17** alapon épül, MySQL adatbázist használ, és JWT alapú hitelesítést biztosít.
+A konditermi webalkalmazás szerveroldali (backend) API-ja. **Spring Boot 3.5** és **Java 17** alapon épül, MySQL adatbázist használ, és JWT alapú hitelesítést biztosít.
 
 ## Technológiák
 
