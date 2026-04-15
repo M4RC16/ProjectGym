@@ -1,58 +1,44 @@
-# ProjectApp
+# ProjectGym – Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
+A konditermi webalkalmaz\u00e1s kliensoldali k\u00f3dja. Az alkalmaz\u00e1s **Angular 20** keretrendszerre épül, és **Bootstrap 5** segítségével reszponzív, modern felhasználói felületet biztosít.
 
-## Development server
+## Technológiák
 
-To start a local development server, run:
+- **Angular 20** – fő keretrendszer
+- **Bootstrap 5** + **ng-bootstrap** – UI komponensek és reszponzív rács
+- **Font Awesome 7** – ikonok
+- **RxJS** – reaktív adatkezelés
+- **JWT Decode** – JWT token kezelés a hitelesítéshez
+- **TypeScript 5.9**
 
-```bash
-ng serve
-```
+## Főbb Funkciók (UI)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Nyitóoldal: képgaléria, felszerelés bemutató, nyitvatartás, árlista
+- Regisztráció és bejelentkezés (JWT alapú authentikáció)
+- Személyes felhasználói profil (adatok, edzéstörténet, fejlődési grafikon)
+- Edzők profiloldalai (bemutatkozás, árazás, naptár)
+- Interaktív foglalási naptár (szabad/foglalt időpontok, lemondás)
+- Bérlet, jegy és prémium tartalom vásárlása (Stripe integráció)
+- Oktatóvideók és termékkatalógus megtekintése
+- Admin és edző felület (felhasználókezelés, tartalom szerkesztés, audit-log)
+- QR / vonalkódos belépőkód megjelenítés
 
-## Code scaffolding
+## Telepítés és Futtatás
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Előfeltételek
+- [Node.js](https://nodejs.org/) (LTS verzió ajánlott)
+- [Angular CLI](https://angular.dev/tools/cli)
 
 ```bash
-ng test
+# Függőségek telepítése
+npm install
+
+# Fejlesztői szerver indítása (http://localhost:4200)
+npm start
+
+# Production build
+npm run build
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 
