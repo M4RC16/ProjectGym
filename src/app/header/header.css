@@ -1,7 +1,5 @@
-/* ==================== NAVBAR ALAP ==================== */
-
 .navbar-custom {
-    background-color: rgba(40, 40, 40, 0.92); /* fallback Android-hoz */
+    background-color: rgba(40, 40, 40, 0.92); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -9,18 +7,16 @@
     z-index: 100;
 }
 
-/* Ha backdrop-filter támogatott, átlátszóbb háttér */
 @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
     .navbar-custom {
         background-color: rgba(223, 223, 223, 0.315);
     }
 }
 
-/* Logo */
 .logo {
-    max-width: 4rem; /* fallback */
+    max-width: 4rem; 
     max-width: clamp(3rem, 4vw + 0.5rem, 4.5rem);
-    max-height: 4rem; /* fallback */
+    max-height: 4rem; 
     max-height: clamp(3rem, 4vw + 0.5rem, 4.5rem);
     transition: 0.2s;
 }
@@ -30,11 +26,9 @@
     cursor: pointer;
 }
 
-/* ==================== NAV LINKEK ==================== */
-
 .nav-link {
     font-weight: bold;
-    font-size: 0.95rem; /* fallback */
+    font-size: 0.95rem; 
     font-size: clamp(0.8rem, 1vw + 0.3rem, 1.1rem);
     color: white !important;
     margin: 0 0.3rem;
@@ -48,8 +42,6 @@
     color: yellow !important;
     transform: scale(1.05);
 }
-
-/* ==================== AUTH GOMBOK ==================== */
 
 .auth-buttons {
     flex-shrink: 0;
@@ -95,8 +87,6 @@
     transform: scale(1.05);
 }
 
-/* ==================== PROFIL IKON ==================== */
-
 .profile-icon {
     display: flex;
     align-items: center;
@@ -117,8 +107,6 @@
     transform: scale(1.1);
 }
 
-/* ==================== HAMBURGER GOMB ==================== */
-
 .navbar-toggler {
     border: 2px solid rgba(255, 255, 255, 0.4);
     padding: 0.4rem 0.6rem;
@@ -136,8 +124,8 @@
     font-size: 1.4rem;
 }
 
-/* ==================== DESKTOP KÖZEPES (992px - 1199px) ==================== */
-/* Ezen a sávon a gombok és linkek kisebbek, hogy ne lógjanak ki */
+/* */
+
 
 @media (min-width: 992px) and (max-width: 1199px) {
     .navbar-custom {
@@ -174,7 +162,7 @@
     }
 }
 
-/* ==================== DESKTOP NAGY (1200px+) ==================== */
+/* */
 
 @media (min-width: 1200px) {
     .navbar-custom {
@@ -198,13 +186,13 @@
     }
 
     .loginButton, .registerButton {
-        font-size: 0.85rem; /* fallback */
+        font-size: 0.85rem; 
         font-size: clamp(0.75rem, 0.9vw, 0.95rem);
         padding: 8px 16px;
     }
 }
 
-/* ==================== TABLET / MOBIL (991px alatt) ==================== */
+/* */
 
 @media (max-width: 991px) {
     .navbar-custom {
@@ -219,7 +207,6 @@
         align-items: center;
     }
 
-    /* Oldal neve középen */
     .brand-name {
         color: white;
         font-weight: 800;
@@ -232,15 +219,13 @@
         pointer-events: none;
     }
 
-    /* Hamburger */
     .navbar-toggler {
         border: none;
         padding: 0.4rem;
     }
 
-    /* Lenyíló menü */
     .navbar-collapse {
-        background-color: rgba(30, 30, 30, 0.98); /* fallback Android-hoz */
+        background-color: rgba(30, 30, 30, 0.98); 
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-radius: 16px;
@@ -292,7 +277,7 @@
     }
 }
 
-/* ==================== MOBIL (576px - 767px) ==================== */
+/* */
 
 @media (max-width: 767px) {
     .brand-name {
@@ -310,7 +295,7 @@
     }
 }
 
-/* ==================== KIS MOBIL (350px - 575px) ==================== */
+/**/
 
 @media (max-width: 575px) {
     .navbar-custom {

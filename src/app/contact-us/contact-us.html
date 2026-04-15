@@ -59,7 +59,7 @@
           }
 
           <label for="uzenet">Üzenet</label>
-          <input [(ngModel)]="formdata.message" type="text" id="uzenet" name="uzenet" placeholder="Üzenet" />
+          <textarea [(ngModel)]="formdata.message" id="uzenet" name="uzenet" placeholder="Üzenet" rows="5"></textarea>
           @if (messageError()) {
             <p class="error-message">{{ messageError() }}</p>
           }

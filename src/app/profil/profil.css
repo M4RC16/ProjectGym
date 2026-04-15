@@ -268,7 +268,7 @@
   background: rgba(232, 4, 4, 0.1);
 }
 
-/* ==================== 576px+ ==================== */
+/* reszponzivitás */
 
 @media (min-width: 576px) {
   .profil-container {
@@ -298,7 +298,7 @@
   }
 }
 
-/* ==================== 768px+ ==================== */
+/* */
 
 @media (min-width: 768px) {
   .profil-container {
@@ -341,7 +341,7 @@
   }
 }
 
-/* ==================== 992px+ ==================== */
+/* */
 
 @media (min-width: 992px) {
   .profil-container {
@@ -392,7 +392,7 @@
   }
 }
 
-/* ==================== 1200px+ ==================== */
+/* */
 
 @media (min-width: 1200px) {
   .profil-container {

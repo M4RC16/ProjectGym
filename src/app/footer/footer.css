@@ -1,5 +1,3 @@
-/* (MOBIL, <576px)*/
-
 .footer-wrapper {
     background-image: url("../../assets/SVG/footer2.svg");
     background-color: gray;
@@ -102,8 +100,6 @@
     transform: scale(1.1);
 }
 
-/* (350px - 575px)*/
-
 @media (max-width: 575.98px) {
     .footer-links {
         gap: 0.25rem !important;
@@ -114,8 +110,6 @@
         font-size: 0.7rem;
     }
 }
-
-/*(576px - 767px)*/
 
 @media (min-width: 576px) {
     .footer-wrapper {
@@ -193,8 +187,6 @@
     }
 }
 
-/* (992px - 1199px)*/
-
 @media (min-width: 992px) {
     .footer-wrapper {
         padding: 1.5rem 2rem;
@@ -233,8 +225,6 @@
         font-size: 0.9rem;
     }
 }
-
-/*(1200px+)*/
 
 @media (min-width: 1200px) {
     .footer-wrapper {

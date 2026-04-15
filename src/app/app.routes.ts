@@ -16,6 +16,8 @@ import { authGuard } from './guards/auth-guard';
 import { roleGuard } from './guards/role-guard';
 import { redirectGuard } from './guards/redirect-guard';
 import { ForgottenPass } from './login/forgotten-pass/forgotten-pass';
+import { TermsOfCondition } from './gdpr/terms-of-condition/terms-of-condition';
+import { PrivacyPolicy } from './gdpr/privacy-policy/privacy-policy';
 
 export const routes: Routes = [
   {
@@ -95,6 +97,14 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'terms-of-conditions',
+    component: TermsOfCondition,
+  },
+    {
+    path: 'privacy-policy',
+    component: PrivacyPolicy,
+  },
+    {
     path: '**',
     component: NotFound,
   },

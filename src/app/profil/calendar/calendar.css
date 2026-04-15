@@ -1,14 +1,6 @@
-:host {
-/*   display: flex;
-  flex: 1;
-  overflow: hidden; */
-}
-
 :root {
   --primary-clr: #b38add;
 }
-
-/* ==================== CONTAINER ==================== */
 
 .container {
   position: relative;
@@ -23,8 +15,6 @@
   border-radius: 4rem;
   background-color: #212529;
 }
-
-/* ==================== LEFT — NAPTÁR ==================== */
 
 .left {
   margin-top: 1.5rem;
@@ -214,7 +204,7 @@
   background-color: var(--primary-clr);
 }
 
-/* ==================== RIGHT — ESEMÉNYEK ==================== */
+/* ==================== Naptár ==================== */
 
 .container .right {
   position: relative;
@@ -346,7 +336,7 @@
   transition: opacity .5s ease, transform .5s ease, max-height .5s ease;
 }
 
-/* ==================== ESEMÉNY HOZZÁADÁS ==================== */
+/* ==================== időpont foglalás ==================== */
 
 .add-event {
   position: absolute;
@@ -475,8 +465,6 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: #373c4f;
-  margin-bottom: 6px;
-  display: block;
 }
 
 .time-slot-list {
@@ -562,7 +550,7 @@
   color: #a8b0b5;
 }
 
-/* ==================== 576px+ ==================== */
+/* ==================== reszponzivitás ==================== */
 
 @media (min-width: 576px) {
   .calendar {
@@ -619,7 +607,7 @@
   }
 }
 
-/* ==================== 768px+ ==================== */
+/**/
 
 @media (min-width: 768px) {
   .left {
@@ -722,7 +710,7 @@
   }
 }
 
-/* ==================== 992px+ ==================== */
+/**/
 
 @media (min-width: 992px) {
   .left {
@@ -885,7 +873,7 @@
   }
 }
 
-/* ==================== 1200px+ ==================== */
+/**/
 
 @media (min-width: 1200px) {
   .calendar {

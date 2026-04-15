@@ -113,7 +113,8 @@
     font-size: 0.85rem;
 }
 
-.contact-form input {
+.contact-form input,
+.contact-form textarea {
     width: 100%;
     padding: 10px 12px;
     margin-bottom: 0.5rem;
@@ -125,14 +126,21 @@
     font-size: 0.85rem;
 }
 
-.contact-form input:hover {
+.contact-form input:hover,
+.contact-form textarea:hover {
     transform: scale(1.01);
     border: 1px solid black;
 }
 
-.contact-form input:focus {
+.contact-form input:focus,
+.contact-form textarea:focus {
     border-color: #000;
     background: #fff;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 7rem;
 }
 
 .contact-btn {
@@ -255,7 +263,8 @@
         font-size: 0.95rem;
     }
 
-    .contact-form input {
+    .contact-form input,
+    .contact-form textarea {
         padding: 12px 15px;
         font-size: 0.95rem;
     }
