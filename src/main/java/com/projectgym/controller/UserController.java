@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.util.List;
 @Controller
 @RestController
@@ -84,7 +85,8 @@ public class UserController {
     @GetMapping("/verify/{token}")
     public ResponseEntity<ApiResponse> verifyToken(@PathVariable String token) {
         service.verifyUser(token);
-        return ResponseEntity.ok(ApiResponse.success("Sikeres aktiválás"));
+        URI target = URI.create("https://projectgym.hu/login");
+        return ResponseEntity.status(HttpStatus.FOUND).location(target).build();
     }
 
     @GetMapping("requests/getAllTrainer")

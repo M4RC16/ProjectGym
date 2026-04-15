@@ -18,7 +18,7 @@ public class EmailService {
     }
 
     public void SendVerificationEmail(String toEmail, String token) {
-        String verificationLink = "https://projectgym.hu/verify/api/user" + token;
+        String verificationLink = "https://projectgym.hu/api/user/verify/" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);

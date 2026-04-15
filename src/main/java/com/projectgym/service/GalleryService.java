@@ -37,11 +37,11 @@ public class GalleryService {
             String newFileName = UUID.randomUUID() + originalName.substring(originalName.lastIndexOf("."));
             Path filePath = uploadPath.resolve(newFileName);
             file.transferTo(filePath.toFile());
-            System.out.println(filePath);
+            String imgurl = "/uploads/gallery/" + newFileName;
 
             Gallery gallery = new Gallery();
             gallery.setAltText(title);
-            gallery.setImageUrl(filePath.toString());
+            gallery.setImageUrl(imgurl);
             repository.save(gallery);
         } catch (BadRequestException e) {
             throw e;
