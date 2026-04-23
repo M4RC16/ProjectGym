@@ -9,7 +9,6 @@ A konditermi webalkalmazás szerveroldali (backend) API-ja. **Spring Boot 3.5** 
 - **Spring Security** + **JWT (jjwt 0.12.5)** – hitelesítés és jogosultságkezelés
 - **Spring Data JPA** – adatbázis-kezelés
 - **MySQL** – relációs adatbázis
-- **Stripe Java SDK 31.3** – online fizetési integráció
 - **Spring Mail** – e-mail értesítések
 - **Lombok** – kódcsökkentés
 - **Maven** – build eszköz
