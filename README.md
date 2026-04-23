@@ -5,7 +5,7 @@ Egy modern, reszponzív konditermi weboldal és belső ügyfélkezelő rendszer,
 ## A Projektről
 
 - **Frontend**: Angular 20 alapú webalkalmazás (Bootstrap 5, JWT hitelesítés)
-- **Backend**: Spring Boot 3.5 REST API (Java 17, MySQL, Spring Security, Stripe fizetés)
+- **Backend**: Spring Boot 3.5 REST API (Java 17, MySQL, Spring Security)
 - **Célközönség**: konditermi látogatók, edzők és adminisztrátorok
 
 ## Repository Szerkezet
