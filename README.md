@@ -15,6 +15,7 @@ Egy modern, reszponzív konditermi weboldal és belső ügyfélkezelő rendszer,
 | `main` | Projekt dokumentáció (ez az ág) |
 | `frontend` | Angular 20 frontend forráskód |
 | `backend` | Spring Boot 3.5 backend forráskód |
+| `test` |
 
 ## Dokumentáció
 
