@@ -127,7 +127,6 @@ export class Profil {
   }
 
   constructor() {
-      console.log('Current user in Profil component:', this.currentUser()?.profilePicture);
     const user = this.currentUser();
     if (user) {
       this.firstName = user.firstName || '';

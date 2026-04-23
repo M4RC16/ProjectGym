@@ -37,8 +37,8 @@ export class AuthService {
 
   private initializeAuth(): void {
     this.refreshTokens().subscribe({
-      next: () => console.log('✅ Session restored from cookie'),
-      error: () => console.log('❌ No valid session'),
+/*       next: () => console.log('✅ Session restored from cookie'),
+      error: () => console.log('❌ No valid session'), */
     });
   }
 
@@ -49,7 +49,7 @@ export class AuthService {
       .pipe(
         tap((response) => this.handleLoginResponse(response)),
         catchError((error) => {
-          console.error('Login error:', error);
+          /* console.error('Login error:', error); */
           return throwError(() => error);
         }),
       );
@@ -64,12 +64,12 @@ export class AuthService {
     this.userService.getUserById(decodedToken.userId).subscribe({
       next: (user) => {
         this.currentUserSubject.next(user);
-        console.log('✅ Auth success:', user.firstName, user.role?.[0]?.roleName);
+        /* console.log('✅ Auth success:', user.firstName, user.role?.[0]?.roleName); */
         localStorage.setItem('loggedInUser', user.role?.[0]?.id.toString() || '');
         this.scheduleTokenRefresh(1000);
       },
       error: (err) => {
-        console.error('❌ Failed to fetch user data after login', err);
+        /* console.error('❌ Failed to fetch user data after login', err); */
         this.clearAuthState();
       },
     });
@@ -84,14 +84,14 @@ export class AuthService {
     const refreshTime = (expiresIn - 60) * 1000; // 1 perccel a lejárat előtt
 
     this.refreshTimeout = setTimeout(() => {
-      console.log('🔄 Auto-refreshing token...');
+      /* console.log('🔄 Auto-refreshing token...'); */
       this.refreshTokens().subscribe({
-        next: () => console.log('✅ Token auto-refreshed'),
-        error: (err) => console.error('❌ Auto-refresh failed', err),
+       /*  next: () => console.log('✅ Token auto-refreshed'),
+        error: (err) => console.error('❌ Auto-refresh failed', err), */
       });
     }, refreshTime);
 
-    console.log(`⏰ Token refresh scheduled in ${refreshTime / 1000 / 60} minutes`);
+    /* console.log(`⏰ Token refresh scheduled in ${refreshTime / 1000 / 60} minutes`); */
   }
 
   // Token frissítése
@@ -107,7 +107,7 @@ export class AuthService {
       .pipe(
         tap((response) => this.handleLoginResponse(response)),
         catchError((error) => {
-          console.error('Token refresh failed', error);
+          /* console.error('Token refresh failed', error); */
           this.clearAuthState();
           return throwError(() => error);
         }),
@@ -171,7 +171,7 @@ export class AuthService {
     const decoded = jwtDecode<AppJwtPayload>(token);
     this.userService.getUserById(decoded.userId).subscribe({
       next: (user) => this.currentUserSubject.next(user),
-      error: (err) => console.error('Failed to refresh user data', err),
+      /* error: (err) => console.error('Failed to refresh user data', err), */
     });
   }
 
@@ -183,11 +183,9 @@ export class AuthService {
     );
   }
 
-  forgottenPassword(data: ForgottenPasswordRequest){
-    return this.httpClient.post(
-      `${this.baseUrl}/api/user/forgottenPassword`,
-      data,
-      { withCredentials: true },
-    );
+  forgottenPassword(data: ForgottenPasswordRequest) {
+    return this.httpClient.post(`${this.baseUrl}/api/user/forgottenPassword`, data, {
+      withCredentials: true,
+    });
   }
 }

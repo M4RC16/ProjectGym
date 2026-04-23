@@ -17,7 +17,7 @@
       <tbody>
         @for (user of users(); track user.email) {
           <tr>
-            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.lastName }} {{ user.firstName }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.phoneNumber ?? '–' }}</td>
             <td>{{ user.validUntil ?? '–' }}</td>
