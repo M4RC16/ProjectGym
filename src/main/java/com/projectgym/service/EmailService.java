@@ -22,7 +22,7 @@ public class EmailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setFrom("***REMOVED***");
+        message.setFrom("noreply@projectgym.hu");
         message.setSubject("Fiók aktiválás - ForeverGym");
         message.setText("15 perce van az aktiválásra\n" +
                 "Az aktiváláshoz kattintson ide: " + verificationLink);
@@ -36,7 +36,7 @@ public class EmailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setFrom("***REMOVED***");
+        message.setFrom("noreply@projectgym.hu");
         message.setSubject("Jelszó megváltoztatás - ForeverGym");
         message.setText("Írd be a kódot a weboldalon:" + token);
 
@@ -48,7 +48,7 @@ public class EmailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setFrom("***REMOVED***");
+        message.setFrom("noreply@projectgym.hu");
         message.setSubject("Lemondott óra - ForeverGym");
         message.setText(name + " lemondta az órát.\n\n" +
                 "Időpont: " + scheduledAt + "\n\n" +
@@ -62,7 +62,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Foglalt óra - ForeverGym");
-        message.setFrom("***REMOVED***");
+        message.setFrom("noreply@projectgym.hu");
         message.setText(name + " foglalt egy órát.\n\n" +
                 "Időpont: " + scheduledAt + "\n\n" +
                 "Üdvözlettel,\nAutómata üzenetküldő");
